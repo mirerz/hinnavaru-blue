@@ -113,7 +113,7 @@ export default function Projects() {
                       >
                         {notified[i] ? '🔔 Notified!' : '🔔 Notify Me'}
                       </button>
-                      <a href="/hinnavaru-blue/sponsor" className="btn btn-coral btn-sm">💙 Help Fund</a>
+                      <a href="/sponsor" className="btn btn-coral btn-sm">💙 Help Fund</a>
                     </>
                   )}
                 </div>

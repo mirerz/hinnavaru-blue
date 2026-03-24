@@ -15,7 +15,7 @@ export default function Layout() {
     <>
       <nav className="navbar" style={scrolled ? { boxShadow: '0 4px 32px rgba(0,0,0,0.5)' } : {}}>
         <Link to="/" className="nav-brand">
-          <img src="/hinnavaru-blue/logo-circle.png" alt="Hinnavaru Blue Logo" className="nav-logo-img" />
+          <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" className="nav-logo-img" />
         </Link>
 
         <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
@@ -43,7 +43,7 @@ export default function Layout() {
           <div className="footer-grid">
             <div className="footer-brand">
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                <img src="/hinnavaru-blue/logo-circle.png" alt="Hinnavaru Blue Logo" style={{ width: '60px', height: '60px' }} />
+                <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" style={{ width: '60px', height: '60px' }} />
                 <span style={{ fontWeight: 700, fontSize: '1.2rem', color: '#fff' }}>Hinnavaru Blue</span>
               </div>
               <p>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Lhaviyani Atoll, Maldives. Every frame counts.</p>
@@ -78,7 +78,7 @@ export default function Layout() {
           </div>
           <div className="footer-bottom">
             <span>© 2025 Hinnavaru Blue Initiative · NGO Reg. MLD-2024-0371</span>
-            <span>Made with 🪸 for Hinnavaru · <a href="/hinnavaru-blue/registry#transparency">Amaanaiy (Transparency)</a></span>
+            <span>Made with 🪸 for Hinnavaru · <a href="/registry#transparency">Amaanaiy (Transparency)</a></span>
           </div>
         </div>
       </footer>

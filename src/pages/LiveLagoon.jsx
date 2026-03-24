@@ -257,7 +257,7 @@ export default function LiveLagoon() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <a href="/hinnavaru-blue/registry" className="btn btn-primary btn-sm">View in Registry</a>
+              <a href="/registry" className="btn btn-primary btn-sm">View in Registry</a>
               <button className="btn btn-outline btn-sm" onClick={() => setSelected(null)}>Close</button>
             </div>
           </div>
