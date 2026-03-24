@@ -78,10 +78,11 @@ export default function Home() {
               <span>Lhaviyani Atoll · Maldives</span>
             </div>
             <h1>
-              Restoring the <span className="gradient-text">Blue Heart</span> of Hinnavaru
+              Restoring our reef. <br />
+              <span className="gradient-text">Empowering our future.</span>
             </h1>
             <p className="hero-sub">
-              A community-led coral restoration initiative protecting the lagoon ecosystem of Hinnavaru Island — one coral frame at a time, with full transparency.
+              Transforming the Hinnavaru lagoon through science-backed coral gardening and community-led conservation. Be part of the rebirth.
             </p>
             <div className="hero-actions">
               <Link to="/live-lagoon" className="btn btn-primary">🗺️ Explore Live Map</Link>

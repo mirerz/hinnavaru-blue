@@ -1,24 +1,9 @@
 const pillars = [
-  {
-    icon: '🌊',
-    title: 'Purpose',
-    text: 'To restore, protect, and celebrate the coral reef ecosystem of Hinnavaru lagoon through community-guided science, accountability, and action.',
-  },
-  {
-    icon: '🌟',
-    title: 'Vision',
-    text: 'A future where Hinnavaru lagoon is a thriving, biodiverse sanctuary — a model for island communities across the Indian Ocean.',
-  },
-  {
-    icon: '🎯',
-    title: 'Mission',
-    text: 'Empower Hinnavaru residents as frontline conservationists through training, technology, and transparent governance of ocean resources.',
-  },
-  {
-    icon: '💙',
-    title: 'Values',
-    text: 'Amaanaiy (integrity), community ownership, indigenous knowledge, scientific rigor, and radical transparency guide every decision we make.',
-  },
+  { icon: '🏛️', title: 'Amaanaiy (Integrity)', text: 'Absolute transparency in data, community interactions, and funding execution.' },
+  { icon: '🧬', title: 'Tharika (Legacy)', text: 'Protecting natural capital and preserving our thriving ecosystem for future generations.' },
+  { icon: '🫀', title: 'Vindhu (Vitality)', text: 'Prioritizing the health of the reef as the island’s absolute heartbeat and baseline.' },
+  { icon: '🤝', title: 'Ekuveri (Community)', text: 'Fostering shared ownership through inclusive education and active local stewardship.' },
+  { icon: '🔬', title: 'Ilimu (Science)', text: 'Utilizing data-driven, scientifically-proven methodologies for enduring restoration impact.' },
 ]
 
 const team = [
