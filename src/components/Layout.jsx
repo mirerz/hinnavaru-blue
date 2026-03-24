@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react'
-import { NavLink, Outlet, Link } from 'react-router-dom'
+import { NavLink, Outlet, Link, useLocation } from 'react-router-dom'
 
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -76,7 +81,7 @@ export default function Layout() {
             </div>
           </div>
           <div className="footer-bottom">
-            <span>© 2025 Hinnavaru Blue Initiative · NGO Reg. MLD-2024-0371</span>
+            <span>© 2026 Hinnavaru Blue Initiative · NGO Reg. No. 493-NGO/CERT/2026/10</span>
             <span>Made with 🪸 for Hinnavaru · <a href="/registry#transparency">Amaanaiy (Transparency)</a></span>
           </div>
         </div>
