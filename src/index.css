@@ -602,3 +602,4 @@ svg.waves { display: block; width: 100%; }
   .team-grid { grid-template-columns: 1fr 1fr; }
   .lagoon-map-wrapper { height: 380px; }
 }
+.nav-logo-img { height: 48px; width: auto; max-width: 140px; display: block; filter: drop-shadow(0 0 8px rgba(14,165,233,0.3)); }

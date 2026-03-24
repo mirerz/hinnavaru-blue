@@ -15,8 +15,7 @@ export default function Layout() {
     <>
       <nav className="navbar" style={scrolled ? { boxShadow: '0 4px 32px rgba(0,0,0,0.5)' } : {}}>
         <Link to="/" className="nav-brand">
-          <div className="nav-logo">🪸</div>
-          <div className="nav-name">Hinnavaru <span>Blue</span></div>
+          <img src="/hinnavaru-blue/logo-circle.png" alt="Hinnavaru Blue Logo" className="nav-logo-img" />
         </Link>
 
         <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
@@ -44,8 +43,8 @@ export default function Layout() {
           <div className="footer-grid">
             <div className="footer-brand">
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                <div className="nav-logo">🪸</div>
-                <span style={{ fontWeight: 700, fontSize: '1.1rem' }}>Hinnavaru Blue</span>
+                <img src="/hinnavaru-blue/logo-circle.png" alt="Hinnavaru Blue Logo" style={{ width: '60px', height: '60px' }} />
+                <span style={{ fontWeight: 700, fontSize: '1.2rem', color: '#fff' }}>Hinnavaru Blue</span>
               </div>
               <p>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Lhaviyani Atoll, Maldives. Every frame counts.</p>
             </div>
