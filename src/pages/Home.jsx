@@ -85,8 +85,8 @@ export default function Home() {
               Transforming the Hinnavaru lagoon through science-backed coral gardening and community-led conservation. Be part of the rebirth.
             </p>
             <div className="hero-actions">
-              <Link to="/live-lagoon" className="btn btn-primary">🗺️ Explore Live Map</Link>
-              <Link to="/sponsor" className="btn btn-outline">🪸 Sponsor a Frame</Link>
+              <Link to="/live-lagoon" className="btn btn-outline">🗺️ Explore Live Map</Link>
+              <Link to="/sponsor" className="btn btn-primary">🪸 Sponsor a Frame</Link>
             </div>
             <div className="hero-stats">
               <div>

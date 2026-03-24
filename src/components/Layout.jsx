@@ -24,7 +24,6 @@ export default function Layout() {
           <li><NavLink to="/projects" onClick={() => setMenuOpen(false)}>Projects</NavLink></li>
           <li><NavLink to="/registry" onClick={() => setMenuOpen(false)}>Registry</NavLink></li>
           <li><NavLink to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Lagoon</NavLink></li>
-          <li><NavLink to="/sponsor" onClick={() => setMenuOpen(false)}>Sponsor</NavLink></li>
         </ul>
 
         <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta">Sponsor a Frame</Link>
