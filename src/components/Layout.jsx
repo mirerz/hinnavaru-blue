@@ -82,7 +82,7 @@ export default function Layout() {
           </div>
           <div className="footer-bottom">
             <span>© 2026 Hinnavaru Blue Initiative · NGO Reg. No. 493-NGO/CERT/2026/10</span>
-            <span>Made with 🪸 by Page 729 · <a href="/registry#transparency">Amaanaiy (Transparency)</a></span>
+            <span>Made with 🪸 by Page 729</span>
           </div>
         </div>
       </footer>
