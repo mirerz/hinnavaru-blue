@@ -2,22 +2,22 @@ import { useEffect, useRef, useState } from 'react'
 import L from 'leaflet'
 
 // Hinnavaru lagoon center coordinates
-const LAGOON_CENTER = [5.489, 73.414]
+const LAGOON_CENTER = [5.490, 73.406]
 
 // Mock nursery frame data
 const frames = [
-  { id: 'HBF-001', lat: 5.4895, lng: 73.4142, species: 'Acropora muricata', status: 'healthy', survival: 94, sponsor: 'Ahmed & Family', depth: '4m' },
-  { id: 'HBF-002', lat: 5.4892, lng: 73.4138, species: 'Porites lobata', status: 'healthy', survival: 88, sponsor: 'Maldives Marine Fund', depth: '3m' },
-  { id: 'HBF-003', lat: 5.4898, lng: 73.4145, species: 'Acropora tenuis', status: 'stable', survival: 76, sponsor: 'Fathimath Rasheed', depth: '6m' },
-  { id: 'HBF-004', lat: 5.4885, lng: 73.4135, species: 'Pocillopora damicornis', status: 'attention', survival: 61, sponsor: 'Anonymous', depth: '5m' },
-  { id: 'HBF-005', lat: 5.4900, lng: 73.4140, species: 'Montipora capricornis', status: 'healthy', survival: 91, sponsor: 'Blue Ocean NGO', depth: '4m' },
-  { id: 'HBF-006', lat: 5.4888, lng: 73.4148, species: 'Acropora millepora', status: 'stable', survival: 79, sponsor: 'Ibrahim Ali', depth: '3m' },
-  { id: 'HBF-007', lat: 5.4896, lng: 73.4150, species: 'Stylophora pistillata', status: 'healthy', survival: 87, sponsor: 'Reef Tech Ltd', depth: '7m' },
-  { id: 'HBF-008', lat: 5.4882, lng: 73.4130, species: 'Platygyra daedalea', status: 'critical', survival: 42, sponsor: 'UNESCO MFF', depth: '5m' },
-  { id: 'HBF-009', lat: 5.4902, lng: 73.4146, species: 'Galaxea fascicularis', status: 'healthy', survival: 93, sponsor: 'Hassan Mohamed', depth: '4m' },
-  { id: 'HBF-010', lat: 5.4891, lng: 73.4152, species: 'Acropora florida', status: 'stable', survival: 72, sponsor: 'Coral Hope Foundation', depth: '3m' },
-  { id: 'HBF-011', lat: 5.4899, lng: 73.4132, species: 'Heliopora coerulea', status: 'healthy', survival: 85, sponsor: 'Aishath Ibrahim', depth: '5m' },
-  { id: 'HBF-012', lat: 5.4886, lng: 73.4141, species: 'Lobophyllia hemprichii', status: 'attention', survival: 58, sponsor: 'Anonymous', depth: '6m' },
+  { id: 'HBF-001', lat: 5.4905, lng: 73.4065, species: 'Acropora muricata', status: 'healthy', survival: 94, sponsor: 'Ahmed & Family', depth: '4m' },
+  { id: 'HBF-002', lat: 5.4895, lng: 73.4055, species: 'Porites lobata', status: 'healthy', survival: 88, sponsor: 'Maldives Marine Fund', depth: '3m' },
+  { id: 'HBF-003', lat: 5.4910, lng: 73.4070, species: 'Acropora tenuis', status: 'stable', survival: 76, sponsor: 'Fathimath Rasheed', depth: '6m' },
+  { id: 'HBF-004', lat: 5.4890, lng: 73.4050, species: 'Pocillopora damicornis', status: 'attention', survival: 61, sponsor: 'Anonymous', depth: '5m' },
+  { id: 'HBF-005', lat: 5.4908, lng: 73.4058, species: 'Montipora capricornis', status: 'healthy', survival: 91, sponsor: 'Blue Ocean NGO', depth: '4m' },
+  { id: 'HBF-006', lat: 5.4892, lng: 73.4068, species: 'Acropora millepora', status: 'stable', survival: 79, sponsor: 'Ibrahim Ali', depth: '3m' },
+  { id: 'HBF-007', lat: 5.4902, lng: 73.4072, species: 'Stylophora pistillata', status: 'healthy', survival: 87, sponsor: 'Reef Tech Ltd', depth: '7m' },
+  { id: 'HBF-008', lat: 5.4888, lng: 73.4048, species: 'Platygyra daedalea', status: 'critical', survival: 42, sponsor: 'UNESCO MFF', depth: '5m' },
+  { id: 'HBF-009', lat: 5.4912, lng: 73.4062, species: 'Galaxea fascicularis', status: 'healthy', survival: 93, sponsor: 'Hassan Mohamed', depth: '4m' },
+  { id: 'HBF-010', lat: 5.4898, lng: 73.4075, species: 'Acropora florida', status: 'stable', survival: 72, sponsor: 'Coral Hope Foundation', depth: '3m' },
+  { id: 'HBF-011', lat: 5.4906, lng: 73.4052, species: 'Heliopora coerulea', status: 'healthy', survival: 85, sponsor: 'Aishath Ibrahim', depth: '5m' },
+  { id: 'HBF-012', lat: 5.4894, lng: 73.4060, species: 'Lobophyllia hemprichii', status: 'attention', survival: 58, sponsor: 'Anonymous', depth: '6m' },
 ]
 
 const statusColors = {
@@ -79,8 +79,8 @@ export default function LiveLagoon() {
 
     // Add a blue overlay polygon for the lagoon area
     const lagoonBounds = [
-      [5.487, 73.412], [5.487, 73.417],
-      [5.491, 73.417], [5.491, 73.412],
+      [5.4885, 73.4045], [5.4885, 73.4075],
+      [5.4915, 73.4075], [5.4915, 73.4045],
     ]
     L.polygon(lagoonBounds, {
       color: '#0ea5e9',
