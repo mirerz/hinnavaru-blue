@@ -513,6 +513,10 @@ svg.waves { display: block; width: 100%; }
   border-radius: var(--radius-sm); font-family: var(--font); font-size: 0.9rem;
   outline: none; transition: var(--transition);
 }
+option {
+  background: var(--ocean-deep);
+  color: var(--text-primary);
+}
 .form-group input:focus, .form-group textarea:focus { border-color: var(--blue-primary); }
 .form-row { display: grid; grid-template-columns: 1fr; gap: 16px; }
 

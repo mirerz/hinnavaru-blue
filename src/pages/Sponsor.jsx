@@ -116,7 +116,7 @@ export default function Sponsor() {
       <section className="section" id="sponsor-form">
         <div className="container" style={{ maxWidth: '680px' }}>
           <div className="badge" style={{ marginBottom: '16px' }}>📋 Apply</div>
-          <h2 className="section-title">Become a <span className="gradient-text">Adopter</span></h2>
+          <h2 className="section-title">Become an <span className="gradient-text">Adopter</span></h2>
           <p className="section-sub">Fill in your details and our team will reach out within 48 hours to confirm your coral frame assignment.</p>
 
           {submitted ? (
