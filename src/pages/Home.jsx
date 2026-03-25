@@ -36,7 +36,7 @@ const impacts = [
   {
     icon: '🌐',
     title: 'Digital Registry',
-    text: 'Every coral frame has a unique ID. Sponsors can track their adopted frames in real-time on the Live Lagoon map.',
+    text: 'Every coral frame has a unique ID. Adopters can track their adopted frames in real-time on the Live Lagoon map.',
   },
 ]
 
@@ -86,7 +86,7 @@ export default function Home() {
             </p>
             <div className="hero-actions">
               <Link to="/live-lagoon" className="btn btn-outline">🗺️ Explore Live Map</Link>
-              <Link to="/sponsor" className="btn btn-primary">🪸 Sponsor a Frame</Link>
+              <Link to="/sponsor" className="btn btn-primary">🪸 Adopt a Frame</Link>
             </div>
             <div className="hero-stats">
               <div>
@@ -217,7 +217,7 @@ export default function Home() {
               For as little as MVR 500/month, you can sponsor a coral frame and watch it grow on our Live Lagoon map. Your name, forever etched in the reef.
             </p>
             <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/sponsor" className="btn btn-primary">Sponsor a Frame</Link>
+              <Link to="/sponsor" className="btn btn-primary">Adopt a Frame</Link>
               <Link to="/live-lagoon" className="btn btn-outline">Explore the Lagoon</Link>
             </div>
           </div>

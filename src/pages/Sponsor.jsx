@@ -60,11 +60,11 @@ export default function Sponsor() {
     <>
       <section className="sponsor-hero section">
         <div className="container">
-          <div className="badge badge-coral" style={{ marginBottom: '16px' }}>🪸 Sponsor a Frame</div>
+          <div className="badge badge-coral" style={{ marginBottom: '16px' }}>🪸 Adopt a Frame</div>
           <h1 className="section-title">
             Leave Your Legacy <span className="gradient-text">in the Reef</span>
           </h1>
-          <p className="section-sub">Every coral frame you sponsor is named after you, tracked in the registry, and visible on the Live Lagoon map. Your commitment grows with the coral.</p>
+          <p className="section-sub">Every coral frame you adopt is named after you, tracked in the registry, and visible on the Live Lagoon map. Your commitment grows with the coral.</p>
 
           <div className="sponsor-tiers">
             {tiers.map((t, i) => (
@@ -116,7 +116,7 @@ export default function Sponsor() {
       <section className="section" id="sponsor-form">
         <div className="container" style={{ maxWidth: '680px' }}>
           <div className="badge" style={{ marginBottom: '16px' }}>📋 Apply</div>
-          <h2 className="section-title">Become a <span className="gradient-text">Sponsor</span></h2>
+          <h2 className="section-title">Become a <span className="gradient-text">Adopter</span></h2>
           <p className="section-sub">Fill in your details and our team will reach out within 48 hours to confirm your coral frame assignment.</p>
 
           {submitted ? (
@@ -124,7 +124,7 @@ export default function Sponsor() {
               <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🪸</div>
               <h3 style={{ marginBottom: '12px' }}>Thank you, {form.name}!</h3>
               <p style={{ color: 'var(--text-secondary)' }}>
-                We've received your sponsorship application for the <strong style={{ color: 'var(--teal)' }}>{form.tier}</strong> tier.
+                We've received your adoption application for the <strong style={{ color: 'var(--teal)' }}>{form.tier}</strong> tier.
                 Our team will contact you at <strong>{form.email}</strong> within 48 hours.
               </p>
             </div>
@@ -146,7 +146,7 @@ export default function Sponsor() {
                   <input name="org" value={form.org} onChange={handle} placeholder="Company or NGO name" />
                 </div>
                 <div className="form-group">
-                  <label>Sponsorship Tier *</label>
+                  <label>Adoption Tier *</label>
                   <select name="tier" value={form.tier} onChange={handle}>
                     <option>Seedling</option>
                     <option>Reef Guardian</option>
@@ -159,7 +159,7 @@ export default function Sponsor() {
                 <textarea name="message" value={form.message} onChange={handle} rows={4} placeholder="Tell us why you're sponsoring, or any special naming requests for your frame..." />
               </div>
               <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-                🪸 Submit Sponsorship Application
+                🪸 Submit Adoption Application
               </button>
               <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '12px' }}>
                 By submitting, you agree to our transparency pledge. No payment is taken through this form.

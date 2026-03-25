@@ -31,7 +31,7 @@ export default function Layout() {
           <li><NavLink to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Lagoon</NavLink></li>
         </ul>
 
-        <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta">Sponsor a Frame</Link>
+        <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta">Adopt a Frame</Link>
 
         <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
           {menuOpen ? '✕' : '☰'}
@@ -73,7 +73,7 @@ export default function Layout() {
             <div className="footer-col">
               <h4>Get Involved</h4>
               <ul>
-                <li><Link to="/sponsor">Sponsor a Frame</Link></li>
+                <li><Link to="/sponsor">Adopt a Frame</Link></li>
                 <li><Link to="/sponsor">Partner with Us</Link></li>
                 <li><a href="mailto:hello@hinnavarublue.org">Contact Us</a></li>
                 <li><a href="https://hinnavarublueinitiative.org" target="_blank" rel="noopener">hinnavarublueinitiative.org</a></li>

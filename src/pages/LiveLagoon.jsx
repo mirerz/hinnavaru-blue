@@ -107,7 +107,7 @@ export default function LiveLagoon() {
             <span>Depth</span><strong>${f.depth}</strong>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:0.82rem">
-            <span>Sponsor</span><strong>${f.sponsor}</strong>
+            <span>Adopter</span><strong>${f.sponsor}</strong>
           </div>
         </div>
       `, { className: 'lagoon-popup' })
@@ -128,7 +128,7 @@ export default function LiveLagoon() {
           <div className="badge badge-teal" style={{ marginBottom: '16px' }}>🗺️ Live Monitoring</div>
           <h1>Live <span className="gradient-text">Lagoon Map</span></h1>
           <p style={{ color: 'var(--text-secondary)', maxWidth: '580px', marginBottom: '32px' }}>
-            Real-time visualization of all active coral nursery frames in Hinnavaru lagoon. Click any marker to view frame details, survival data, and sponsor info.
+            Real-time visualization of all active coral nursery frames in Hinnavaru lagoon. Click any marker to view frame details, survival data, and adopter info.
           </p>
 
           <div className="lagoon-map-wrapper">
@@ -238,7 +238,7 @@ export default function LiveLagoon() {
               {[
                 ['🟢 Status', statusLabels[selected.status]],
                 ['🌊 Depth', selected.depth],
-                ['💙 Sponsor', selected.sponsor],
+                ['💙 Adopter', selected.sponsor],
                 ['📅 Last Check', 'March 2025'],
               ].map(([label, val]) => (
                 <div key={label} style={{ background: 'var(--card-bg)', borderRadius: '8px', padding: '12px', border: '1px solid var(--card-border)' }}>

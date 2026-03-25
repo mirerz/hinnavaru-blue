@@ -58,7 +58,7 @@ export default function Registry() {
           <h1 className="section-title">
             The Blue <span className="gradient-text">Registry</span>
           </h1>
-          <p className="section-sub">Every coral frame tracked, every dive logged, every sponsor acknowledged. Full transparency starts here.</p>
+          <p className="section-sub">Every coral frame tracked, every dive logged, every adopter acknowledged. Full transparency starts here.</p>
         </div>
       </section>
 
@@ -67,7 +67,7 @@ export default function Registry() {
           <div className="registry-search">
             <input
               type="text"
-              placeholder="🔍 Search by frame ID, species, or sponsor..."
+              placeholder="🔍 Search by frame ID, species, or adopter..."
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
@@ -88,7 +88,7 @@ export default function Registry() {
                   <th>Species</th>
                   <th>Location</th>
                   <th>Depth</th>
-                  <th>Sponsor</th>
+                  <th>Adopter</th>
                   <th>Planted</th>
                   <th>Status</th>
                   <th>Survival</th>
@@ -197,7 +197,7 @@ export default function Registry() {
               {[
                 ['📍 Location', selected.location],
                 ['🌊 Depth', selected.depth],
-                ['💙 Sponsor', selected.sponsor],
+                ['💙 Adopter', selected.sponsor],
                 ['📅 Planted', selected.date],
               ].map(([label, val]) => (
                 <div key={label} style={{ background: 'var(--card-bg)', borderRadius: '8px', padding: '12px', border: '1px solid var(--card-border)' }}>
