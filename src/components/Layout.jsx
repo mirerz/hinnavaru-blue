@@ -19,23 +19,25 @@ export default function Layout() {
   return (
     <>
       <nav className="navbar" style={scrolled ? { boxShadow: '0 4px 32px rgba(0,0,0,0.5)' } : {}}>
-        <Link to="/" className="nav-brand">
-          <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" className="nav-logo-img" />
-        </Link>
+        <div className="nav-container">
+          <Link to="/" className="nav-brand">
+            <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" className="nav-logo-img" />
+          </Link>
 
-        <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-          <li><NavLink to="/" end onClick={() => setMenuOpen(false)}>Home</NavLink></li>
-          <li><NavLink to="/about" onClick={() => setMenuOpen(false)}>Our Roots</NavLink></li>
-          <li><NavLink to="/projects" onClick={() => setMenuOpen(false)}>Projects</NavLink></li>
-          <li><NavLink to="/registry" onClick={() => setMenuOpen(false)}>Registry</NavLink></li>
-          <li><NavLink to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Lagoon</NavLink></li>
-        </ul>
+          <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
+            <li><NavLink to="/" end onClick={() => setMenuOpen(false)}>Home</NavLink></li>
+            <li><NavLink to="/about" onClick={() => setMenuOpen(false)}>Our Roots</NavLink></li>
+            <li><NavLink to="/projects" onClick={() => setMenuOpen(false)}>Projects</NavLink></li>
+            <li><NavLink to="/registry" onClick={() => setMenuOpen(false)}>Registry</NavLink></li>
+            <li><NavLink to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Lagoon</NavLink></li>
+          </ul>
 
-        <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta">Adopt a Frame</Link>
+          <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta">Adopt a Frame</Link>
 
-        <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
-          {menuOpen ? '✕' : '☰'}
-        </button>
+          <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+            {menuOpen ? '✕' : '☰'}
+          </button>
+        </div>
       </nav>
 
       <main>
@@ -62,12 +64,10 @@ export default function Layout() {
               </ul>
             </div>
             <div className="footer-col">
-              <h4>Registry</h4>
+              <h4>Transparency</h4>
               <ul>
                 <li><Link to="/registry">Coral Registry</Link></li>
                 <li><Link to="/registry#transparency">Transparency Hub</Link></li>
-                <li><Link to="/registry#transparency">Financial Disclosures</Link></li>
-                <li><Link to="/registry">Impact Reports</Link></li>
               </ul>
             </div>
             <div className="footer-col">
