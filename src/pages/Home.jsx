@@ -10,7 +10,7 @@ export default function Home() {
   // Auto-cycle the LiveUp ticker
   useEffect(() => {
     const timer = setInterval(() => {
-      setUpdateIdx(prev => (prev + 1) % LATEST_BULLETINS.length)
+      setUpdateIdx(prev => (prev + 1) % NOTICE_BOARD.length)
     }, 5000)
     return () => clearInterval(timer)
   }, [])

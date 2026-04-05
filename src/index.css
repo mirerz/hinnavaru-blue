@@ -1448,6 +1448,7 @@ option {
   inset: 0;
   z-index: 2000;
   background: rgba(2, 11, 24, 0.85);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
@@ -1885,8 +1886,8 @@ option {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   transition: var(--transition);
   font-size: 1.1rem;
 }

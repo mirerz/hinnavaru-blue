@@ -10,7 +10,7 @@ export default function Layout() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    setProjectsOpen(false)
+    setTimeout(() => setProjectsOpen(false), 0)
   }, [pathname])
 
   useEffect(() => {

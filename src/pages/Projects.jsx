@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { PROJECT_ARCHIVE, PROJECTS_LIST, PROJECT_CATEGORIES } from '../data/cms'
 
@@ -9,14 +9,14 @@ export default function Projects() {
   const [joined, setJoined] = useState({})
 
   // Shuffle projects on load
-  const shuffledProjects = useMemo(() => {
+  const [shuffledProjects] = useState(() => {
     const list = [...PROJECTS_LIST]
     for (let i = list.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [list[i], list[j]] = [list[j], list[i]]
     }
     return list
-  }, [])
+  })
 
   const filtered = useMemo(() => {
     if (!cat) return shuffledProjects
@@ -57,7 +57,7 @@ export default function Projects() {
       <section className="section-sm" style={{ paddingTop: 0, marginTop: '-40px', position: 'relative', zIndex: 10 }}>
         <div className="container">
           <div className="projects-grid">
-            {filtered.map((p, i) => (
+            {filtered.map(p => (
               <div 
                 className="glass-card project-card" 
                 key={p.title}
@@ -76,6 +76,20 @@ export default function Projects() {
                   <span>{p.progressLabel}</span>
                   <span>{p.funded} / {p.target}</span>
                 </div>
+
+                {p.syllabus && (
+                  <div className="project-syllabus" style={{ marginTop: '16px', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', padding: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                    <h4 style={{ fontSize: '0.8rem', color: 'var(--teal)', textTransform: 'uppercase', letterSpacing: '0.05rem', marginBottom: '8px' }}>📚 Workshop Syllabus</h4>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                      {p.syllabus.map((item, idx) => (
+                        <li key={idx} style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '4px', display: 'flex', gap: '8px' }}>
+                          <span style={{ color: 'var(--teal)' }}>•</span> {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 <div className="project-actions">
                   {p.status === 'active' ? (
                     <>
