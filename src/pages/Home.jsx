@@ -53,7 +53,7 @@ export default function Home() {
               <span className="live-dot" />
               <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--teal)' }}>LIVE UPDATE:</span>
               <span key={updateIdx} className="fade-in" style={{ fontSize: '0.8rem', opacity: 0.9 }}>
-                {LATEST_BULLETINS[updateIdx % LATEST_BULLETINS.length].text}
+                {NOTICE_BOARD[updateIdx % NOTICE_BOARD.length].text}
               </span>
             </div>
 
