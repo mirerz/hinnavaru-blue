@@ -16,8 +16,12 @@ export const CMS_CONFIG = {
   admin_email: "admin@hinnavarublueinitiative.org",
   founder_email: "founder@hinnavarublueinitiative.org",
   hello_email: "hello@hinnavarublueinitiative.org",
+  contact_email: "hello@hinnavarublueinitiative.org",
+  support_email: "admin@hinnavarublueinitiative.org",
   hotline: "+9607714340",
   mailer_url: "https://mailer-service-1085797488900.asia-southeast1.run.app/send",
+  whatsapp_link: "https://wa.me/9607714340",
+  telegram_link: "https://t.me/9607714340",
   socials: {
     whatsapp_link: "https://wa.me/9607714340",
     telegram_link: "https://t.me/9607714340"
