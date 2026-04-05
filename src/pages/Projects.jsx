@@ -1,86 +1,68 @@
-import { useState } from 'react'
-
-const projects = [
-  {
-    emoji: '🪸',
-    status: 'active',
-    badge: 'Active',
-    badgeClass: 'badge-teal',
-    title: 'Hinnavaru Lagoon Nursery',
-    desc: 'Our flagship coral nursery program, deploying over 247 frames across 4.2 km² of the lagoon with bi-weekly monitoring.',
-    progress: 82,
-    progressLabel: '82% of 2025 survival target met',
-    funded: 'MVR 480,000',
-    target: 'MVR 600,000',
-  },
-  {
-    emoji: '🌊',
-    status: 'active',
-    badge: 'Active',
-    badgeClass: 'badge-teal',
-    title: 'Thermotolerant Species Study',
-    desc: 'Partnering with IUCN to test 6 coral species for climate resilience in Lhaviyani Atoll conditions. Results inform future planting.',
-    progress: 65,
-    progressLabel: '65% of research phase complete',
-    funded: 'MVR 180,000',
-    target: 'MVR 280,000',
-  },
-  {
-    emoji: '🏫',
-    status: 'active',
-    badge: 'Active',
-    badgeClass: 'badge-teal',
-    title: 'Ocean Guardians School Program',
-    desc: 'Monthly marine ecology sessions for 320 students at Hinnavaru School, including supervised snorkel tours of the nursery.',
-    progress: 90,
-    progressLabel: '90% of 2024-25 curriculum delivered',
-    funded: 'MVR 95,000',
-    target: 'MVR 95,000',
-  },
-  {
-    emoji: '📡',
-    status: 'planned',
-    badge: 'Planned',
-    badgeClass: 'badge-coral',
-    title: 'Deep Lagoon Monitoring Array',
-    desc: 'Installing 12 IoT sensor buoys to provide real-time temperature, pH, and turbidity data directly into the Live Lagoon dashboard.',
-    progress: 20,
-    progressLabel: '20% of funding secured',
-    funded: 'MVR 60,000',
-    target: 'MVR 300,000',
-  },
-]
-
-const archive = [
-  { year: '2023', title: 'Phase 1 Nursery Frames', desc: '50 initial frames deployed. 88% survival at 12 months.' },
-  { year: '2023', title: 'Guardian Diver Training', desc: '18 community divers certified. First local-led monitoring dives.' },
-  { year: '2022', title: 'Lagoon Baseline Survey', desc: 'Full coral coverage mapping of 4.2 km² of Hinnavaru lagoon.' },
-  { year: '2022', title: 'NGO Registration', desc: 'Hinnavaru Blue registered under MLD-2024-0371.' },
-  { year: '2021', title: 'First Coral Nursery', desc: '10 experimental frames. Proof-of-concept for community model.' },
-  { year: '2021', title: 'Founding of Initiative', desc: 'Hinnavaru fishermen meet with marine biologist to form the initiative.' },
-]
+import { useState, useMemo, useEffect } from 'react'
+import { useSearchParams, Link } from 'react-router-dom'
+import { PROJECT_ARCHIVE, PROJECTS_LIST, PROJECT_CATEGORIES } from '../data/cms'
 
 export default function Projects() {
+  const [searchParams] = useSearchParams()
+  const cat = searchParams.get('cat')
   const [notified, setNotified] = useState({})
   const [joined, setJoined] = useState({})
 
+  // Shuffle projects on load
+  const shuffledProjects = useMemo(() => {
+    const list = [...PROJECTS_LIST]
+    for (let i = list.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [list[i], list[j]] = [list[j], list[i]]
+    }
+    return list
+  }, [])
+
+  const filtered = useMemo(() => {
+    if (!cat) return shuffledProjects
+    return shuffledProjects.filter(p => p.category === cat)
+  }, [cat, shuffledProjects])
+
+  const categoryTitle = useMemo(() => {
+    return PROJECT_CATEGORIES.find(c => c.id === cat)?.title || 'Our Work'
+  }, [cat])
+
   return (
     <>
-      <section className="projects-hero section">
-        <div className="container">
-          <div className="badge badge-teal" style={{ marginBottom: '16px' }}>🌊 Our Work</div>
+      <section className="projects-hero section" style={{ position: 'relative', overflow: 'hidden', paddingBottom: '200px' }}>
+        {/* Background Overlay */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 0,
+          backgroundImage: "url('/Project-Progs.png')",
+          backgroundSize: 'cover', backgroundPosition: 'center',
+          opacity: 0.3
+        }} />
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 0,
+          background: 'linear-gradient(to bottom, var(--ocean-deep) 0%, transparent 30%, transparent 70%, var(--ocean-deep) 100%)'
+        }} />
+
+        <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="badge badge-teal" style={{ marginBottom: '16px' }}>🌊 {categoryTitle}</div>
           <h1 className="section-title">
             Projects & <span className="gradient-text">Programs</span>
           </h1>
-          <p className="section-sub">From underwater nurseries to classroom education — every project is designed to build lasting ocean resilience for Hinnavaru.</p>
+          <p className="section-sub" style={{ margin: '0 auto' }}>
+            From underwater nurseries to classroom education — every project is designed to build lasting ocean resilience for Hinnavaru.
+          </p>
         </div>
       </section>
 
-      <section className="section-sm">
+      {/* OVERLAY PROJECTS (Glassmorphism) */}
+      <section className="section-sm" style={{ paddingTop: 0, marginTop: '-40px', position: 'relative', zIndex: 10 }}>
         <div className="container">
           <div className="projects-grid">
-            {projects.map((p, i) => (
-              <div className="card project-card" key={i}>
+            {filtered.map((p, i) => (
+              <div 
+                className="glass-card project-card" 
+                key={p.title}
+              >
+
                 <div className="project-card-top">
                   <div className="project-emoji">{p.emoji}</div>
                   <span className={`badge ${p.badgeClass}`}>{p.badge}</span>
@@ -99,44 +81,75 @@ export default function Projects() {
                     <>
                       <button
                         className="btn btn-primary btn-sm"
-                        onClick={() => setJoined(prev => ({ ...prev, [i]: true }))}
+                        onClick={() => setJoined(prev => ({ ...prev, [p.title]: true }))}
                       >
-                        {joined[i] ? '✅ Joined!' : '🤿 Join Next Clean'}
+                        {joined[p.title] ? p.actionPrimaryDone : p.actionPrimary}
                       </button>
-                      <a href="#" className="btn btn-outline btn-sm">📋 View Report</a>
+                      <a href={p.actionSecondaryLink} className="btn btn-outline btn-sm">{p.actionSecondary}</a>
                     </>
                   ) : (
                     <>
                       <button
                         className="btn btn-outline btn-sm"
-                        onClick={() => setNotified(prev => ({ ...prev, [i]: true }))}
+                        onClick={() => setNotified(prev => ({ ...prev, [p.title]: true }))}
                       >
-                        {notified[i] ? '🔔 Notified!' : '🔔 Notify Me'}
+                        {notified[p.title] ? p.actionPrimaryDone : p.actionPrimary}
                       </button>
-                      <a href="/sponsor" className="btn btn-coral btn-sm">💙 Help Fund</a>
+                      <a href={p.actionSecondaryLink} className="btn btn-coral btn-sm">{p.actionSecondary}</a>
                     </>
                   )}
                 </div>
               </div>
             ))}
           </div>
+          {filtered.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '100px 0' }}>
+              <h3 style={{ opacity: 0.5 }}>Currently launching more programs...</h3>
+              <Link to="/projects" className="btn btn-outline" style={{ marginTop: '24px' }}>View All Projects</Link>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* ARCHIVE */}
-      <section className="section">
+      {/* ARCHIVE -> IN ACTION / DOCUMENT VAULTS */}
+      <section className="section" id="archive">
         <div className="container">
           <div className="badge" style={{ marginBottom: '16px' }}>📁 Archive</div>
-          <h2 className="section-title">Project <span className="gradient-text">History</span></h2>
+          <h2 className="section-title">Deep <span className="gradient-text">Archives</span></h2>
           <p className="section-sub">Every milestone, every frame, every dive — documented for posterity and accountability.</p>
-          <div className="archive-grid">
-            {archive.map((a, i) => (
-              <div className="archive-item" key={i}>
-                <div className="archive-year">{a.year}</div>
-                <h4>{a.title}</h4>
-                <p>{a.desc}</p>
-              </div>
-            ))}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '24px', marginBottom: '64px' }}>
+            {/* Visuals Block */}
+            <div className="card" style={{ padding: '48px', background: 'rgba(255, 255, 255, 0.02)', borderLeft: '4px solid var(--teal)', transition: 'var(--transition)' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>📸</div>
+              <h3 style={{ fontSize: '1.6rem', marginBottom: '8px' }}>In Action</h3>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', lineHeight: '1.7' }}>
+                High-definition drone captures of the Shipyard area, bi-weekly underwater time-lapses of nursing frames, and monthly progress photography.
+              </p>
+              <button className="btn btn-outline" style={{ padding: '12px 32px' }}>👁️ View Media visuals</button>
+            </div>
+
+            {/* Docs Block */}
+            <div className="card" style={{ padding: '48px', background: 'rgba(255, 255, 255, 0.02)', borderLeft: '4px solid var(--blue-primary)', transition: 'var(--transition)' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '16px' }}>📑</div>
+              <h3 style={{ fontSize: '1.6rem', marginBottom: '8px' }}>Document Vaults</h3>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', lineHeight: '1.7' }}>
+                Official registries, annual financial audits, marine ecology impact assessments (EIA), and our community-led conservation protocols.
+              </p>
+              <Link to="/registry#transparency" className="btn btn-outline" style={{ padding: '12px 32px' }}>👁️ Access Registry Vaults</Link>
+            </div>
+          </div>
+
+          <div style={{ paddingTop: '48px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+            <h3 style={{ fontSize: '1.2rem', color: 'var(--teal)', fontWeight: 600, marginBottom: '24px' }}>📅 Recent Timeline</h3>
+            <div className="archive-grid">
+              {PROJECT_ARCHIVE.map((a, i) => (
+                <div className="archive-item" key={i}>
+                  <div className="archive-year">{a.year}</div>
+                  <h4>{a.title}</h4>
+                  <p>{a.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

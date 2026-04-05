@@ -1,16 +1,33 @@
-# React + Vite
+# 🌊 Hinnavaru Blue Initiative — Web Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Hinnavaru Blue** is a community-led marine conservation platform dedicated to restoring the Hinnavaru lagoon through science-backed coral gardening and digital transparency.
 
-Currently, two official plugins are available:
+## ✨ Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Live Lagoon Map**: Real-time status tracking of all nursery frames using Leaflet.js.
+- **Multimedia Hub**: Integrated "Pulse" updates, "Focus" photography, and community bulletins.
+- **Transparency Hub (Amaanaiy)**: Public access to impact data, governance documents, and financial audits.
+- **Historical Narrative**: The official "Our Roots" story documenting the *Skipjack* wrecks and the NGO's founding.
+- **Mobile First**: Fully responsive architecture optimized for all device sizes.
 
-## React Compiler
+## 🚀 Quick Start
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Development**: `npm run dev`
+2. **Build**: `npm run build`
+3. **Deploy**: `npm run deploy` (requires GitHub Pages configuration)
 
-## Expanding the ESLint configuration
+## 📁 Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `/src/pages`: Individual page components (Home, About, LiveLagoon, etc.).
+- `/src/data/cms.js`: **Central Source of Truth**. Update content, stats, and registry data here.
+- `/src/index.css`: Global "Blue Kit" design system and animations.
+
+## 🛠️ Tech Stack
+
+- **React + Vite** (Frontend)
+- **React Router** (Navigation)
+- **Leaflet.js** (Mapping)
+- **Glassmorphism & Vanilla CSS** (Styling)
+
+---
+*Developed for the people of Hinnavaru by the Hinnavaru Blue Initiative.*

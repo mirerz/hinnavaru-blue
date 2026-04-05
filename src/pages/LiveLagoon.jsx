@@ -1,24 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { CORAL_REGISTRY, LIVE_LAGOON_CONTENT } from '../data/cms'
 import L from 'leaflet'
 
 // Hinnavaru lagoon center coordinates
 const LAGOON_CENTER = [5.490, 73.406]
-
-// Mock nursery frame data
-const frames = [
-  { id: 'HBF-001', lat: 5.4905, lng: 73.4065, species: 'Acropora muricata', status: 'healthy', survival: 94, sponsor: 'Ahmed & Family', depth: '4m' },
-  { id: 'HBF-002', lat: 5.4895, lng: 73.4055, species: 'Porites lobata', status: 'healthy', survival: 88, sponsor: 'Maldives Marine Fund', depth: '3m' },
-  { id: 'HBF-003', lat: 5.4910, lng: 73.4070, species: 'Acropora tenuis', status: 'stable', survival: 76, sponsor: 'Fathimath Rasheed', depth: '6m' },
-  { id: 'HBF-004', lat: 5.4890, lng: 73.4050, species: 'Pocillopora damicornis', status: 'attention', survival: 61, sponsor: 'Anonymous', depth: '5m' },
-  { id: 'HBF-005', lat: 5.4908, lng: 73.4058, species: 'Montipora capricornis', status: 'healthy', survival: 91, sponsor: 'Blue Ocean NGO', depth: '4m' },
-  { id: 'HBF-006', lat: 5.4892, lng: 73.4068, species: 'Acropora millepora', status: 'stable', survival: 79, sponsor: 'Ibrahim Ali', depth: '3m' },
-  { id: 'HBF-007', lat: 5.4902, lng: 73.4072, species: 'Stylophora pistillata', status: 'healthy', survival: 87, sponsor: 'Reef Tech Ltd', depth: '7m' },
-  { id: 'HBF-008', lat: 5.4888, lng: 73.4048, species: 'Platygyra daedalea', status: 'critical', survival: 42, sponsor: 'UNESCO MFF', depth: '5m' },
-  { id: 'HBF-009', lat: 5.4912, lng: 73.4062, species: 'Galaxea fascicularis', status: 'healthy', survival: 93, sponsor: 'Hassan Mohamed', depth: '4m' },
-  { id: 'HBF-010', lat: 5.4898, lng: 73.4075, species: 'Acropora florida', status: 'stable', survival: 72, sponsor: 'Coral Hope Foundation', depth: '3m' },
-  { id: 'HBF-011', lat: 5.4906, lng: 73.4052, species: 'Heliopora coerulea', status: 'healthy', survival: 85, sponsor: 'Aishath Ibrahim', depth: '5m' },
-  { id: 'HBF-012', lat: 5.4894, lng: 73.4060, species: 'Lobophyllia hemprichii', status: 'attention', survival: 58, sponsor: 'Anonymous', depth: '6m' },
-]
 
 const statusColors = {
   healthy: '#10b981',
@@ -55,11 +41,11 @@ export default function LiveLagoon() {
   const [filterStatus, setFilterStatus] = useState('all')
 
   const stats = {
-    total: frames.length,
-    healthy: frames.filter(f => f.status === 'healthy').length,
-    stable: frames.filter(f => f.status === 'stable').length,
-    attention: frames.filter(f => f.status === 'attention' || f.status === 'critical').length,
-    avgSurvival: Math.round(frames.reduce((s, f) => s + f.survival, 0) / frames.length),
+    total: CORAL_REGISTRY.length,
+    healthy: CORAL_REGISTRY.filter(f => f.status === 'healthy').length,
+    stable: CORAL_REGISTRY.filter(f => f.status === 'stable').length,
+    attention: CORAL_REGISTRY.filter(f => f.status === 'attention' || f.status === 'critical').length,
+    avgSurvival: Math.round(CORAL_REGISTRY.reduce((s, f) => s + f.survival, 0) / CORAL_REGISTRY.length),
   }
 
   useEffect(() => {
@@ -75,8 +61,8 @@ export default function LiveLagoon() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors',
       maxZoom: 18,
+      className: 'map-tiles'
     }).addTo(map)
-
     // Add a blue overlay polygon for the lagoon area
     const lagoonBounds = [
       [5.4885, 73.4045], [5.4885, 73.4075],
@@ -90,7 +76,7 @@ export default function LiveLagoon() {
       fillOpacity: 0.06,
     }).addTo(map)
 
-    frames.forEach(f => {
+    CORAL_REGISTRY.forEach(f => {
       const color = statusColors[f.status]
       const marker = L.marker([f.lat, f.lng], { icon: makeIcon(color) })
       marker.bindPopup(`
@@ -107,7 +93,7 @@ export default function LiveLagoon() {
             <span>Depth</span><strong>${f.depth}</strong>
           </div>
           <div style="display:flex;justify-content:space-between;font-size:0.82rem">
-            <span>Adopter</span><strong>${f.sponsor}</strong>
+            <span>Adopter</span><strong>${f.adopter}</strong>
           </div>
         </div>
       `, { className: 'lagoon-popup' })
@@ -119,29 +105,49 @@ export default function LiveLagoon() {
     return () => { map.remove(); leafletRef.current = null }
   }, [])
 
-  const filtered = filterStatus === 'all' ? frames : frames.filter(f => f.status === filterStatus)
+  const filtered = filterStatus === 'all' ? CORAL_REGISTRY : CORAL_REGISTRY.filter(f => f.status === filterStatus)
 
   return (
     <>
-      <section className="lagoon-hero section">
-        <div className="container">
-          <div className="badge badge-teal" style={{ marginBottom: '16px' }}>🗺️ Live Monitoring</div>
-          <h1>Live <span className="gradient-text">Lagoon Map</span></h1>
-          <p style={{ color: 'var(--text-secondary)', maxWidth: '580px', marginBottom: '32px' }}>
-            Real-time visualization of all active coral nursery frames in Hinnavaru lagoon. Click any marker to view frame details, survival data, and adopter info.
+      <section className="lagoon-hero section" style={{ position: 'relative', overflow: 'hidden', paddingBottom: '200px' }}>
+        {/* Background Overlay */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 0,
+          backgroundImage: `url('${LIVE_LAGOON_CONTENT.hero.bg_image}')`,
+          backgroundSize: 'cover', backgroundPosition: 'center',
+          opacity: 0.3
+        }} />
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 0,
+          background: 'linear-gradient(to bottom, var(--ocean-deep) 0%, transparent 30%, transparent 70%, var(--ocean-deep) 100%)'
+        }} />
+
+        <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="badge badge-teal" style={{ marginBottom: '16px' }}>{LIVE_LAGOON_CONTENT.hero.badge}</div>
+          <h1 className="section-title">Live <span className="gradient-text">Lagoon Map</span></h1>
+          <p className="section-sub" style={{ margin: '0 auto' }}>
+            {LIVE_LAGOON_CONTENT.hero.desc}
           </p>
+        </div>
+      </section>
 
-          <div className="lagoon-map-wrapper">
-            <div ref={mapRef} style={{ height: '100%', width: '100%' }} />
-          </div>
+      {/* OVERLAY MAP (Glassmorphism) */}
+      <section className="section-sm" style={{ paddingTop: 0, marginTop: '-140px', position: 'relative', zIndex: 10 }}>
+        <div className="container">
+          <div className="glass-card" style={{ padding: '24px' }}>
 
-          <div className="lagoon-legend">
-            {Object.entries(statusColors).map(([key, color]) => (
-              <div className="lagoon-legend-item" key={key}>
-                <div className="legend-dot" style={{ background: color, boxShadow: `0 0 6px ${color}88` }} />
-                <span>{statusLabels[key]}</span>
-              </div>
-            ))}
+            <div className="lagoon-map-wrapper" style={{ margin: 0, border: 'none', background: 'transparent' }}>
+              <div ref={mapRef} style={{ height: '100%', width: '100%', borderRadius: '12px', overflow: 'hidden' }} />
+            </div>
+
+            <div className="lagoon-legend" style={{ justifyContent: 'center', marginTop: '24px' }}>
+              {Object.entries(statusColors).map(([key, color]) => (
+                <div className="lagoon-legend-item" key={key}>
+                  <div className="legend-dot" style={{ background: color, boxShadow: `0 0 6px ${color}88` }} />
+                  <span>{statusLabels[key]}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -183,7 +189,7 @@ export default function LiveLagoon() {
               onChange={e => setFilterStatus(e.target.value)}
               style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)', color: 'var(--text-primary)', padding: '10px 16px', borderRadius: '8px', fontFamily: 'var(--font)', fontSize: '0.9rem', cursor: 'pointer', outline: 'none' }}
             >
-              <option value="all">All Statuses ({frames.length})</option>
+              <option value="all">All Statuses ({CORAL_REGISTRY.length})</option>
               <option value="healthy">🟢 Healthy ({stats.healthy})</option>
               <option value="stable">🔵 Stable ({stats.stable})</option>
               <option value="attention">🟡 Needs Attention</option>
@@ -214,7 +220,7 @@ export default function LiveLagoon() {
                   </div>
                   <div className="frame-meta">
                     <span>🌊 {f.depth}</span>
-                    <span>💙 {f.sponsor}</span>
+                    <span>💙 Adopter: {f.adopter}</span>
                   </div>
                 </div>
               )
@@ -238,7 +244,7 @@ export default function LiveLagoon() {
               {[
                 ['🟢 Status', statusLabels[selected.status]],
                 ['🌊 Depth', selected.depth],
-                ['💙 Adopter', selected.sponsor],
+                ['💙 Adopter', selected.adopter],
                 ['📅 Last Check', 'March 2025'],
               ].map(([label, val]) => (
                 <div key={label} style={{ background: 'var(--card-bg)', borderRadius: '8px', padding: '12px', border: '1px solid var(--card-border)' }}>
@@ -257,7 +263,7 @@ export default function LiveLagoon() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <a href="/registry" className="btn btn-primary btn-sm">View in Registry</a>
+              <Link to="/registry" className="btn btn-primary btn-sm">View in Registry</Link>
               <button className="btn btn-outline btn-sm" onClick={() => setSelected(null)}>Close</button>
             </div>
           </div>
@@ -279,6 +285,12 @@ export default function LiveLagoon() {
           background: #041428 !important;
           color: #e2e8f0 !important;
           border-color: rgba(14,165,233,0.3) !important;
+        }
+        .leaflet-container {
+          background: transparent !important;
+        }
+        .map-tiles {
+          opacity: 0.65 !important;
         }
       `}</style>
     </>

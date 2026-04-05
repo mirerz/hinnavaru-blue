@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react'
 import { NavLink, Outlet, Link, useLocation } from 'react-router-dom'
+import { CMS_CONFIG } from '../data/cms'
 
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { pathname } = useLocation()
+  const [projectsOpen, setProjectsOpen] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
+    setProjectsOpen(false)
   }, [pathname])
 
   useEffect(() => {
@@ -20,19 +23,37 @@ export default function Layout() {
     <>
       <nav className="navbar" style={scrolled ? { boxShadow: '0 4px 32px rgba(0,0,0,0.5)' } : {}}>
         <div className="nav-container">
-          <Link to="/" className="nav-brand">
+          <Link to="/" className="nav-brand" onClick={() => setMenuOpen(false)}>
             <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" className="nav-logo-img" />
           </Link>
 
           <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
             <li><NavLink to="/" end onClick={() => setMenuOpen(false)}>Home</NavLink></li>
             <li><NavLink to="/about" onClick={() => setMenuOpen(false)}>Our Roots</NavLink></li>
-            <li><NavLink to="/projects" onClick={() => setMenuOpen(false)}>Projects</NavLink></li>
+            <li 
+              onMouseEnter={() => setProjectsOpen(true)} 
+              onMouseLeave={() => setProjectsOpen(false)}
+              className="nav-dropdown-trigger"
+            >
+              <NavLink to="/projects" onClick={() => setMenuOpen(false)}>
+                Projects <span style={{ fontSize: '0.7rem', verticalAlign: 'middle', opacity: 0.6 }}>▼</span>
+              </NavLink>
+              <div className={`nav-dropdown ${projectsOpen ? 'show' : ''}`}>
+                <Link to="/projects?cat=coral" onClick={() => setMenuOpen(false)}>Coral Restoration</Link>
+                <Link to="/projects?cat=coastal" onClick={() => setMenuOpen(false)}>Coastal Cleaning</Link>
+                <Link to="/projects?cat=edu" onClick={() => setMenuOpen(false)}>Education & Awareness</Link>
+              </div>
+            </li>
             <li><NavLink to="/registry" onClick={() => setMenuOpen(false)}>Registry</NavLink></li>
-            <li><NavLink to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Lagoon</NavLink></li>
           </ul>
 
-          <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta">Adopt a Frame</Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div className="nav-hotline hide-mobile">
+              <span style={{ fontSize: '0.7rem', color: 'var(--teal)', fontWeight: 600 }}>HOTLINE</span>
+              <a href={`tel:${CMS_CONFIG.hotline}`} style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>{CMS_CONFIG.hotline}</a>
+            </div>
+            <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta">Adopt a Frame</Link>
+          </div>
 
           <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
             {menuOpen ? '✕' : '☰'}
@@ -46,7 +67,7 @@ export default function Layout() {
 
       <footer className="footer">
         <div className="container">
-          <div className="footer-grid">
+          <div className="footer-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
             <div className="footer-brand">
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                 <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" style={{ width: '60px', height: '60px' }} />
@@ -68,24 +89,58 @@ export default function Layout() {
               <ul>
                 <li><Link to="/registry">Coral Registry</Link></li>
                 <li><Link to="/registry#transparency">Transparency Hub</Link></li>
+                <li><Link to="/live-lagoon">Live Lagoon Map</Link></li>
               </ul>
             </div>
             <div className="footer-col">
               <h4>Get Involved</h4>
               <ul>
-                <li><Link to="/sponsor">Adopt a Frame</Link></li>
-                <li><Link to="/sponsor">Partner with Us</Link></li>
-                <li><a href="mailto:hello@hinnavarublue.org">Contact Us</a></li>
-                <li><a href="https://hinnavarublueinitiative.org" target="_blank" rel="noopener">hinnavarublueinitiative.org</a></li>
+                <li><Link to="/sponsor">Adopt or Partner with Us</Link></li>
+                <li><a href={`mailto:${CMS_CONFIG.contact_email}`}>Contact Support</a></li>
               </ul>
+            </div>
+            <div className="footer-col">
+              <h4>Initiate</h4>
+              <div className="footer-btn-group">
+                <a href={`tel:${CMS_CONFIG.hotline}`} className="footer-btn">
+                  <span style={{ color: 'var(--blue-light)' }}>📞</span> {CMS_CONFIG.hotline}
+                </a>
+                <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="footer-btn">
+                  <span style={{ color: '#25D366' }}>💬</span> WhatsApp Hotline
+                </a>
+                <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="footer-btn">
+                  <span style={{ color: '#0088cc' }}>✈️</span> Telegram Feed
+                </a>
+              </div>
             </div>
           </div>
           <div className="footer-bottom">
-            <span>© 2026 Hinnavaru Blue Initiative · NGO Reg. No. 493-NGO/CERT/2026/10</span>
+            <span>© 2026 Hinnavaru Blue Initiative · NGO Reg. No. {CMS_CONFIG.ngo_registration}</span>
             <span>Made with 🪸 by Page 729</span>
           </div>
         </div>
       </footer>
+
+      {/* FLOATING ACTION BUTTON (FAB) */}
+      <div className="fab-container">
+        <div className="fab-menu">
+          <a href={`tel:${CMS_CONFIG.hotline}`} className="fab-item" style={{ background: 'var(--ocean-surface)' }}>
+            <span className="fab-label">Call Hotline</span>
+            📞
+          </a>
+          <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="fab-item whatsapp-bg">
+            <span className="fab-label">WhatsApp Support</span>
+            💬
+          </a>
+          <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="fab-item telegram-bg">
+            <span className="fab-label">Telegram Updates</span>
+            ✈️
+          </a>
+        </div>
+        <div className="fab-main">
+          <span>⚡</span>
+        </div>
+      </div>
     </>
   )
 }
