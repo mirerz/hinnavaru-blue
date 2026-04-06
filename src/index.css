@@ -253,7 +253,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 72px;
+  min-height: 100px;
 }
 
 .nav-brand {
@@ -1654,7 +1654,7 @@ option {
 }
 
 .nav-logo-img {
-  height: 60px;
+  height: 85px;
   margin: 0;
   width: auto;
   max-width: 250px;
@@ -1869,8 +1869,9 @@ option {
   align-items: center;
 }
 .nav-fab-main {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
+  font-size: 1.4rem;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--blue-primary), var(--teal));
   color: white;

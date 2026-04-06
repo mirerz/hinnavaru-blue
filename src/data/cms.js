@@ -236,9 +236,11 @@ export const DOCUMENT_VAULTS = [
 
 // 4. THE NOTICE BOARD (Live Feed Updates)
 export const NOTICE_BOARD = [
-  { icon: '🪸', type: 'Notice', text: 'Next Community Diving Session: April 12th. Registration required via Hotline.' },
-  { icon: '📢', type: 'Milestone', text: '250th Coral Frame planted in the North Lagoon zone!' },
-  { icon: '🌊', type: 'Data', text: 'March survival rates show 82% healthy coverage in tracked frames.' }
+  { icon: '🌍', type: 'Global', text: 'UN Ocean Decade target aligned: Hinnavaru blueprint scaling to 14 atolls.' },
+  { icon: '📡', type: 'Live Feed', text: 'Global network detects 0.2°C temp anomaly. High-frequency monitoring activated.' },
+  { icon: '🌊', type: 'Mission', text: 'Vision 2030: Restoring critical nursery corridors for 5,000+ localized reef species.' },
+  { icon: '📢', type: 'Milestone', text: 'MVR 3.2M milestone passed! 100% of global funding allocated directly to field operations.' },
+  { icon: '🪸', type: 'Data', text: 'March survival rates show 82% healthy coverage across 180 tracked frames.' }
 ]
 
 // 5. FINANCIAL ALLOCATION (Transparency Hub)
