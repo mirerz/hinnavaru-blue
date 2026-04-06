@@ -35,8 +35,18 @@ export default function Layout() {
               onMouseLeave={() => setProjectsOpen(false)}
               className="nav-dropdown-trigger"
             >
-              <NavLink to="/projects" onClick={() => setMenuOpen(false)}>
-                Projects <span style={{ fontSize: '0.7rem', verticalAlign: 'middle', opacity: 0.6 }}>▼</span>
+              <NavLink 
+                to="/projects" 
+                onClick={(e) => {
+                  if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    setProjectsOpen(!projectsOpen);
+                  } else {
+                    setMenuOpen(false);
+                  }
+                }}
+              >
+                Projects <span style={{ fontSize: '0.7rem', verticalAlign: 'middle', opacity: 0.6, display: 'inline-block', transform: projectsOpen ? 'rotate(180deg)' : 'none', transition: '0.2s' }}>▼</span>
               </NavLink>
               <div className={`nav-dropdown ${projectsOpen ? 'show' : ''}`}>
                 <Link to="/projects?cat=coral" onClick={() => setMenuOpen(false)}>Coral Restoration</Link>

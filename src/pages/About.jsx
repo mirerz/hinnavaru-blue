@@ -95,7 +95,7 @@ export default function About() {
               <p style={{ fontSize: '1.3rem', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '40px' }}>"{narrative.footer_quote}"</p>
               <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
                 <Link to="/projects" className="btn btn-primary">Our Programs</Link>
-                <Link to="/registry/transparency" className="btn btn-outline" style={{ color: 'var(--teal)' }}>Transparency Hub →</Link>
+                <Link to="/registry#transparency" className="btn btn-outline" style={{ color: 'var(--teal)' }}>Transparency Hub →</Link>
               </div>
            </div>
         </div>
