@@ -48,9 +48,24 @@ export default function Layout() {
           </ul>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div className="nav-hotline hide-mobile">
-              <span style={{ fontSize: '0.7rem', color: 'var(--teal)', fontWeight: 600 }}>HOTLINE</span>
-              <a href={`tel:${CMS_CONFIG.hotline}`} style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#fff' }}>{CMS_CONFIG.hotline}</a>
+            <div className="nav-fab-container hide-mobile">
+              <div className="nav-fab-main">
+                <span style={{ fontSize: '1.2rem' }}>⚡</span>
+              </div>
+              <div className="nav-fab-menu">
+                <a href={`tel:${CMS_CONFIG.hotline}`} className="fab-item" style={{ background: 'var(--ocean-surface)' }}>
+                  <span className="fab-label">Call Hotline</span>
+                  📞
+                </a>
+                <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="fab-item whatsapp-bg">
+                  <span className="fab-label">WhatsApp Support</span>
+                  💬
+                </a>
+                <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="fab-item telegram-bg">
+                  <span className="fab-label">Telegram Updates</span>
+                  ✈️
+                </a>
+              </div>
             </div>
             <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta">Adopt a Frame</Link>
           </div>
@@ -99,20 +114,7 @@ export default function Layout() {
                 <li><a href={`mailto:${CMS_CONFIG.contact_email}`}>Contact Support</a></li>
               </ul>
             </div>
-            <div className="footer-col">
-              <h4>Initiate</h4>
-              <div className="footer-btn-group">
-                <a href={`tel:${CMS_CONFIG.hotline}`} className="footer-btn">
-                  <span style={{ color: 'var(--blue-light)' }}>📞</span> {CMS_CONFIG.hotline}
-                </a>
-                <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="footer-btn">
-                  <span style={{ color: '#25D366' }}>💬</span> WhatsApp Hotline
-                </a>
-                <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="footer-btn">
-                  <span style={{ color: '#0088cc' }}>✈️</span> Telegram Feed
-                </a>
-              </div>
-            </div>
+
           </div>
           <div className="footer-bottom">
             <span>© 2026 Hinnavaru Blue Initiative · NGO Reg. No. {CMS_CONFIG.ngo_registration}</span>

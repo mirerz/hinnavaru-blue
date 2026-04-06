@@ -1862,6 +1862,48 @@ option {
   }
 }
 
+/* ===== NAV FAB ===== */
+.nav-fab-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.nav-fab-main {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue-primary), var(--teal));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+}
+.nav-fab-container:hover .nav-fab-main {
+  transform: rotate(15deg) scale(1.1);
+}
+.nav-fab-menu {
+  position: absolute;
+  top: 100%;
+  right: -5px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: var(--transition);
+}
+.nav-fab-container:hover .nav-fab-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 /* ===== GUARDIAN LIVE FEED (STORIES & REELS) ===== */
 .story-overlay {
   position: absolute;
