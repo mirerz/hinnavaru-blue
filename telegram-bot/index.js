@@ -43,10 +43,12 @@ app.post('/webhook', async (req, res) => {
         const currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
         const sha = fileData.sha;
 
-        // Verify admin
-        const adminRegex = /role:\s*'Lead Diver'.*?telegramId:\s*'([^']+)'/;
-        const adminMatch = currentContent.match(adminRegex);
-        if (!adminMatch || adminMatch[1] !== adminChatId) {
+        // Verify admin (allow both Lead Diver and Initiator)
+        const adminRegex = /role:\s*'(?:Lead Diver|Initiator)'.*?telegramId:\s*'([^']+)'/g;
+        const adminMatches = [...currentContent.matchAll(adminRegex)];
+        const adminChatIds = adminMatches.map(m => m[1]).filter(id => id && id !== 'ADMIN_CHAT_ID' && id !== '');
+        
+        if (!adminChatIds.includes(adminChatId)) {
           return await sendTelegramMessage(adminChatId, '⛔ *Permission Denied*');
         }
 
@@ -91,20 +93,20 @@ app.post('/webhook', async (req, res) => {
     const currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
     const sha = fileData.sha;
 
-    const adminRegex = /role:\s*'Lead Diver'.*?telegramId:\s*'([^']+)'/;
-    const adminMatch = currentContent.match(adminRegex);
-    const adminChatId = adminMatch ? adminMatch[1] : null;
+    const adminRegex = /role:\s*'(?:Lead Diver|Initiator)'.*?telegramId:\s*'([^']+)'/g;
+    const adminMatches = [...currentContent.matchAll(adminRegex)];
+    const adminChatIds = adminMatches.map(m => m[1]).filter(id => id && id !== 'ADMIN_CHAT_ID' && id !== '');
 
     const guardianMatchRegex = new RegExp(`name:\\s*'([^']+)',\\s*role:\\s*'([^']+)',\\s*avatar:\\s*'([^']+)',\\s*telegramId:\\s*'${chatId}'`);
     const guardianMatch = currentContent.match(guardianMatchRegex);
 
     if (text === '/start') {
       if (guardianMatch) {
-         return await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Gateway*\nWelcome back, ${guardianMatch[1]}. You are authorized for live updates.`);
+         return await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Gateway*\nWelcome back, \`${guardianMatch[1]}\`. You are authorized for operations.`);
       } else {
         await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Bot Online*\nHey ${senderFirstName}, your Chat ID is: \`${chatId}\`\n\nThe Hinnavaru Blue Initiator has been notified to approve your device.`);
         
-        if (adminChatId && adminChatId !== 'ADMIN_CHAT_ID') {
+        if (adminChatIds.length > 0) {
           // Find unassigned guardians to create clever buttons
           const unassignedRegex = /name:\s*'([^']+)',[^}]+telegramId:\s*''/g;
           let match;
@@ -118,12 +120,15 @@ app.post('/webhook', async (req, res) => {
           if (buttons.length === 0) buttons.push([{ text: `No unassigned spots left`, callback_data: `ignore` }]);
 
           const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-          await axios.post(url, { 
-            chat_id: adminChatId, 
-            text: `⚠️ *Access Request*\n${senderFirstName} (Chat ID: \`${chatId}\`) is requesting clearance.\nTap a button below to bind them to a profile:`, 
-            parse_mode: 'Markdown',
-            reply_markup: { inline_keyboard: buttons }
-          });
+          const alertPromises = adminChatIds.map(adminId => 
+             axios.post(url, { 
+              chat_id: adminId, 
+              text: `⚠️ *Access Request*\n${senderFirstName} (Chat ID: \`${chatId}\`) is requesting clearance.\nTap a button below to bind them to a profile:`, 
+              parse_mode: 'Markdown',
+              reply_markup: { inline_keyboard: buttons }
+            })
+          );
+          await Promise.all(alertPromises);
         }
         return;
       }
