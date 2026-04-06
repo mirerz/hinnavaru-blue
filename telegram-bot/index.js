@@ -25,44 +25,105 @@ async function sendTelegramMessage(chatId, text) {
 }
 
 app.post('/webhook', async (req, res) => {
-  // Acknowledge receipt to Telegram immediately
   res.sendStatus(200);
 
+  // 1. Handle Button Clicks (Callback Queries)
+  if (req.body.callback_query) {
+    const callback = req.body.callback_query;
+    const adminChatId = callback.from.id.toString();
+    const data = callback.data; // e.g., "approve:12345:Zoya Ahmed"
+
+    if (data.startsWith('approve:')) {
+      const parts = data.split(':');
+      const targetChatId = parts[1];
+      const targetName = parts[2];
+
+      try {
+        const { data: fileData } = await octokit.repos.getContent({ owner: REPO_OWNER, repo: REPO_NAME, path: CMS_PATH });
+        const currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
+        const sha = fileData.sha;
+
+        // Verify admin
+        const adminRegex = /role:\s*'Lead Diver'.*?telegramId:\s*'([^']+)'/;
+        const adminMatch = currentContent.match(adminRegex);
+        if (!adminMatch || adminMatch[1] !== adminChatId) {
+          return await sendTelegramMessage(adminChatId, '⛔ *Permission Denied*');
+        }
+
+        await sendTelegramMessage(adminChatId, `⏳ *Approving ${targetName}...*`);
+
+        const targetRegex = new RegExp(`(name:\\s*'${targetName}'.*?telegramId:\\s*')([^']*)(')`);
+        if (!targetRegex.test(currentContent)) {
+           return await sendTelegramMessage(adminChatId, `❌ *Error: Guardian Not Found*`);
+        }
+
+        const updatedContent = currentContent.replace(targetRegex, `$1${targetChatId}$3`);
+
+        await octokit.repos.createOrUpdateFileContents({
+          owner: REPO_OWNER, repo: REPO_NAME, path: CMS_PATH,
+          message: `bot: admin approved telegram access for ${targetName}`,
+          content: Buffer.from(updatedContent).toString('base64'),
+          sha: sha, branch: 'main'
+        });
+
+        await sendTelegramMessage(adminChatId, `✅ *Approval Completed!*\n\n**${targetName}** is now linked to Chat ID \`${targetChatId}\`.\nI will notify them immediately.`);
+        await sendTelegramMessage(targetChatId, `🎉 *Access Granted!*\nThe Hinnavaru Blue Initiator has approved your device.\nType /ticker <message> to post an update.`);
+
+        // Acknowledge the callback alert (removes loading state on the button)
+        await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, { callback_query_id: callback.id });
+      } catch (e) {
+        await sendTelegramMessage(adminChatId, `❌ *Error processing approval:* ${e.message}`);
+      }
+    }
+    return;
+  }
+
+  // 2. Handle standard Messages
   const message = req.body.message;
   if (!message || !message.text) return;
 
   const chatId = message.chat.id.toString();
   const text = message.text.trim();
+  const senderFirstName = message.from.first_name || 'Guardian';
 
   try {
-    // 1. Fetch current file to know the Admins & Guardians
-    const { data: fileData } = await octokit.repos.getContent({
-      owner: REPO_OWNER,
-      repo: REPO_NAME,
-      path: CMS_PATH,
-    });
-
+    const { data: fileData } = await octokit.repos.getContent({ owner: REPO_OWNER, repo: REPO_NAME, path: CMS_PATH });
     const currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
     const sha = fileData.sha;
 
-    // Find the Admin (Lead Diver)
     const adminRegex = /role:\s*'Lead Diver'.*?telegramId:\s*'([^']+)'/;
     const adminMatch = currentContent.match(adminRegex);
     const adminChatId = adminMatch ? adminMatch[1] : null;
 
-    // 2. Identify Guardian using Regex
     const guardianMatchRegex = new RegExp(`name:\\s*'([^']+)',\\s*role:\\s*'([^']+)',\\s*avatar:\\s*'([^']+)',\\s*telegramId:\\s*'${chatId}'`);
     const guardianMatch = currentContent.match(guardianMatchRegex);
 
-    // Handle identification command
     if (text === '/start') {
       if (guardianMatch) {
-        return await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Gateway*\nWelcome back, Guardian ${guardianMatch[1]}. You are fully authorized to broadcast live updates.`);
+         return await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Gateway*\nWelcome back, ${guardianMatch[1]}. You are authorized for live updates.`);
       } else {
-        await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Bot Online*\nYour Chat ID is: \`${chatId}\`\n\nThe System Administrator has been automatically notified to approve your device.`);
+        await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Bot Online*\nHey ${senderFirstName}, your Chat ID is: \`${chatId}\`\n\nThe Hinnavaru Blue Initiator has been notified to approve your device.`);
+        
         if (adminChatId && adminChatId !== 'ADMIN_CHAT_ID') {
-          const senderName = message.from.first_name || 'Unknown User';
-          await sendTelegramMessage(adminChatId, `⚠️ *Access Request*\n${senderName} is requesting Guardian clearance.\nTo approve them, copy and paste this command:\n\n\`/approve ${chatId} Exact Name in CMS\``);
+          // Find unassigned guardians to create clever buttons
+          const unassignedRegex = /name:\s*'([^']+)',[^}]+telegramId:\s*''/g;
+          let match;
+          const buttons = [];
+          
+          while ((match = unassignedRegex.exec(currentContent)) !== null) {
+            const name = match[1];
+            buttons.push([{ text: `✅ Approve as ${name}`, callback_data: `approve:${chatId}:${name}` }]);
+          }
+
+          if (buttons.length === 0) buttons.push([{ text: `No unassigned spots left`, callback_data: `ignore` }]);
+
+          const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+          await axios.post(url, { 
+            chat_id: adminChatId, 
+            text: `⚠️ *Access Request*\n${senderFirstName} (Chat ID: \`${chatId}\`) is requesting clearance.\nTap a button below to bind them to a profile:`, 
+            parse_mode: 'Markdown',
+            reply_markup: { inline_keyboard: buttons }
+          });
         }
         return;
       }
@@ -74,79 +135,33 @@ app.post('/webhook', async (req, res) => {
 
     const [_, gName, gRole, gAvatar] = guardianMatch;
 
-    // Handle Commands
     if (text.startsWith('/ticker ')) {
       const updateText = text.replace('/ticker ', '').trim();
       if (updateText.length < 5) return await sendTelegramMessage(chatId, '❌ Update text is too short. Please provide a full sentence.');
 
       await sendTelegramMessage(chatId, `⏳ *Initiating Website Update...*\nAuthenticating as ${gName} (${gRole})...`);
       
-      // Inject new ticker update into NOTICE_BOARD array
       const injectionTarget = 'export const NOTICE_BOARD = [';
       const newEntry = `\n  { icon: '${gAvatar}', type: 'Guardian Log', text: '${updateText.replace(/'/g, "\\'")}' },`;
-      
       const updatedContent = currentContent.replace(injectionTarget, injectionTarget + newEntry);
 
-      if (updatedContent === currentContent) {
-        throw new Error('Could not find NOTICE_BOARD injection target in cms.js');
-      }
+      if (updatedContent === currentContent) throw new Error('Target string not found inside cms.js');
 
-      // 3. Commit new file
       await octokit.repos.createOrUpdateFileContents({
-        owner: REPO_OWNER,
-        repo: REPO_NAME,
-        path: CMS_PATH,
+        owner: REPO_OWNER, repo: REPO_NAME, path: CMS_PATH,
         message: `bot: guardian ${gName} live update from Telegram`,
         content: Buffer.from(updatedContent).toString('base64'),
-        sha: sha,
-        branch: 'main'
+        sha: sha, branch: 'main'
       });
 
-      await sendTelegramMessage(chatId, `✅ *Success! Update Committed.*\n\n*${gName} (${gRole})*\n"${updateText}"\n\nGitHub Actions is now rebuilding the secure server. Your update will be globally visible on \`hinnavarublueinitiative.org\` in approx 60 seconds.`);
-
-    } else if (text.startsWith('/approve ')) {
-      // Syntax: /approve <Chat_ID> <Exact Name in CMS>
-      // e.g. /approve 987654321 Zoya Ahmed
-      if (gRole !== 'Lead Diver') {
-        return await sendTelegramMessage(chatId, '⛔ *Permission Denied*\nOnly the Lead Diver (Admin) can approve new Guardians.');
-      }
-
-      const args = text.replace('/approve ', '').split(' ');
-      if (args.length < 2) return await sendTelegramMessage(chatId, '❌ *Invalid Syntax*\nUse: `/approve <ChatID> <Exact Name>`');
-
-      const targetChatId = args[0];
-      const targetName = args.slice(1).join(' ');
-
-      await sendTelegramMessage(chatId, `⏳ *Processing Approval...*\nLinking Chat ID ${targetChatId} to Guardian ${targetName}...`);
-
-      const targetRegex = new RegExp(`(name:\\s*'${targetName}'.*?telegramId:\\s*')([^']*)(')`);
-      if (!targetRegex.test(currentContent)) {
-         return await sendTelegramMessage(chatId, `❌ *Error: Guardian Not Found*\nCould not find a Guardian named "${targetName}" in the registry, or they don't have a telegramId field.`);
-      }
-
-      const updatedContent = currentContent.replace(targetRegex, `$1${targetChatId}$3`);
-
-      // Commit new file
-      await octokit.repos.createOrUpdateFileContents({
-        owner: REPO_OWNER,
-        repo: REPO_NAME,
-        path: CMS_PATH,
-        message: `bot: admin approved telegram access for ${targetName}`,
-        content: Buffer.from(updatedContent).toString('base64'),
-        sha: sha,
-        branch: 'main'
-      });
-
-      await sendTelegramMessage(chatId, `✅ *Approval Completed!*\n\nGuardian **${targetName}** has been securely linked to Chat ID \`${targetChatId}\`.\nThey can now use the \`/ticker\` command.`);
-
+      await sendTelegramMessage(chatId, `✅ *Success! Update Committed.*\n\n*${gName} (${gRole})*\n"${updateText}"\n\nIt revolves live on \`hinnavarublueinitiative.org\` in 60s.`);
     } else {
-      // Help Message
-      await sendTelegramMessage(chatId, `🛠️ *Guardian Dashboard: ${gName}*\n\nAvailable Directives:\n\n\`/ticker <message>\` - Broadcasts a live feed update instantly to the globally visible homepage ticker.\n${gRole === 'Lead Diver' ? '\n`/approve <ChatID> <Exact Name>` - Link a Guardian to their Chat ID.' : ''}\n\n*Note:* More commands coming online soon.`);
+      await sendTelegramMessage(chatId, `🛠️ *Guardian Dashboard: ${gName}*\n\n\`/ticker <message>\` - Broadcast live feed update instantly.`);
     }
 
   } catch (error) {
     console.error(error);
-    await sendTelegramMessage(chatId, `❌ *Critical System Failure*\nFailed to commit update. Error: ${error.message}`);
+    await sendTelegramMessage(chatId, `❌ *Critical System Failure*\nFailed to connect. Error: ${error.message}`);
   }
 });
 
