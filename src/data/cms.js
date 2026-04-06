@@ -254,9 +254,9 @@ export const FUND_ALLOCATION = [
 
 // 6. APPROVED LAGOON GUARDIANS (Certified Volunteers)
 export const APPROVED_GUARDIANS = [
-  { id: 'GD-01', name: 'Nabeel Hussain', role: 'Lead Diver', avatar: '🤿' },
-  { id: 'GD-02', name: 'Zoya Ahmed', role: 'Marine Tech', avatar: '👩‍🔬' },
-  { id: 'GD-03', name: 'Ibrahim Ali', role: 'Youth Ambassador', avatar: '🌊' },
+  { id: 'GD-01', name: 'Nabeel Hussain', role: 'Lead Diver', avatar: '🤿', telegramId: 'ADMIN_CHAT_ID' },
+  { id: 'GD-02', name: 'Zoya Ahmed', role: 'Marine Tech', avatar: '👩‍🔬', telegramId: '' },
+  { id: 'GD-03', name: 'Ibrahim Ali', role: 'Youth Ambassador', avatar: '🌊', telegramId: '' },
 ]
 
 // 7. LAGOON STORIES (Time-Limited Reels & Photos)
