@@ -96,7 +96,6 @@ export default function Layout() {
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/about">Our Roots</Link></li>
                 <li><Link to="/projects">Projects</Link></li>
-                <li><Link to="/live-lagoon">Live Lagoon</Link></li>
               </ul>
             </div>
             <div className="footer-col">
@@ -112,6 +111,7 @@ export default function Layout() {
               <ul>
                 <li><Link to="/sponsor">Adopt or Partner with Us</Link></li>
                 <li><a href={`mailto:${CMS_CONFIG.contact_email}`}>Contact Support</a></li>
+                <li><Link to="/live-lagoon">Live Lagoon</Link></li>
               </ul>
             </div>
 
