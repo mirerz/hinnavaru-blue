@@ -152,14 +152,6 @@ export default function Registry() {
         </div>
       </section>
 
-      <section className="section" style={{ position: 'relative', background: 'var(--ocean-mid)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-        <div className="container" style={{ maxWidth: '900px', textAlign: 'center' }}>
-           <h2 className="section-title">Radical <span className="gradient-text">Openness</span></h2>
-           <p className="section-sub">
-             Accountability is the heart of stewardship. From our financial audits to real-time survival sensors, nothing is hidden. We operate an open-books policy for all stakeholders.
-           </p>
-        </div>
-      </section>
 
       {/* TRANSPARENCY HUB */}
       <section className="section transparency-section" id="transparency">

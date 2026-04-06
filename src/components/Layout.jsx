@@ -121,26 +121,7 @@ export default function Layout() {
         </div>
       </footer>
 
-      {/* FLOATING ACTION BUTTON (FAB) */}
-      <div className="fab-container">
-        <div className="fab-menu">
-          <a href={`tel:${CMS_CONFIG.hotline}`} className="fab-item" style={{ background: 'var(--ocean-surface)' }}>
-            <span className="fab-label">Call Hotline</span>
-            📞
-          </a>
-          <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="fab-item whatsapp-bg">
-            <span className="fab-label">WhatsApp Support</span>
-            💬
-          </a>
-          <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="fab-item telegram-bg">
-            <span className="fab-label">Telegram Updates</span>
-            ✈️
-          </a>
-        </div>
-        <div className="fab-main">
-          <span>⚡</span>
-        </div>
-      </div>
+
     </>
   )
 }
