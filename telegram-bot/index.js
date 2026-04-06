@@ -90,9 +90,44 @@ app.post('/webhook', async (req, res) => {
 
       await sendTelegramMessage(chatId, `✅ *Success! Update Committed.*\n\n*${gName} (${gRole})*\n"${updateText}"\n\nGitHub Actions is now rebuilding the secure server. Your update will be globally visible on \`hinnavarublueinitiative.org\` in approx 60 seconds.`);
 
+    } else if (text.startsWith('/approve ')) {
+      // Syntax: /approve <Chat_ID> <Exact Name in CMS>
+      // e.g. /approve 987654321 Zoya Ahmed
+      if (gRole !== 'Lead Diver') {
+        return await sendTelegramMessage(chatId, '⛔ *Permission Denied*\nOnly the Lead Diver (Admin) can approve new Guardians.');
+      }
+
+      const args = text.replace('/approve ', '').split(' ');
+      if (args.length < 2) return await sendTelegramMessage(chatId, '❌ *Invalid Syntax*\nUse: `/approve <ChatID> <Exact Name>`');
+
+      const targetChatId = args[0];
+      const targetName = args.slice(1).join(' ');
+
+      await sendTelegramMessage(chatId, `⏳ *Processing Approval...*\nLinking Chat ID ${targetChatId} to Guardian ${targetName}...`);
+
+      const targetRegex = new RegExp(`(name:\\s*'${targetName}'.*?telegramId:\\s*')([^']*)(')`);
+      if (!targetRegex.test(currentContent)) {
+         return await sendTelegramMessage(chatId, `❌ *Error: Guardian Not Found*\nCould not find a Guardian named "${targetName}" in the registry, or they don't have a telegramId field.`);
+      }
+
+      const updatedContent = currentContent.replace(targetRegex, `$1${targetChatId}$3`);
+
+      // Commit new file
+      await octokit.repos.createOrUpdateFileContents({
+        owner: REPO_OWNER,
+        repo: REPO_NAME,
+        path: CMS_PATH,
+        message: `bot: admin approved telegram access for ${targetName}`,
+        content: Buffer.from(updatedContent).toString('base64'),
+        sha: sha,
+        branch: 'main'
+      });
+
+      await sendTelegramMessage(chatId, `✅ *Approval Completed!*\n\nGuardian **${targetName}** has been securely linked to Chat ID \`${targetChatId}\`.\nThey can now use the \`/ticker\` command.`);
+
     } else {
       // Help Message
-      await sendTelegramMessage(chatId, `🛠️ *Guardian Dashboard: ${gName}*\n\nAvailable Directives:\n\n\`/ticker <message>\` - Broadcasts a live feed update instantly to the globally visible homepage ticker.\n\n*Note:* More commands coming online soon.`);
+      await sendTelegramMessage(chatId, `🛠️ *Guardian Dashboard: ${gName}*\n\nAvailable Directives:\n\n\`/ticker <message>\` - Broadcasts a live feed update instantly to the globally visible homepage ticker.\n${gRole === 'Lead Diver' ? '\n`/approve <ChatID> <Exact Name>` - Link a Guardian to their Chat ID.' : ''}\n\n*Note:* More commands coming online soon.`);
     }
 
   } catch (error) {
