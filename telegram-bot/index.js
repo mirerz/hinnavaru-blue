@@ -34,13 +34,8 @@ app.post('/webhook', async (req, res) => {
   const chatId = message.chat.id.toString();
   const text = message.text.trim();
 
-  // Handle identification command
-  if (text === '/start') {
-    return await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Bot Online*\nYour Chat ID is: \`${chatId}\`\n\nIf you are a Guardian, provide this ID to the system admin to be added to the registry in \`cms.js\`.`);
-  }
-
   try {
-    // 1. Fetch current file
+    // 1. Fetch current file to know the Admins & Guardians
     const { data: fileData } = await octokit.repos.getContent({
       owner: REPO_OWNER,
       repo: REPO_NAME,
@@ -50,12 +45,31 @@ app.post('/webhook', async (req, res) => {
     const currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
     const sha = fileData.sha;
 
-    // 2. Identify Guardian using Regex to extract APPROVED_GUARDIANS block
+    // Find the Admin (Lead Diver)
+    const adminRegex = /role:\s*'Lead Diver'.*?telegramId:\s*'([^']+)'/;
+    const adminMatch = currentContent.match(adminRegex);
+    const adminChatId = adminMatch ? adminMatch[1] : null;
+
+    // 2. Identify Guardian using Regex
     const guardianMatchRegex = new RegExp(`name:\\s*'([^']+)',\\s*role:\\s*'([^']+)',\\s*avatar:\\s*'([^']+)',\\s*telegramId:\\s*'${chatId}'`);
     const guardianMatch = currentContent.match(guardianMatchRegex);
 
+    // Handle identification command
+    if (text === '/start') {
+      if (guardianMatch) {
+        return await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Gateway*\nWelcome back, Guardian ${guardianMatch[1]}. You are fully authorized to broadcast live updates.`);
+      } else {
+        await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Bot Online*\nYour Chat ID is: \`${chatId}\`\n\nThe System Administrator has been automatically notified to approve your device.`);
+        if (adminChatId && adminChatId !== 'ADMIN_CHAT_ID') {
+          const senderName = message.from.first_name || 'Unknown User';
+          await sendTelegramMessage(adminChatId, `⚠️ *Access Request*\n${senderName} is requesting Guardian clearance.\nTo approve them, copy and paste this command:\n\n\`/approve ${chatId} Exact Name in CMS\``);
+        }
+        return;
+      }
+    }
+
     if (!guardianMatch) {
-      return await sendTelegramMessage(chatId, '⛔ *Unauthorized*\nYou are not a registered Guardian authorized to update the live website. Ensure your Chat ID is in `cms.js`.');
+      return await sendTelegramMessage(chatId, '⛔ *Unauthorized*\nYou are not a registered Guardian authorized to update the live website.');
     }
 
     const [_, gName, gRole, gAvatar] = guardianMatch;
