@@ -31,7 +31,7 @@ export default function About() {
               </span>
             ))}
           </h1>
-          <p className="hero-sub" style={{ margin: '24px auto' }}>{narrative.intro.replace(/<[^>]*>/g, '')}</p>
+          <p className="hero-sub" style={{ margin: '24px auto' }} dangerouslySetInnerHTML={{ __html: narrative.intro }} />
         </div>
       </section>
 
@@ -57,9 +57,9 @@ export default function About() {
           </div>
 
           {/* Catalyst Block */}
-          <div className="glass-card" style={{ padding: '64px 48px', borderRight: '6px solid var(--coral)', textAlign: 'right', display: 'flex', justifyContent: 'flex-end' }}>
+          <div className="glass-card animate-reveal" style={{ padding: '64px 48px', borderRight: '6px solid var(--coral)', textAlign: 'right', display: 'flex', justifyContent: 'flex-end' }}>
             <div style={{ maxWidth: '720px' }}>
-              <div className="badge badge-coral" style={{ marginBottom: '16px' }}>🔥 The Spark</div>
+              <div className="badge badge-coral animate-float" style={{ marginBottom: '16px' }}>🔥 The Spark</div>
               <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '24px' }}>{narrative.catalyst.title}</h2>
               <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px' }}>{narrative.catalyst.p1}</p>
               <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px' }}>{narrative.catalyst.p2}</p>

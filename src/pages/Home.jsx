@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { NOTICE_BOARD, CMS_CONFIG, LAGOON_STORIES, APPROVED_GUARDIANS, LAGOON_ASSETS, HOME_CONTENT, IMPACT_PILLARS } from '../data/cms'
+import { LATEST_BULLETINS, CMS_CONFIG, LAGOON_STORIES, APPROVED_GUARDIANS, LAGOON_ASSETS, HOME_CONTENT, IMPACT_PILLARS } from '../data/cms'
 
 export default function Home() {
   const [pulseIdx, setPulseIdx] = useState(0)
@@ -10,7 +10,7 @@ export default function Home() {
   // Auto-cycle the LiveUp ticker
   useEffect(() => {
     const timer = setInterval(() => {
-      setUpdateIdx(prev => (prev + 1) % NOTICE_BOARD.length)
+      setUpdateIdx(prev => (prev + 1) % LATEST_BULLETINS.length)
     }, 5000)
     return () => clearInterval(timer)
   }, [])
@@ -34,7 +34,7 @@ export default function Home() {
               <span style={{ fontSize: '0.9rem', fontWeight: 800 }}>HINNAVARU BLUE INITIATIVE</span>
               <span style={{ fontSize: '0.75rem', fontWeight: 600, opacity: 0.8 }}>{CMS_CONFIG.atoll} · ({CMS_CONFIG.location_code}) · Maldives ({CMS_CONFIG.country_code})</span>
             </div>
-            <h1 style={{ textAlign: 'center' }}>
+            <h1 className="animate-reveal" style={{ textAlign: 'center' }}>
               {HOME_CONTENT.hero.title} <br />
               <span className="gradient-text">{HOME_CONTENT.hero.subtitle}</span>
             </h1>
@@ -53,7 +53,7 @@ export default function Home() {
               <span className="live-dot" />
               <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--teal)' }}>LIVE UPDATE:</span>
               <span key={updateIdx} className="fade-in" style={{ fontSize: '0.8rem', opacity: 0.9 }}>
-                {NOTICE_BOARD[updateIdx % NOTICE_BOARD.length].text}
+                {LATEST_BULLETINS[updateIdx % LATEST_BULLETINS.length].text}
               </span>
             </div>
 
@@ -84,7 +84,7 @@ export default function Home() {
       </section>
 
       {/* 2. ADOPT OVERLAY */}
-      <div className="container" style={{ position: 'relative', marginTop: '-120px', zIndex: 10, display: 'flex', justifyContent: 'center', marginBottom: '80px' }}>
+      <div className="container animate-reveal delay-200" style={{ position: 'relative', marginTop: '-120px', zIndex: 10, display: 'flex', justifyContent: 'center', marginBottom: '80px' }}>
         <div className="glass-card" style={{ 
           padding: '40px 32px',
           display: 'flex',
@@ -98,7 +98,7 @@ export default function Home() {
           <p style={{ margin: '0 0 24px 0', color: 'rgba(255,255,255,0.85)', fontSize: '1.05rem', lineHeight: '1.6' }}>
             {HOME_CONTENT.adopt_overlay.text}
           </p>
-          <Link to="/sponsor" className="btn btn-coral" style={{ padding: '14px 32px', fontSize: '1.1rem' }}>🪸 Adopt a Coral Frame</Link>
+          <Link to="/sponsor" className="btn btn-coral btn-shimmer" style={{ padding: '14px 32px', fontSize: '1.1rem' }}>🪸 Adopt a Coral Frame</Link>
         </div>
       </div>
 
@@ -196,7 +196,7 @@ export default function Home() {
                 <p style={{ color: 'var(--teal)', margin: '4px 0 0 0', fontSize: '0.9rem' }}>Official Transmissions</p>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '0.95rem', flexGrow: 1 }}>
-                {NOTICE_BOARD.slice(updateIdx * 3, (updateIdx + 1) * 3).map((n, i) => (
+                {LATEST_BULLETINS.slice(updateIdx * 3, (updateIdx + 1) * 3).map((n, i) => (
                   <div style={{ display: 'flex', gap: '12px' }} key={i}>
                     <span>{n.icon}</span>
                     <div>
@@ -209,7 +209,7 @@ export default function Home() {
               <div style={{ marginTop: 'auto', paddingTop: '24px', display: 'flex', alignItems: 'center', gap: '12px' }}>
                  <div style={{ flex: 1, display: 'flex', gap: '8px' }}>
                     <button onClick={() => setUpdateIdx(prev => Math.max(0, prev - 1))} className="btn-story-nav" style={{ padding: '6px 12px' }}>←</button>
-                    <button onClick={() => setUpdateIdx(prev => Math.min(Math.ceil(NOTICE_BOARD.length / 3) - 1, prev + 1))} className="btn-story-nav" style={{ padding: '6px 12px' }}>→</button>
+                    <button onClick={() => setUpdateIdx(prev => Math.min(Math.ceil(LATEST_BULLETINS.length / 3) - 1, prev + 1))} className="btn-story-nav" style={{ padding: '6px 12px' }}>→</button>
                  </div>
                  <Link to="/about" className="btn btn-outline btn-sm" style={{ flex: 2 }}>Our Mission</Link>
               </div>

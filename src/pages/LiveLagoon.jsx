@@ -51,18 +51,31 @@ export default function LiveLagoon() {
   useEffect(() => {
     if (leafletRef.current) return
 
+    const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    })
+
+    const street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 18,
+      className: 'map-tiles'
+    })
+
     const map = L.map(mapRef.current, {
       center: LAGOON_CENTER,
       zoom: 14,
       zoomControl: true,
       attributionControl: true,
+      layers: [satellite] // Default to satellite for premium look
     })
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-      maxZoom: 18,
-      className: 'map-tiles'
-    }).addTo(map)
+    const baseMaps = {
+      "Satellite": satellite,
+      "Street": street
+    }
+
+    L.control.layers(baseMaps).addTo(map)
+
     // Add a blue overlay polygon for the lagoon area
     const lagoonBounds = [
       [5.4885, 73.4045], [5.4885, 73.4075],

@@ -25,6 +25,17 @@ export const CMS_CONFIG = {
   socials: {
     whatsapp_link: "https://wa.me/9607714340",
     telegram_link: "tg://resolve?phone=9607714340"
+  },
+  media_automation: {
+    // 📂 CHANGE MEDIA FOLDER: Copy the Folder ID from Google Drive URL and paste it here
+    drive_id: "1RButp5B8quSmH1NEA6E9N8YD_uIkxtE_",
+    sync_folder: "public/media-hub",
+    optimize_to: "webp",
+    naming_rules: {
+      frame_update: "{FRAMEID}_{DATE}.jpg",
+      slideshow: "PROJ_SLIDE_{N}.jpg",
+      hero_pulse: "HERO_PULSE_LATEST.mp4"
+    }
   }
 }
 
@@ -132,18 +143,18 @@ export const CORAL_REGISTRY = [
   { id: 'HBF-088', species: 'Platygyra daedalea', location: 'West Lagoon, Zone D', depth: '5m', adopter: 'Aishath Leen', date: '2026-04-08', status: 'stable', survival: 79, lat: 5.4881, lng: 73.4045 },
   { id: 'HBF-089', species: 'Galaxea fascicularis', location: 'North Lagoon, Zone A', depth: '4m', adopter: 'Zaidan Nasir', date: '2026-04-15', status: 'healthy', survival: 91, lat: 5.4918, lng: 73.4062 },
   { id: 'HBF-090', species: 'Acropora florida', location: 'East Reef, Zone B', depth: '3m', adopter: 'Marine Life Foundation', date: '2026-04-22', status: 'stable', survival: 74, lat: 5.4890, lng: 73.4072 },
-  { id: 'HBF-091', species: 'Acropora humilis', location: 'South Channel, Zone C', depth: '4m', adopter: 'Ibrahim Ali', date: '2026-05-02', status: 'healthy', survival: 93, lat: 5.4901, lng: 73.4085 },
-  { id: 'HBF-092', species: 'Pocillopora verrucosa', location: 'West Lagoon, Zone D', depth: '5m', adopter: 'Fathimath Shadia', date: '2026-05-10', status: 'stable', survival: 86, lat: 5.4888, lng: 73.4050 },
-  { id: 'HBF-093', species: 'Porites lutea', location: 'North Lagoon, Zone A', depth: '6m', adopter: 'Mariyam Didi', date: '2026-05-18', status: 'healthy', survival: 95, lat: 5.4920, lng: 73.4066 },
-  { id: 'HBF-094', species: 'Montipora digitata', location: 'East Reef, Zone B', depth: '3m', adopter: 'Ahmed Fam', date: '2026-05-25', status: 'stable', survival: 81, lat: 5.4895, lng: 73.4055 },
-  { id: 'HBF-095', species: 'Acropora hyacinthus', location: 'South Channel, Zone C', depth: '4m', adopter: 'Musthafa Moosa', date: '2026-06-02', status: 'healthy', survival: 89, lat: 5.4907, lng: 73.4075 },
-  { id: 'HBF-096', species: 'Acropora cervicornis', location: 'West Lagoon, Zone D', depth: '5m', adopter: 'Khadeeja Moosa', date: '2026-06-10', status: 'stable', survival: 78, lat: 5.4884, lng: 73.4052 },
-  { id: 'HBF-097', species: 'Pocillopora eydouxi', location: 'North Lagoon, Zone A', depth: '6m', adopter: 'Ali Naseer', date: '2026-06-18', status: 'healthy', survival: 94, lat: 5.4914, lng: 73.4061 },
-  { id: 'HBF-098', species: 'Porites solida', location: 'East Reef, Zone B', depth: '4m', adopter: 'Ibrahim Siraaj', date: '2026-07-02', status: 'stable', survival: 88, lat: 5.4897, lng: 73.4072 },
-  { id: 'HBF-099', species: 'Acropora formosa', location: 'South Channel, Zone C', depth: '3m', adopter: 'Aisath Leen', date: '2026-07-10', status: 'healthy', survival: 91, lat: 5.4909, lng: 73.4080 },
-  { id: 'HBF-100', species: 'Stylophora mordax', location: 'West Lagoon, Zone D', depth: '4m', adopter: 'Hassan Mohamed', date: '2026-07-18', status: 'stable', survival: 84, lat: 5.4881, lng: 73.4048 },
-  { id: 'HBF-101', species: 'Acropora cytherea', location: 'North Lagoon, Zone A', depth: '5m', adopter: 'Mariyam Rizna', date: '2026-08-01', status: 'healthy', survival: 92, lat: 5.4922, lng: 73.4068 },
-  { id: 'HBF-102', species: 'Pocillopora woodjonesi', location: 'East Reef, Zone B', depth: '4m', adopter: 'Ali Riza', date: '2026-08-08', status: 'stable', survival: 83, lat: 5.4892, lng: 73.4078 },
+  { id: 'HBF-091', species: 'Acropora humilis', location: 'South Channel, Zone C', depth: '4m', adopter: 'Ibrahim Ali', date: '2026-03-25', status: 'healthy', survival: 93, lat: 5.4901, lng: 73.4085 },
+  { id: 'HBF-092', species: 'Pocillopora verrucosa', location: 'West Lagoon, Zone D', depth: '5m', adopter: 'Fathimath Shadia', date: '2026-03-28', status: 'stable', survival: 86, lat: 5.4888, lng: 73.4050 },
+  { id: 'HBF-093', species: 'Porites lutea', location: 'North Lagoon, Zone A', depth: '6m', adopter: 'Mariyam Didi', date: '2026-04-01', status: 'healthy', survival: 95, lat: 5.4920, lng: 73.4066 },
+  { id: 'HBF-094', species: 'Montipora digitata', location: 'East Reef, Zone B', depth: '3m', adopter: 'Ahmed Fam', date: '2026-04-02', status: 'stable', survival: 81, lat: 5.4895, lng: 73.4055 },
+  { id: 'HBF-095', species: 'Acropora hyacinthus', location: 'South Channel, Zone C', depth: '4m', adopter: 'Musthafa Moosa', date: '2026-04-04', status: 'healthy', survival: 89, lat: 5.4907, lng: 73.4075 },
+  { id: 'HBF-096', species: 'Acropora cervicornis', location: 'West Lagoon, Zone D', depth: '5m', adopter: 'Khadeeja Moosa', date: '2026-04-06', status: 'stable', survival: 78, lat: 5.4884, lng: 73.4052 },
+  { id: 'HBF-097', species: 'Pocillopora eydouxi', location: 'North Lagoon, Zone A', depth: '6m', adopter: 'Ali Naseer', date: '2026-03-10', status: 'healthy', survival: 94, lat: 5.4914, lng: 73.4061 },
+  { id: 'HBF-098', species: 'Porites solida', location: 'East Reef, Zone B', depth: '4m', adopter: 'Ibrahim Siraaj', date: '2026-03-15', status: 'stable', survival: 88, lat: 5.4897, lng: 73.4072 },
+  { id: 'HBF-099', species: 'Acropora formosa', location: 'South Channel, Zone C', depth: '3m', adopter: 'Aisath Leen', date: '2026-03-20', status: 'healthy', survival: 91, lat: 5.4909, lng: 73.4080 },
+  { id: 'HBF-100', species: 'Stylophora mordax', location: 'West Lagoon, Zone D', depth: '4m', adopter: 'Hassan Mohamed', date: '2026-03-25', status: 'stable', survival: 84, lat: 5.4881, lng: 73.4048 },
+  { id: 'HBF-101', species: 'Acropora cytherea', location: 'North Lagoon, Zone A', depth: '5m', adopter: 'Mariyam Rizna', date: '2026-04-01', status: 'healthy', survival: 92, lat: 5.4922, lng: 73.4068 },
+  { id: 'HBF-102', species: 'Pocillopora woodjonesi', location: 'East Reef, Zone B', depth: '4m', adopter: 'Ali Riza', date: '2026-04-05', status: 'stable', survival: 83, lat: 5.4892, lng: 73.4078 },
   { id: 'HBF-103', species: 'Porites compressa', location: 'South Channel, Zone C', depth: '6m', adopter: 'Ahmed Shareef', date: '2026-08-15', status: 'healthy', survival: 95, lat: 5.4906, lng: 73.4060 },
   { id: 'HBF-104', species: 'Acropora valida', location: 'West Lagoon, Zone D', depth: '5m', adopter: 'Fathimath Ali', date: '2026-08-22', status: 'stable', survival: 76, lat: 5.4882, lng: 73.4047 },
   { id: 'HBF-105', species: 'Montipora aequituberculata', location: 'North Lagoon, Zone A', depth: '4m', adopter: 'Ibrahim Rameez', date: '2026-09-02', status: 'healthy', survival: 91, lat: 5.4918, lng: 73.4071 },
@@ -235,7 +246,7 @@ export const DOCUMENT_VAULTS = [
 ]
 
 // 4. THE NOTICE BOARD (Live Feed Updates)
-export const NOTICE_BOARD = [
+export const LATEST_BULLETINS = [
   { icon: '🌍', type: 'Global', text: 'UN Ocean Decade target aligned: Hinnavaru blueprint scaling to 14 atolls.' },
   { icon: '📡', type: 'Live Feed', text: 'Global network detects 0.2°C temp anomaly. High-frequency monitoring activated.' },
   { icon: '🌊', type: 'Mission', text: 'Vision 2030: Restoring critical nursery corridors for 5,000+ localized reef species.' },
@@ -291,8 +302,8 @@ export const LAGOON_STORIES = [
 // 8. PROJECT CATEGORIES (For Navbar Dropdown)
 export const PROJECT_CATEGORIES = [
   { id: 'coral', title: 'Coral Restoration', slug: 'restoration' },
-  { id: 'coastal', title: 'Coastal Cleaning', slug: 'cleaning' },
-  { id: 'edu', title: 'Education & Awareness', slug: 'education' },
+  { id: 'sweep', title: 'Sweep Efforts', slug: 'sweep' },
+  { id: 'edu', title: 'Edu Awareness', slug: 'education' },
 ]
 
 // 9. ACTIVE PROJECTS & PROGRAMS
@@ -366,10 +377,10 @@ export const PROJECTS_LIST = [
     actionSecondaryLink: '#registry'
   },
   {
-    category: 'coastal',
+    category: 'sweep',
     emoji: '🧹',
     status: 'active',
-    badge: 'Cleaning',
+    badge: 'Sweep',
     badgeClass: 'badge-teal',
     title: 'Reef Plastic Extraction',
     desc: 'Bi-monthly cleaning of the harbor and Shipyard site to remove derelict fishing gear and household waste.',
@@ -400,62 +411,62 @@ export const PROJECTS_LIST = [
     actionSecondaryLink: "/registry"
   },
   {
-    title: "Shipyard Cleanup Day",
-    category: "cleaning",
-    emoji: "🧹",
-    badge: "Event",
-    badgeClass: "badge-coral",
+    category: 'sweep',
+    emoji: '🧹',
+    status: 'active',
+    badge: 'Sweep',
+    badgeClass: 'badge-coral',
     progress: 75,
-    progressLabel: "Registration Open",
-    funded: "45/60",
-    target: "Volunteers",
-    desc: "Community beach cleanup focused on the Shipyard vicinity and the East Lagoon shoreline.",
-    status: "active",
-    actionPrimary: "Register",
-    actionPrimaryDone: "Registered",
-    actionSecondary: "Guidelines",
-    actionSecondaryLink: "/projects"
+    progressLabel: 'Registration Open',
+    funded: '45/60',
+    target: 'Volunteers',
+    desc: 'Community beach cleanup focused on the Shipyard vicinity and the East Lagoon shoreline.',
+    title: 'Shipyard Cleanup Day',
+    actionPrimary: 'Register',
+    actionPrimaryDone: 'Registered',
+    actionSecondary: 'Guidelines',
+    actionSecondaryLink: '/projects'
   },
   {
-    title: "Marine Biology Workshop",
-    category: "edu",
-    emoji: "🔬",
-    badge: "Education",
-    badgeClass: "badge-teal",
+    category: 'edu',
+    emoji: '🔬',
+    status: 'upcoming',
+    badge: 'Education',
+    badgeClass: 'badge-teal',
     progress: 40,
-    progressLabel: "Curriculum Finalized",
-    funded: "MVR 25,000",
-    target: "MVR 60,000",
-    desc: "A hands-on, community-led program designed for Hinnavaru youth to master the science of reef restoration. Includes local coral ID guides, survey diving (for older students), and nursery maintenance basics using Hinnavaru Blue protocols.",
-    status: "upcoming",
-    actionPrimary: "Notify Me",
-    actionPrimaryDone: "Notified",
-    actionSecondary: "Syllabus Details",
-    actionSecondaryLink: "#archive",
+    progressLabel: 'Curriculum Finalized',
+    funded: 'MVR 25,000',
+    target: 'MVR 60,000',
+    title: 'Marine Biology Workshop',
+    desc: 'A hands-on, community-led program designed for Hinnavaru youth to master the science of reef restoration. Includes local coral ID guides, survey diving (for older students), and nursery maintenance basics using Hinnavaru Blue protocols.',
+    actionPrimary: 'Notify Me',
+    actionPrimaryDone: 'Notified',
+    actionSecondary: 'Syllabus Details',
+    actionSecondaryLink: '#archive',
     syllabus: [
-      "1. Introduction to the Hinnavaru Ecosystem",
-      "2. Coral Biology & Species ID (Lhaviyani Focus)",
-      "3. Restoration Science: The Repurposed Frame Model",
-      "4. Monitoring Tools: From Slates to IoT Buoys",
-      "5. Climate Adaptation: Finding Resilient Colonies"
+      '1. Introduction to the Hinnavaru Ecosystem',
+      '2. Coral Biology & Species ID (Lhaviyani Focus)',
+      '3. Restoration Science: The Repurposed Frame Model',
+      '4. Monitoring Tools: From Slates to IoT Buoys',
+      '5. Climate Adaptation: Finding Resilient Colonies'
     ]
   },
   {
-    title: "Ghost Net Removal",
-    category: "cleaning",
-    emoji: "🕸️",
-    badge: "Recovery",
-    badgeClass: "badge-coral",
+    category: 'sweep',
+    emoji: '🕸️',
+    status: 'active',
+    badge: 'Sweep',
+    badgeClass: 'badge-coral',
     progress: 90,
-    progressLabel: "In Progress",
-    funded: "12 Nets",
-    target: "15 Nets",
-    desc: "Targeted retrieval of discarded fishing nets from the deep slopes of the outer reef.",
-    status: "active",
-    actionPrimary: "Join Dive",
-    actionPrimaryDone: "Joined",
-    actionSecondary: "Incident Map",
-    actionSecondaryLink: "/projects"
+    progressLabel: 'In Progress',
+    funded: '12 Nets',
+    target: '15 Nets',
+    title: 'Ghost Net Removal',
+    desc: 'Targeted retrieval of discarded fishing nets from the deep slopes of the outer reef.',
+    actionPrimary: 'Join Dive',
+    actionPrimaryDone: 'Joined',
+    actionSecondary: 'Incident Map',
+    actionSecondaryLink: '/projects'
   }
 ]
 
@@ -658,7 +669,7 @@ export const SPONSOR_CONTENT = {
 export const REGISTRY_CONTENT = {
   hero: {
     badge: "🪸 Coral Registry",
-    title: "The Blue Registry",
+    title: "The Reef Guardians Registry",
     desc: "Every coral frame tracked, every dive logged, every adopter acknowledged. Full transparency starts here.",
     bg_image: "/Blue-Registry.png"
   },

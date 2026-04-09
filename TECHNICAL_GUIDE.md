@@ -4,14 +4,34 @@ This guide is designed for the non-developer or a new developer to manage and up
 
 ## 🚀 How to Update Content (CMS)
 
-Instead of editing website code, almost everything is managed in **[src/data/cms.js](file:///src/data/cms.js)**. 
+Almost everything is managed in **[src/data/cms.js](file:///src/data/cms.js)**.
 
-### Common Tasks:
+### Common Tasks
 
 1. **Changing Bulletins:** Edit the `LATEST_BULLETINS` array. Add a new item to the top to see it on the Home-page "Notice Board".
-2. **Adding History Milestones:** Add a new object to the `PROJECT_ARCHIVE` array. 
+2. **Adding History Milestones:** Add a new object to the `PROJECT_ARCHIVE` array.
 3. **Updating Case Studies/Corals:** Update `CORAL_REGISTRY`. Change a survival percentage or status here, and it will update the map, the counters, and the tables automatically.
 4. **Official Terms:** Edit `CMS_CONFIG` for the current Year, Registration Number, or Atoll codes.
+5. **Media Sync Folder:** In `CMS_CONFIG`, update the `drive_id` to point to a new Google Drive folder.
+
+## 🔄 Media Pipeline Control (Google Drive Sync)
+
+The website is synced with a Google Drive folder for live visuals.
+
+### To Change the Google Drive Folder
+
+1. Open your Google Drive folder.
+2. The Folder ID is the last part of the URL (e.g., `1xxx...xxx`).
+3. Paste this ID into **[src/data/cms.js](file:///src/data/cms.js)** under `media_automation.drive_id`.
+4. The background sync script will automatically begin using the new folder during its next run.
+
+### To Trigger a Manual Sync
+
+If you have node installed, run this in your terminal:
+
+```bash
+node scripts/sync-media.js
+```
 
 ## 🛠️ Architecture Overview
 
@@ -58,27 +78,29 @@ Log into your **Squarespace** account → **Domains** → **DNS Settings** → *
 
 Google will provide a **Verification Code**. Add it to Squarespace:
 
-- **Type**: TXT
-- **Host**: @
-- **Value**: (Paste your `google-site-verification=...` code here)
+- **Type:** TXT
+- **Host:** @
+- **Value:** (Paste your `google-site-verification=...` code here)
 
 ## 🎥 Video & Asset Specifications
 
 To ensure the website remains fast and continues to deploy successfully, please follow these guidelines for the **Pulse** video or any new media:
 
-### **1. Video Limits (The Pulse)**
-*   **Max File Size:** **100 MB** (GitHub strict limit).
-*   **Optimal Web Size:** **10 MB – 20 MB** (for fast loading on mobile).
-*   **Format:** `.mp4` (H.264 / H.265 encoding).
-*   **Resolution:** 1080p or 720p (Vertical 9:16 for Pulse).
-*   **Duration:** 15–30 seconds loop.
+### 1. Video Limits (The Pulse)
+
+- **Max File Size:** **100 MB** (GitHub strict limit).
+- **Optimal Web Size:** **10 MB – 20 MB** (for fast loading on mobile).
+- **Format:** `.mp4` (H.264 / H.265 encoding).
+- **Resolution:** 1080p or 720p (Vertical 9:16 for Pulse).
+- **Duration:** 15–30 seconds loop.
 
 > [!WARNING]
 > The previous 530MB video was removed because it was physically impossible for GitHub to host it. Before uploading a new video, use a tool like [Handbrake](https://handbrake.fr/) or [Canva's video compressor](https://www.canva.com/features/video-compressor/) to bring it under **20MB**.
 
-### **2. Image Optimization**
-*   **Max Size:** Keep under **2 MB** per image.
-*   **Format:** `.webp` is best for the web; `.jpg` is backup.
+### 2. Image Optimization
+
+- **Max Size:** Keep under **2 MB** per image.
+- **Format:** `.webp` is best for the web; `.jpg` is backup.
 
 ---
 

@@ -50,11 +50,11 @@ export default function Layout() {
               </NavLink>
               <div className={`nav-dropdown ${projectsOpen ? 'show' : ''}`}>
                 <Link to="/projects?cat=coral" onClick={() => setMenuOpen(false)}>Coral Restoration</Link>
-                <Link to="/projects?cat=coastal" onClick={() => setMenuOpen(false)}>Coastal Cleaning</Link>
-                <Link to="/projects?cat=edu" onClick={() => setMenuOpen(false)}>Education & Awareness</Link>
+                <Link to="/projects?cat=sweep" onClick={() => setMenuOpen(false)}>Sweep Efforts</Link>
+                <Link to="/projects?cat=edu" onClick={() => setMenuOpen(false)}>Edu Awareness</Link>
               </div>
             </li>
-            <li><NavLink to="/registry" onClick={() => setMenuOpen(false)}>Registry</NavLink></li>
+            <li><NavLink to="/registry" onClick={() => setMenuOpen(false)}>Reef Guardians</NavLink></li>
           </ul>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -111,7 +111,7 @@ export default function Layout() {
             <div className="footer-col">
               <h4>Transparency</h4>
               <ul>
-                <li><Link to="/registry">Coral Registry</Link></li>
+                <li><Link to="/registry">Reef Guardians</Link></li>
                 <li><Link to="/registry#transparency">Transparency Hub</Link></li>
                 <li><Link to="/live-lagoon">Live Lagoon Map</Link></li>
               </ul>

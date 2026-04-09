@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { CORAL_REGISTRY, FUND_ALLOCATION, DOCUMENT_VAULTS, CMS_CONFIG, REGISTRY_CONTENT } from '../data/cms'
+import MANIFEST from '../data/media-manifest.json'
 import TransparencyModal from '../components/TransparencyModal'
 
 const statusMap = {
@@ -46,9 +47,9 @@ export default function Registry() {
         }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <div className="badge badge-teal" style={{ marginBottom: '16px' }}>{REGISTRY_CONTENT.hero.badge}</div>
+          <div className="badge badge-teal" style={{ marginBottom: '16px' }}>🛡️ Reef Guardians</div>
           <h1 className="section-title">
-            The Blue <span className="gradient-text">Registry</span>
+            Reef <span className="gradient-text">Guardians</span>
           </h1>
           <p className="section-sub" style={{ margin: '0 auto' }}>
             {REGISTRY_CONTENT.hero.desc}
@@ -232,15 +233,34 @@ export default function Registry() {
                 </div>
               ))}
             </div>
-            <div style={{ marginBottom: '20px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
-                <span>Survival Rate</span>
-                <span style={{ color: 'var(--teal)' }}>{selected.survival}%</span>
+              {/* DYNAMIC FIELD OBSERVATION PHOTO */}
+              {(() => {
+                const latestPhoto = MANIFEST.archives.find(p => p.startsWith(selected.id));
+                if (!latestPhoto) return null;
+                return (
+                  <div style={{ marginBottom: '20px' }}>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--teal)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '0.05rem' }}>
+                      📸 Latest Field Observation
+                    </div>
+                    <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(13,211,197,0.2)', height: '180px' }}>
+                       <img src={`/media-hub/${latestPhoto}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Field update" />
+                       <div style={{ position: 'absolute', bottom: 10, right: 10, background: 'rgba(0,0,0,0.6)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.65rem' }}>
+                         Verified Sync: {latestPhoto.split('_')[1]?.split('.')[0] || 'Recent'}
+                       </div>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              <div style={{ marginBottom: '20px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
+                  <span>Survival Rate</span>
+                  <span style={{ color: 'var(--teal)' }}>{selected.survival}%</span>
+                </div>
+                <div className="progress-bar" style={{ height: '10px' }}>
+                  <div className="progress-fill" style={{ width: `${selected.survival}%` }} />
+                </div>
               </div>
-              <div className="progress-bar" style={{ height: '10px' }}>
-                <div className="progress-fill" style={{ width: `${selected.survival}%` }} />
-              </div>
-            </div>
             <div style={{ display: 'flex', gap: '8px' }}>
               <Link to="/live-lagoon" className="btn btn-primary btn-sm">View on Map</Link>
               <button className="btn btn-outline btn-sm" onClick={() => setSelected(null)}>Close</button>
