@@ -267,8 +267,8 @@ export const FUND_ALLOCATION = [
 export const APPROVED_GUARDIANS = [
   { id: 'GD-00', name: 'Mirror', role: 'Initiator', avatar: '👁️', telegramId: '1116569241' },
   { id: 'GD-01', name: 'Nabeel Hussain', role: 'Lead Diver', avatar: '🤿', telegramId: '1305116955' },
-  { id: 'GD-02', name: 'Zoya Ahmed', role: 'Marine Tech', avatar: '👩‍🔬', telegramId: '8594545357' },
-  { id: 'GD-03', name: 'Ibrahim Ali', role: 'Youth Ambassador', avatar: '🌊', telegramId: '8594545357' },
+  { id: 'GD-02', name: 'Zoya Ahmed', role: 'Initiator', avatar: '👩‍🔬', telegramId: '8594545357' },
+  { id: 'GD-03', name: 'Ibrahim Ali', role: 'Initiator', avatar: '🌊', telegramId: '8594545357' },
 ]
 
 // 7. LAGOON STORIES (Time-Limited Reels & Photos)

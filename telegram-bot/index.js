@@ -91,6 +91,20 @@ async function syncGoogleDriveToGitHub() {
   }
 }
 
+// Helper for Info Menu
+async function showInfoMenu(chatId) {
+  const buttons = Object.keys(knowledgeBase.categories).map(key => [
+    { text: knowledgeBase.categories[key].title, callback_data: `know:${key}` }
+  ]);
+  
+  await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    chat_id: chatId,
+    text: '📚 *Hinnavaru Blue Intelligence Matrix*\nSelect a topic to retrieve from the Deep Archives:',
+    parse_mode: 'Markdown',
+    reply_markup: { inline_keyboard: buttons }
+  });
+}
+
 // Schedule sync every 30 minutes
 cron.schedule('*/30 * * * *', () => {
   syncGoogleDriveToGitHub();
@@ -390,11 +404,22 @@ if (req.body.callback_query && req.body.callback_query.data === 'manual_sync') {
       return await sendTelegramMessage(chatId, '✅ *Sync Operation Complete.*\nCheck the Deep Archives section on the website.');
     }
 
-    if (text === '/start') {
+    // Phase 3: Text Commands & Keywords
+    const trigger = text.toLowerCase();
+
+    if (trigger === '/start' || trigger === 'menu' || trigger === 'hello') {
       if (guardianMatch) {
-         return await showMainMenu(chatId);
+         await showMainMenu(chatId);
       } else {
-        await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Bot Online*\nHey ${senderFirstName}, your Chat ID is: \`${chatId}\`\n\nThe Hinnavaru Blue Initiator has been notified to approve your device.`);
+        const welcome = `🌊 *Greetings from the Lagoon.*\nI am the Hinnavaru Blue assistant. Your access level is currently **General Observer**.\n\n*Want to help?* Tap below to view our mission intelligence.`;
+        const buttons = [[{ text: '📘 Project Intelligence', callback_data: 'menu:info' }]];
+        
+        await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          chat_id: chatId,
+          text: welcome,
+          parse_mode: 'Markdown',
+          reply_markup: { inline_keyboard: buttons }
+        });
         
         if (adminChatIds.length > 0) {
           // Find unassigned guardians to create clever buttons
