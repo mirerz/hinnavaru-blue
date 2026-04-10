@@ -65,15 +65,15 @@ export default function Layout() {
               </div>
               <div className="nav-fab-menu">
                 <a href={`tel:${CMS_CONFIG.hotline}`} className="fab-item" style={{ background: 'var(--ocean-surface)' }}>
-                  <span className="fab-label">Call Hotline</span>
+                  <span className="fab-label">HOTLINE (Mobile)</span>
                   📞
                 </a>
                 <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="fab-item whatsapp-bg">
-                  <span className="fab-label">WhatsApp</span>
+                  <span className="fab-label">SUPPORT (WhatsApp)</span>
                   💬
                 </a>
                 <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="fab-item telegram-bg">
-                  <span className="fab-label">Telegram Updates</span>
+                  <span className="fab-label">GUARDIANS FEED (Telegram)</span>
                   ✈️
                 </a>
               </div>
