@@ -1,11 +1,19 @@
 {
-  "last_sync": null,
-  "archives": [],
+  "last_sync": "2026-04-10T10:25:00Z",
+  "archives": [
+    "Project-Progs.png",
+    "Living-L.png",
+    "Born-Lagoon.png",
+    "Blue-Registry.png",
+    "Adopt-Frame.png",
+    "logo-island.png",
+    "we-are.png"
+  ],
   "slideshow": [
-    "/Project-Progs.png",
-    "/Living-L.png",
-    "/Born-Lagoon.png",
-    "/Blue-Registry.png"
+    "Project-Progs.png",
+    "Living-L.png",
+    "Born-Lagoon.png",
+    "Blue-Registry.png"
   ],
   "hero_pulse": "/pulse-update.mp4"
 }

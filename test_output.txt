@@ -1,0 +1,31 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 501B-800A
+
+ Directory of C:\Users\Surface\OneDrive\Documents\hinnavaru-blue
+
+10/04/2026  15:03    <DIR>          .
+09/04/2026  21:42    <DIR>          ..
+05/04/2026  09:00    <DIR>          .github
+24/03/2026  13:07               253 .gitignore
+09/04/2026  13:57    <DIR>          .vite
+10/04/2026  14:49    <DIR>          .vscode
+10/04/2026  14:41    <DIR>          assets
+10/04/2026  15:03                 0 dev_log.txt
+10/04/2026  15:01                 0 dev_log2.txt
+10/04/2026  09:10    <DIR>          dist
+10/04/2026  14:41               787 eslint.config.js
+10/04/2026  14:41                 0 frames.json
+10/04/2026  14:41             1,294 index.html
+09/04/2026  08:15    <DIR>          node_modules
+10/04/2026  14:41           152,493 package-lock.json
+10/04/2026  14:41               981 package.json
+10/04/2026  14:41    <DIR>          public
+10/04/2026  14:41             1,437 README.md
+10/04/2026  14:41    <DIR>          scripts
+10/04/2026  14:41    <DIR>          src
+10/04/2026  14:41             4,297 TECHNICAL_GUIDE.md
+10/04/2026  14:41    <DIR>          telegram-bot
+10/04/2026  15:03                 0 test_output.txt
+10/04/2026  14:41               153 vite.config.js
+              12 File(s)        161,695 bytes
+              12 Dir(s)  133,396,811,776 bytes free
