@@ -7,10 +7,14 @@ export default function Layout() {
   const [scrolled, setScrolled] = useState(false)
   const { pathname } = useLocation()
   const [projectsOpen, setProjectsOpen] = useState(false)
+  const [registryOpen, setRegistryOpen] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    setTimeout(() => setProjectsOpen(false), 0)
+    setTimeout(() => {
+        setProjectsOpen(false)
+        setRegistryOpen(false)
+    }, 0)
   }, [pathname])
 
   useEffect(() => {
@@ -55,7 +59,31 @@ export default function Layout() {
                 <Link to="/projects?cat=edu" onClick={() => setMenuOpen(false)}>Edu Awareness</Link>
               </div>
             </li>
-            <li><NavLink to="/registry" onClick={() => setMenuOpen(false)}>Reef Guardians</NavLink></li>
+            <li 
+              onMouseEnter={() => setRegistryOpen(true)} 
+              onMouseLeave={() => setRegistryOpen(false)}
+              className="nav-dropdown-trigger"
+            >
+              <NavLink 
+                to="/registry" 
+                onClick={(e) => {
+                  if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    setRegistryOpen(!registryOpen);
+                  } else {
+                    setMenuOpen(false);
+                  }
+                }}
+              >
+                Reef Guardians <span style={{ fontSize: '0.7rem', verticalAlign: 'middle', opacity: 0.6, display: 'inline-block', transform: registryOpen ? 'rotate(180deg)' : 'none', transition: '0.2s' }}>▼</span>
+              </NavLink>
+              <div className={`nav-dropdown ${registryOpen ? 'show' : ''}`}>
+                <Link to="/registry" onClick={() => setMenuOpen(false)}>Guardian Registry</Link>
+                <Link to="/registry#transparency" onClick={() => setMenuOpen(false)}>Transparency Hub (Amaanaiy)</Link>
+                <Link to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Lagoon Map</Link>
+              </div>
+            </li>
+            <li className="hide-mobile"><NavLink to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Lagoon</NavLink></li>
           </ul>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -109,7 +137,7 @@ export default function Layout() {
                 <li><Link to="/projects">Projects</Link></li>
               </ul>
             </div>
-            <div className="footer-col">
+            <div className="footer-col" style={{ paddingLeft: '32px' }}>
               <h4>Transparency</h4>
               <ul>
                 <li><Link to="/registry">Reef Guardians</Link></li>
@@ -117,12 +145,12 @@ export default function Layout() {
                 <li><Link to="/live-lagoon">Live Lagoon Map</Link></li>
               </ul>
             </div>
-            <div className="footer-col">
+            <div className="footer-col" style={{ paddingLeft: '32px' }}>
               <h4>Get Involved</h4>
               <ul>
                 <li><Link to="/sponsor">Adopt or Partner with Us</Link></li>
                 <li><a href={`mailto:${CMS_CONFIG.contact_email}`}>Contact Support</a></li>
-                <li><Link to="/live-lagoon">Live Lagoon</Link></li>
+                <li><Link to="/blog">Blog</Link></li>
               </ul>
             </div>
 

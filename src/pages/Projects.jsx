@@ -27,6 +27,11 @@ export default function Projects() {
     return filtered.length > 0 ? filtered[0] : allMedia[0] || '/Project-Progs.png'
   }, [activeTab, allMedia])
 
+  useEffect(() => {
+    const cat = searchParams.get('cat')
+    if (cat) setActiveTab(cat)
+  }, [searchParams])
+
   const filteredProjects = PROJECTS_LIST.filter(p => p.category === activeTab)
   const activeCatObj = PROJECT_CATEGORIES.find(c => c.id === activeTab)
 
@@ -137,49 +142,6 @@ export default function Projects() {
           
           <div className="scroller-hint">
              Scroll left and right to explore more deep sea updates
-          </div>
-        </div>
-      </section>
-
-      {/* 5. PROJECT GRID (Optional / Contextual) */}
-      <section className="section">
-        <div className="container">
-          <div className="badge badge-teal" style={{ marginBottom: '24px' }}>🛡️ Active Programs</div>
-          <div className="project-grid-dashboard">
-            {filteredProjects.map((p, i) => (
-              <div 
-                key={i} 
-                className="card project-card-dash animate-reveal" 
-                style={{ animationDelay: `${i * 100}ms`, cursor: 'pointer' }}
-                onClick={() => setSelectedProject(p)}
-              >
-                <div className="project-card-dash-img">
-                  <img src={p.image || `/Project-Progs.png`} alt={p.title} />
-                  <div className="card-status-badge" style={{ background: p.status === 'active' ? 'var(--teal)' : 'var(--blue-primary)' }}>
-                    {p.status}
-                  </div>
-                  <div className="card-pulse-indicator">
-                    <span className="live-dot" />
-                    <span style={{ fontSize: '0.65rem', fontWeight: 800 }}>PULSE: {p.progress}%</span>
-                  </div>
-                </div>
-                <div className="project-card-dash-body">
-                  <div className="project-card-cat-tag">{p.emoji} {p.badge}</div>
-                  <h4>{p.title}</h4>
-                  <p>{p.desc.substring(0, 80)}...</p>
-                  
-                  <div className="funding-progress-dash">
-                    <div className="funding-label-dash">MISSION PROGRESS</div>
-                    <div className="progress-bar" style={{ height: '6px', marginBottom: '8px' }}>
-                      <div className="progress-fill" style={{ width: `${p.progress}%` }} />
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 700 }}>
-                      <span className="gradient-text">{p.progress}% DELIVERED</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
