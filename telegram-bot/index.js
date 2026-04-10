@@ -7,6 +7,8 @@ const cron = require('node-cron');
 const app = express();
 app.use(express.json());
 
+const knowledgeBase = require('./knowledge_base');
+
 // Configuration
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const GITHUB_TOKEN = process.env.GITHUB_PAT;
@@ -146,14 +148,105 @@ app.post('/webhook', async (req, res) => {
         await sendTelegramMessage(adminChatId, `✅ *Approval Completed!*\n\n**${targetName}** is now linked to Chat ID \`${targetChatId}\`.\nI will notify them immediately.`);
         await sendTelegramMessage(targetChatId, `🎉 *Access Granted!*\nThe Hinnavaru Blue Initiator has approved your device.\nType /ticker <message> to post an update.`);
 
+        await sendTelegramMessage(targetChatId, `🎉 *Access Granted!*\nThe Hinnavaru Blue Initiator has approved your device.\nType /start to see your menu.`);
+
         // Acknowledge the callback alert (removes loading state on the button)
         await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, { callback_query_id: callback.id });
       } catch (e) {
         await sendTelegramMessage(adminChatId, `❌ *Error processing approval:* ${e.message}`);
       }
+    } else if (data.startsWith('know:')) {
+      const key = data.split(':')[1];
+      const entry = knowledgeBase.categories[key];
+      if (entry) {
+        const text = `*${entry.title}*\n\n${entry.text}`;
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/editMessageText`;
+        await axios.post(url, {
+          chat_id: adminChatId,
+          message_id: callback.message.message_id,
+          text: text,
+          parse_mode: 'Markdown',
+          reply_markup: {
+            inline_keyboard: [[{ text: '⬅️ Back', callback_data: 'menu:info' }]]
+          }
+        });
+      }
+    } else if (data === 'menu:main') {
+      await showMainMenu(adminChatId, callback.message.message_id);
+    } else if (data === 'menu:info') {
+      const buttons = Object.keys(knowledgeBase.categories).map(key => [
+        { text: knowledgeBase.categories[key].title, callback_data: `know:${key}` }
+      ]);
+      buttons.push([{ text: '🏠 Main Menu', callback_data: 'menu:main' }]);
+      
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/editMessageText`;
+      await axios.post(url, {
+        chat_id: adminChatId,
+        message_id: callback.message.message_id,
+        text: '📘 *HBI Project Intelligence*\nExplore the core pillars of our mission:',
+        parse_mode: 'Markdown',
+        reply_markup: { inline_keyboard: buttons }
+      });
+    } else if (data === 'menu:broadcast') {
+      await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/editMessageText`, {
+        chat_id: adminChatId,
+        message_id: callback.message.message_id,
+        text: '📢 *Broadcast Protocol*\n\nTo post a live ticker update:\nType `/ticker your message here` and hit send.',
+        parse_mode: 'Markdown',
+        reply_markup: { inline_keyboard: [[{ text: '🏠 Main Menu', callback_data: 'menu:main' }]] }
+      });
+    } else if (data === 'menu:upload') {
+      await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/editMessageText`, {
+        chat_id: adminChatId,
+        message_id: callback.message.message_id,
+        text: '📽️ *Multimedia Archiving*\n\nTo archive a photo/video to the website:\nSimply send the file directly to this chat.\n\n*Limit:* 10MB per file.',
+        parse_mode: 'Markdown',
+        reply_markup: { inline_keyboard: [[{ text: '🏠 Main Menu', callback_data: 'menu:main' }]] }
+      });
     }
     return;
   }
+
+  // Method to show Main Menu
+async function showMainMenu(chatId, messageId = null) {
+  const text = '🌊 *Hinnavaru Blue Gateway*\nSelect an operation below:';
+  const buttons = [
+    [{ text: '📢 Send Broadcast', callback_data: 'menu:broadcast' }],
+    [{ text: '📽️ Upload Archive', callback_data: 'menu:upload' }],
+    [{ text: '📘 Project Info', callback_data: 'menu:info' }]
+  ];
+
+  const adminRegex = /role:\s*'(?:Lead Diver|Initiator)'.*?telegramId:\s*'([^']+)'/g;
+  const { data: fileData } = await octokit.repos.getContent({ owner: REPO_OWNER, repo: REPO_NAME, path: CMS_PATH });
+  const content = Buffer.from(fileData.content, 'base64').toString();
+  const adminMatches = [...content.matchAll(adminRegex)];
+  const adminChatIds = adminMatches.map(m => m[1]);
+
+  if (adminChatIds.includes(chatId.toString())) {
+    buttons.push([{ text: '🌀 Trigger GDrive Sync', callback_data: 'manual_sync' }]);
+  }
+
+  const endpoint = messageId ? 'editMessageText' : 'sendMessage';
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/${endpoint}`;
+  const payload = {
+    chat_id: chatId,
+    text: text,
+    parse_mode: 'Markdown',
+    reply_markup: { inline_keyboard: buttons }
+  };
+  if (messageId) payload.message_id = messageId;
+  await axios.post(url, payload);
+}
+
+// In callback query handler for manual sync
+if (req.body.callback_query && req.body.callback_query.data === 'manual_sync') {
+    const callback = req.body.callback_query;
+    const chatId = callback.from.id;
+    await sendTelegramMessage(chatId, '🌀 *Starting sync...*');
+    await syncGoogleDriveToGitHub();
+    await sendTelegramMessage(chatId, '✅ *Sync Done.*');
+    return;
+}
 
   // 2. Handle standard Messages
   const message = req.body.message;
@@ -183,7 +276,7 @@ app.post('/webhook', async (req, res) => {
 
     if (text === '/start') {
       if (guardianMatch) {
-         return await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Gateway*\nWelcome back, \`${guardianMatch[1]}\`. You are authorized for operations.`);
+         return await showMainMenu(chatId);
       } else {
         await sendTelegramMessage(chatId, `🌊 *Hinnavaru Blue Bot Online*\nHey ${senderFirstName}, your Chat ID is: \`${chatId}\`\n\nThe Hinnavaru Blue Initiator has been notified to approve your device.`);
         
@@ -290,7 +383,7 @@ app.post('/webhook', async (req, res) => {
           sha: sha, branch: 'main'
         });
 
-        await sendTelegramMessage(chatId, `🎉 *Success! Visual Live Update Committed.*\n\n*${gName} (${gRole})*\nIt will materialize on the 'In Action' pulse tracker in 60s.`);
+        await sendTelegramMessage(chatId, `🎉 *Visual Live Update Archived!* \n\n*${gName} (${gRole})*\nYour file has been committed to the Deep Archives.\n\n*View Live:* [hinnavarublueinitiative.org](https://hinnavarublueinitiative.org)`);
         return;
       } catch (err) {
         console.error(err);
