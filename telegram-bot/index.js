@@ -22,6 +22,9 @@ const DRIVE_FOLDER_ID = '1cLa1IO9Q0r1Q0EiLgqNiAqiLooVZfxOD';
 
 const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
+// Session state management
+const pendingMedia = {}; 
+
 // Google Drive Sync Engine
 async function syncGoogleDriveToGitHub() {
   console.log('🔄 Initiating Google Drive background sync...');
@@ -231,6 +234,59 @@ app.post('/webhook', async (req, res) => {
       }
     } else if (data === 'menu:main') {
       await showMainMenu(adminChatId, callback.message.message_id);
+    } else if (data.startsWith('upload:')) {
+      const [_, category, fileId, fileType, ext] = data.split(':');
+      const chatId = adminChatId;
+      
+      await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/editMessageText`, {
+        chat_id: chatId,
+        message_id: callback.message.message_id,
+        text: `🚀 *Processing ${category.toUpperCase()} Upload...*\nHandshaking with Hinnavaru Digital Archives...`,
+        parse_mode: 'Markdown'
+      });
+
+      try {
+        const fileRes = await axios.get(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${fileId}`);
+        const filePath = fileRes.data.result.file_path;
+        const downloadRes = await axios.get(`https://api.telegram.org/file/bot${BOT_TOKEN}/${filePath}`, { responseType: 'arraybuffer' });
+        const fileBuffer = Buffer.from(downloadRes.data);
+        
+        const timestampMarker = Date.now();
+        const fileName = `${category}_${timestampMarker}.${ext}`;
+
+        // Path logic based on category
+        const ghPath = category === 'noticeboard' ? `public/notices/${fileName}` : `public/deep-archives/${fileName}`;
+        
+        await octokit.repos.createOrUpdateFileContents({
+          owner: REPO_OWNER, repo: REPO_NAME, path: ghPath,
+          message: `bot: ${category} upload by admin`,
+          content: fileBuffer.toString('base64'),
+          branch: 'main'
+        });
+
+        // Update CMS if needed for Live Pulse
+        if (category === 'live_pulse') {
+          const { data: cmsFile } = await octokit.repos.getContent({ owner: REPO_OWNER, repo: REPO_NAME, path: CMS_PATH });
+          const content = Buffer.from(cmsFile.content, 'base64').toString();
+          
+          const now = new Date();
+          const expiry = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
+          const newStory = `\n  { \n    id: 'ST-${timestampMarker}', \n    type: '${fileType}', \n    url: '/deep-archives/${fileName}', \n    guardianId: 'GD-00', \n    timestamp: '${now.toISOString()}', \n    expiryDate: '${expiry.toISOString()}' \n  },`;
+          
+          const updatedContent = content.replace('export const LAGOON_STORIES = [', 'export const LAGOON_STORIES = [' + newStory);
+          
+          await octokit.repos.createOrUpdateFileContents({
+            owner: REPO_OWNER, repo: REPO_NAME, path: CMS_PATH,
+            message: 'bot: updated live stories pulse',
+            content: Buffer.from(updatedContent).toString('base64'),
+            sha: cmsFile.sha, branch: 'main'
+          });
+        }
+
+        await sendTelegramMessage(chatId, `✅ *Task Complete!*\nThe visuals are now active in the **${category.replace('_', ' ')}** section.\n\n🙏 *Thank you for your service to the reef. Session Closed.*`);
+      } catch (err) {
+        await sendTelegramMessage(chatId, `❌ *Upload Error:* ${err.message}`);
+      }
     } else if (data === 'menu:info') {
       const buttons = Object.keys(knowledgeBase.categories).map(key => [
         { text: knowledgeBase.categories[key].title, callback_data: `know:${key}` }
@@ -267,11 +323,13 @@ app.post('/webhook', async (req, res) => {
 
   // Method to show Main Menu
 async function showMainMenu(chatId, messageId = null) {
-  const text = '🌊 *Hinnavaru Blue Gateway*\nSelect an operation below:';
+  const text = `🌊 *Welcome to the Digital Command Center*\nGreetings, Guardian. How shall we protect the blue today?`;
   const buttons = [
-    [{ text: '📢 Send Broadcast', callback_data: 'menu:broadcast' }],
-    [{ text: '📽️ Upload Archive', callback_data: 'menu:upload' }],
-    [{ text: '📘 Project Info', callback_data: 'menu:info' }]
+    [{ text: '📢 Broadcast Ticker', callback_data: 'menu:broadcast' }],
+    [{ text: '📽️ Media Center (Uploads)', callback_data: 'menu:upload' }],
+    [{ text: '📘 HBI Intelligence', callback_data: 'menu:info' }],
+    [{ text: '📊 Statistics Update', callback_data: 'menu:stats' }],
+    [{ text: '📩 View Inbox', callback_data: 'menu:inbox' }]
   ];
 
   const adminRegex = /role:\s*'(?:Lead Diver|Initiator)'.*?telegramId:\s*'([^']+)'/g;
@@ -376,77 +434,32 @@ if (req.body.callback_query && req.body.callback_query.data === 'manual_sync') {
 
     // Phase 2: Multimedia Handling (Photos & Videos)
     if (message.photo || message.video) {
-      await sendTelegramMessage(chatId, `⏳ *Receiving Intel...*\nVerifying logical file size and initiating secure upload to Deep Archives...`);
-      
-      let fileId = '';
-      let fileType = '';
-      let fileSize = 0;
-      let extension = '';
-
-      if (message.photo) {
-        // Telegram sends multiple sizes; grab the largest one
-        const photo = message.photo[message.photo.length - 1];
-        fileId = photo.file_id;
-        fileSize = photo.file_size;
-        fileType = 'photo';
-        extension = 'jpg';
-      } else if (message.video) {
-        fileId = message.video.file_id;
-        fileSize = message.video.file_size;
-        fileType = 'video';
-        extension = 'mp4';
-      }
-
-      // Logical file size limit: 10MB (to prevent choking GitHub)
-      if (fileSize > 10 * 1024 * 1024) {
-        return await sendTelegramMessage(chatId, `❌ *Upload Failed*\nFile size is ${(fileSize/1024/1024).toFixed(1)}MB. HBI protocol limits direct uploads to 10MB per file to maintain global server speed. Compress the file and try again.`);
-      }
-
-      try {
-        // Step 1: Get File Path from Telegram
-        const fileRes = await axios.get(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${fileId}`);
-        const filePath = fileRes.data.result.file_path;
-
-        // Step 2: Download File Buffer
-        const downloadRes = await axios.get(`https://api.telegram.org/file/bot${BOT_TOKEN}/${filePath}`, { responseType: 'arraybuffer' });
-        const fileBuffer = Buffer.from(downloadRes.data);
+        let fileId = '';
+        let fileType = '';
+        let ext = '';
         
-        // Step 3: Archive to GitHub -> public/deep-archives/
-        const timestampMarker = Date.now();
-        const archFileName = `archive_${timestampMarker}.${extension}`;
-        const renderPath = `/deep-archives/${archFileName}`;
+        if (message.photo) {
+            fileId = message.photo[message.photo.length - 1].file_id;
+            fileType = 'photo';
+            ext = 'jpg';
+        } else {
+            fileId = message.video.file_id;
+            fileType = 'video';
+            ext = 'mp4';
+        }
 
-        await octokit.repos.createOrUpdateFileContents({
-          owner: REPO_OWNER, repo: REPO_NAME, path: `public/deep-archives/${archFileName}`,
-          message: `bot: deep-archive upload ${archFileName} by ${gName}`,
-          content: fileBuffer.toString('base64'),
-          branch: 'main'
+        const buttons = [
+            [{ text: '📸 In Action (Live Pulse)', callback_data: `upload:live_pulse:${fileId}:${fileType}:${ext}` }],
+            [{ text: '📂 Deep Archives (Storage)', callback_data: `upload:archive:${fileId}:${fileType}:${ext}` }],
+            [{ text: '📎 Notice Board (Banner)', callback_data: `upload:noticeboard:${fileId}:${fileType}:${ext}` }]
+        ];
+
+        return await axios.post(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            chat_id: chatId,
+            text: '📁 *Visual Target Identity*\nWhere should this intelligence be categorized?',
+            parse_mode: 'Markdown',
+            reply_markup: { inline_keyboard: buttons }
         });
-
-        await sendTelegramMessage(chatId, `✅ *File Archived Successfully!*\nInjecting visual data into the Live Updates (In Action) matrix...`);
-
-        // Step 4: Inject into LAGOON_STORIES in cms.js
-        const now = new Date();
-        const expiry = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000); // 14 days active
-        
-        const newStory = `\n  { \n    id: 'ST-${timestampMarker}', \n    type: '${fileType}', \n    url: '${renderPath}', \n    guardianId: '${gId}', \n    timestamp: '${now.toISOString()}', \n    expiryDate: '${expiry.toISOString()}' \n  },`;
-        
-        const storyTarget = 'export const LAGOON_STORIES = [';
-        const updatedContent = currentContent.replace(storyTarget, storyTarget + newStory);
-
-        await octokit.repos.createOrUpdateFileContents({
-          owner: REPO_OWNER, repo: REPO_NAME, path: CMS_PATH,
-          message: `bot: guardian ${gName} live visual update`,
-          content: Buffer.from(updatedContent).toString('base64'),
-          sha: sha, branch: 'main'
-        });
-
-        await sendTelegramMessage(chatId, `🎉 *Visual Live Update Archived!* \n\n*${gName} (${gRole})*\nYour file has been committed to the Deep Archives.\n\n*View Live:* [hinnavarublueinitiative.org](https://hinnavarublueinitiative.org)`);
-        return;
-      } catch (err) {
-        console.error(err);
-        return await sendTelegramMessage(chatId, `❌ *Upload Failure*\nThe deep archive relay failed. Error: ${err.message}`);
-      }
     }
 
     if (text.startsWith('/ticker ')) {
