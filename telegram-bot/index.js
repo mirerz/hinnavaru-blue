@@ -146,8 +146,6 @@ app.post('/webhook', async (req, res) => {
         });
 
         await sendTelegramMessage(adminChatId, `✅ *Approval Completed!*\n\n**${targetName}** is now linked to Chat ID \`${targetChatId}\`.\nI will notify them immediately.`);
-        await sendTelegramMessage(targetChatId, `🎉 *Access Granted!*\nThe Hinnavaru Blue Initiator has approved your device.\nType /ticker <message> to post an update.`);
-
         await sendTelegramMessage(targetChatId, `🎉 *Access Granted!*\nThe Hinnavaru Blue Initiator has approved your device.\nType /start to see your menu.`);
 
         // Acknowledge the callback alert (removes loading state on the button)
