@@ -1,13 +1,6 @@
 {
-  "last_sync": "2026-04-10T16:35:41.698Z",
+  "last_sync": "2026-04-10T13:35:51.968Z",
   "archives": [
-    "Project-Progs.png",
-    "Living-L.png",
-    "Born-Lagoon.png",
-    "Blue-Registry.png",
-    "Adopt-Frame.png",
-    "logo-island.png",
-    "we-are.png",
     "GPDR2758.JPG",
     "GPDR2757.JPG",
     "GPDR2756.JPG",
@@ -110,10 +103,10 @@
     "GPDR2630.JPG"
   ],
   "slideshow": [
-    "Project-Progs.png",
-    "Living-L.png",
-    "Born-Lagoon.png",
-    "Blue-Registry.png"
+    "/Project-Progs.png",
+    "/Living-L.png",
+    "/Born-Lagoon.png",
+    "/Blue-Registry.png"
   ],
   "hero_pulse": "/pulse-update.mp4"
 }
