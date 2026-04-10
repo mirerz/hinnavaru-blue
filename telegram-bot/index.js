@@ -1,6 +1,8 @@
 const express = require('express');
 const { Octokit } = require('@octokit/rest');
 const axios = require('axios');
+const { google } = require('googleapis');
+const cron = require('node-cron');
 
 const app = express();
 app.use(express.json());
@@ -11,8 +13,81 @@ const GITHUB_TOKEN = process.env.GITHUB_PAT;
 const REPO_OWNER = 'mirerz';
 const REPO_NAME = 'hinnavaru-blue';
 const CMS_PATH = 'src/data/cms.js';
+const MANIFEST_PATH = 'src/data/media-manifest.json';
+const DRIVE_FOLDER_ID = '1cLa1IO9Q0r1Q0EiLgqNiAqiLooVZfxOD';
 
 const octokit = new Octokit({ auth: GITHUB_TOKEN });
+
+// Google Drive Sync Engine
+async function syncGoogleDriveToGitHub() {
+  console.log('🔄 Initiating Google Drive background sync...');
+  try {
+    const auth = new google.auth.GoogleAuth({
+      credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON),
+      scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+    });
+    const drive = google.drive({ version: 'v3', auth });
+
+    // 1. List files in the Drive folder
+    const res = await drive.files.list({
+      q: `'${DRIVE_FOLDER_ID}' in parents and trashed = false`,
+      fields: 'files(id, name, mimeType)',
+    });
+    const driveFiles = res.data.files;
+
+    // 2. Get current manifest from GitHub
+    const { data: manifestFile } = await octokit.repos.getContent({ owner: REPO_OWNER, repo: REPO_NAME, path: MANIFEST_PATH });
+    const manifest = JSON.parse(Buffer.from(manifestFile.content, 'base64').toString());
+
+    let updated = false;
+    const newArchives = [...manifest.archives];
+
+    for (const file of driveFiles) {
+      if (!newArchives.includes(file.name)) {
+        console.log(`📦 New file detected in Drive: ${file.name}`);
+        
+        // Download from Drive
+        const driveRes = await drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'arraybuffer' });
+        const fileContent = Buffer.from(driveRes.data);
+
+        // Upload to GitHub
+        await octokit.repos.createOrUpdateFileContents({
+          owner: REPO_OWNER, repo: REPO_NAME,
+          path: `public/deep-archives/${file.name}`,
+          message: `admin: sync ${file.name} from Google Drive`,
+          content: fileContent.toString('base64'),
+          branch: 'main'
+        });
+
+        newArchives.push(file.name);
+        updated = true;
+      }
+    }
+
+    if (updated) {
+      manifest.archives = newArchives;
+      manifest.last_sync = new Date().toISOString();
+      
+      await octokit.repos.createOrUpdateFileContents({
+        owner: REPO_OWNER, repo: REPO_NAME, path: MANIFEST_PATH,
+        message: 'admin: update media-manifest from Drive sync',
+        content: Buffer.from(JSON.stringify(manifest, null, 2)).toString('base64'),
+        sha: manifestFile.sha,
+        branch: 'main'
+      });
+      console.log('✅ Media manifest updated successfully.');
+    } else {
+      console.log('✨ Archive is already up to date.');
+    }
+  } catch (err) {
+    console.error('❌ Sync Error:', err.message);
+  }
+}
+
+// Schedule sync every 30 minutes
+cron.schedule('*/30 * * * *', () => {
+  syncGoogleDriveToGitHub();
+});
 
 // Method to send Telegram replies
 async function sendTelegramMessage(chatId, text) {
@@ -99,6 +174,12 @@ app.post('/webhook', async (req, res) => {
 
     const guardianMatchRegex = new RegExp(`name:\\s*'([^']+)',\\s*role:\\s*'([^']+)',\\s*avatar:\\s*'([^']+)',\\s*telegramId:\\s*'${chatId}'`);
     const guardianMatch = currentContent.match(guardianMatchRegex);
+
+    if (text === '/sync' && adminChatIds.includes(chatId)) {
+      await sendTelegramMessage(chatId, '🌀 *Manual Sync Requested...*\nChecking Google Drive for new Archive data...');
+      await syncGoogleDriveToGitHub();
+      return await sendTelegramMessage(chatId, '✅ *Sync Operation Complete.*\nCheck the Deep Archives section on the website.');
+    }
 
     if (text === '/start') {
       if (guardianMatch) {
