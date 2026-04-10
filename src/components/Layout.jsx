@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NavLink, Outlet, Link, useLocation } from 'react-router-dom'
+import { NavLink, Link, Outlet, useLocation } from 'react-router-dom'
 import { CMS_CONFIG } from '../data/cms'
 
 export default function Layout() {
@@ -18,22 +18,22 @@ export default function Layout() {
   }, [pathname])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+    const handleScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
     <>
-      <nav className="navbar" style={scrolled ? { boxShadow: '0 4px 32px rgba(0,0,0,0.5)' } : {}}>
-        <div className="nav-container">
-          <Link to="/" className="nav-brand" onClick={() => setMenuOpen(false)}>
-            <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" className="nav-logo-img" style={{ height: '45px', width: 'auto' }} />
-            <span className="nav-name">Hinnavaru <span>Blue</span></span>
+      <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
+        <div className="container nav-container">
+          <Link to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
+            <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" />
+            <span>Hinnavaru <span className="gradient-text">Blue</span></span>
           </Link>
 
-          <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
-            <li><NavLink to="/" end onClick={() => setMenuOpen(false)}>Home</NavLink></li>
+          <ul className={`nav-links ${menuOpen ? 'show' : ''}`}>
+            <li><NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink></li>
             <li><NavLink to="/about" onClick={() => setMenuOpen(false)}>Our Roots</NavLink></li>
             <li 
               onMouseEnter={() => setProjectsOpen(true)} 
@@ -166,11 +166,6 @@ export default function Layout() {
           </div>
         </div>
       </footer>
-    </>
-  )
-}r>
-
-
     </>
   )
 }

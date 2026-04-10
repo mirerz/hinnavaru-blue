@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "last_sync": "2026-04-10T13:35:51.968Z",
   "archives": [
     "GPDR2758.JPG",
@@ -101,12 +102,23 @@
     "GPDR2632.JPG",
     "GPDR2631.JPG",
     "GPDR2630.JPG"
+=======
+  "last_sync": "2026-04-10T10:25:00Z",
+  "archives": [
+    "Project-Progs.png",
+    "Living-L.png",
+    "Born-Lagoon.png",
+    "Blue-Registry.png",
+    "Adopt-Frame.png",
+    "logo-island.png",
+    "we-are.png"
+>>>>>>> c3e3711 (chore: save local state before merge)
   ],
   "slideshow": [
-    "/Project-Progs.png",
-    "/Living-L.png",
-    "/Born-Lagoon.png",
-    "/Blue-Registry.png"
+    "Project-Progs.png",
+    "Living-L.png",
+    "Born-Lagoon.png",
+    "Blue-Registry.png"
   ],
   "hero_pulse": "/pulse-update.mp4"
 }
