@@ -123,16 +123,18 @@ export default function Home() {
               <div style={{ position: 'relative', aspectRatio: '9/16', background: '#000', overflow: 'hidden' }}>
                 {videoStories.length > 0 ? (
                   <>
-                    <video 
-                      key={pulseIdx} 
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    >
-                      <source src={videoStories[pulseIdx].url} type="video/mp4" />
-                    </video>
+                    <a href={videoStories[pulseIdx].url} target="_blank" rel="noopener" style={{ display: 'block', height: '100%', cursor: 'pointer' }}>
+                      <video 
+                        key={pulseIdx} 
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      >
+                        <source src={videoStories[pulseIdx].url} type="video/mp4" />
+                      </video>
+                    </a>
                     <div className="story-overlay">
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <span style={{ fontSize: '1.2rem' }}>{getGuardian(videoStories[pulseIdx].guardianId).avatar}</span>
@@ -163,11 +165,13 @@ export default function Home() {
               <div style={{ position: 'relative', flexGrow: 1, aspectRatio: '9/16', overflow: 'hidden', background: '#000' }}>
                 {photoStories.length > 0 ? (
                   <>
-                    <img 
-                      src={photoStories[focusIdx].url} 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.5s' }} 
-                      alt="Verified capture" 
-                    />
+                    <a href={photoStories[focusIdx].url} target="_blank" rel="noopener" style={{ display: 'block', height: '100%', cursor: 'pointer' }}>
+                      <img 
+                        src={photoStories[focusIdx].url} 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.5s' }} 
+                        alt="Verified capture" 
+                      />
+                    </a>
                     <div className="story-overlay">
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <span style={{ fontSize: '1.2rem' }}>{getGuardian(photoStories[focusIdx].guardianId).avatar}</span>

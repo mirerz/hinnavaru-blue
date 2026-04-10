@@ -3,6 +3,8 @@ const { Octokit } = require('@octokit/rest');
 const axios = require('axios');
 const { google } = require('googleapis');
 const cron = require('node-cron');
+const Parser = require('rss-parser');
+const parser = new Parser();
 
 const app = express();
 app.use(express.json());
@@ -89,6 +91,64 @@ async function syncGoogleDriveToGitHub() {
 // Schedule sync every 30 minutes
 cron.schedule('*/30 * * * *', () => {
   syncGoogleDriveToGitHub();
+});
+
+// RSS Environmental News Sync Engine
+async function syncRSSToGitHub() {
+  console.log('📡 Fetching global environmental intelligence...');
+  try {
+    const feed = await parser.parseURL('https://news.un.org/feed/subscribe/en/news/topic/climate-change/feed/rss.xml');
+    
+    const { data: fileData } = await octokit.repos.getContent({ owner: REPO_OWNER, repo: REPO_NAME, path: CMS_PATH });
+    const currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
+    const sha = fileData.sha;
+
+    // Pick 2 latest items
+    const latestItems = feed.items.slice(0, 2).map(item => ({
+      icon: '🌍',
+      type: 'Global News',
+      text: `${item.title} (${new URL(item.link).hostname})`
+    }));
+
+    let updatedContent = currentContent;
+    const injectionTarget = 'export const NOTICE_BOARD = [';
+
+    latestItems.forEach(item => {
+      // Check if item already exists to avoid duplicates
+      if (!currentContent.includes(item.text)) {
+        const newEntry = `\n  { icon: '${item.icon}', type: '${item.type}', text: '${item.text.replace(/'/g, "\\'")}' },`;
+        updatedContent = updatedContent.replace(injectionTarget, injectionTarget + newEntry);
+      }
+    });
+
+    if (updatedContent !== currentContent) {
+      // Keep only latest 10 entries to prevent file bloat
+      const boardMatch = updatedContent.match(/export const NOTICE_BOARD = \[\s*([\s\S]*?)\s*\]/);
+      if (boardMatch) {
+        let entries = boardMatch[1].split('},').filter(e => e.trim()).map(e => e.trim() + '},');
+        if (entries.length > 10) {
+          entries = entries.slice(0, 10);
+          const newBoard = `export const NOTICE_BOARD = [\n  ${entries.join('\n  ')}\n]`;
+          updatedContent = updatedContent.replace(/export const NOTICE_BOARD = \[\s*[\s\S]*?\s*\]/, newBoard);
+        }
+      }
+
+      await octokit.repos.createOrUpdateFileContents({
+        owner: REPO_OWNER, repo: REPO_NAME, path: CMS_PATH,
+        message: 'bot: automated hourly environmental news update',
+        content: Buffer.from(updatedContent).toString('base64'),
+        sha: sha, branch: 'main'
+      });
+      console.log('✅ RSS News integrated into Ticker.');
+    }
+  } catch (err) {
+    console.error('❌ RSS Error:', err.message);
+  }
+}
+
+// Schedule RSS News every 1 hour
+cron.schedule('0 * * * *', () => {
+  syncRSSToGitHub();
 });
 
 // Method to send Telegram replies
