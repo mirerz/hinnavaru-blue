@@ -24,7 +24,8 @@ export default function Layout() {
       <nav className="navbar" style={scrolled ? { boxShadow: '0 4px 32px rgba(0,0,0,0.5)' } : {}}>
         <div className="nav-container">
           <Link to="/" className="nav-brand" onClick={() => setMenuOpen(false)}>
-            <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" className="nav-logo-img" />
+            <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" className="nav-logo-img" style={{ height: '45px', width: 'auto' }} />
+            <span className="nav-name">Hinnavaru <span>Blue</span></span>
           </Link>
 
           <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
@@ -59,8 +60,8 @@ export default function Layout() {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div className="nav-fab-container hide-mobile">
-              <div className="nav-fab-main">
-                <span style={{ fontSize: '1.2rem' }}>⚡</span>
+              <div className="nav-fab-main" style={{ padding: 0, overflow: 'hidden' }}>
+                <img src="/hotline-icon.png" alt="Support" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div className="nav-fab-menu">
                 <a href={`tel:${CMS_CONFIG.hotline}`} className="fab-item" style={{ background: 'var(--ocean-surface)' }}>
@@ -68,7 +69,7 @@ export default function Layout() {
                   📞
                 </a>
                 <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="fab-item whatsapp-bg">
-                  <span className="fab-label">WhatsApp Support</span>
+                  <span className="fab-label">WhatsApp</span>
                   💬
                 </a>
                 <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="fab-item telegram-bg">
@@ -94,9 +95,9 @@ export default function Layout() {
         <div className="container">
           <div className="footer-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
             <div className="footer-brand">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" style={{ width: '60px', height: '60px' }} />
-                <span style={{ fontWeight: 700, fontSize: '1.2rem', color: '#fff' }}>Hinnavaru Blue</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" style={{ width: '48px', height: '48px' }} />
+                <span style={{ fontWeight: 800, fontSize: '1.4rem', color: '#fff', letterSpacing: '0.02em' }}>Hinnavaru <span style={{ color: 'var(--teal)' }}>Blue</span></span>
               </div>
               <p>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Lhaviyani Atoll, Maldives. Every frame counts.</p>
             </div>

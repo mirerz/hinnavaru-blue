@@ -250,7 +250,7 @@ export const LATEST_BULLETINS = [
   { icon: '🌍', type: 'Global', text: 'UN Ocean Decade target aligned: Hinnavaru blueprint scaling to 14 atolls.' },
   { icon: '📡', type: 'Live Feed', text: 'Global network detects 0.2°C temp anomaly. High-frequency monitoring activated.' },
   { icon: '🌊', type: 'Mission', text: 'Vision 2030: Restoring critical nursery corridors for 5,000+ localized reef species.' },
-  { icon: '📢', type: 'Milestone', text: 'MVR 3.2M milestone passed! 100% of global funding allocated directly to field operations.' },
+  { icon: '📢', type: 'Milestone', text: 'Operational milestone passed! 100% of global funding allocated directly to field operations.' },
   { icon: '🪸', type: 'Data', text: 'March survival rates show 82% healthy coverage across 180 tracked frames.' }
 ]
 
@@ -318,8 +318,6 @@ export const PROJECTS_LIST = [
     desc: 'Our flagship coral nursery program, deploying over 40 frames across 4.2 km² of the lagoon with bi-weekly monitoring.',
     progress: 82,
     progressLabel: '82% of 2025 survival target met',
-    funded: 'MVR 480,000',
-    target: 'MVR 600,000',
     actionPrimary: '🤿 Join Next Dive',
     actionPrimaryDone: '✅ Registered!',
     actionSecondary: '📸 View Latest Photos',
@@ -335,8 +333,6 @@ export const PROJECTS_LIST = [
     desc: 'Partnering with IUCN to test 6 coral species for climate resilience in Lhaviyani Atoll conditions. Results inform future planting.',
     progress: 65,
     progressLabel: '65% of research phase complete',
-    funded: 'MVR 180,000',
-    target: 'MVR 280,000',
     actionPrimary: '🔬 Volunteer in Lab',
     actionPrimaryDone: '✅ Volunteered!',
     actionSecondary: '📋 View Research Notes',
@@ -352,8 +348,6 @@ export const PROJECTS_LIST = [
     desc: 'Annually marine ecology workshop for school children, building the next generation of ocean stewards in Hinnavaru.',
     progress: 90,
     progressLabel: '90% of 2024-25 curriculum delivered',
-    funded: 'MVR 95,000',
-    target: 'MVR 95,000',
     actionPrimary: '🎒 Enroll Student',
     actionPrimaryDone: '✅ Enrolled!',
     actionSecondary: '🖼️ View Event Gallery',
@@ -368,9 +362,7 @@ export const PROJECTS_LIST = [
     title: 'Deep Lagoon Monitoring Array',
     desc: 'Installing 12 IoT sensor buoys to provide real-time temperature, pH, and turbidity data directly into the Live Lagoon dashboard.',
     progress: 20,
-    progressLabel: '20% of funding secured',
-    funded: 'MVR 60,000',
-    target: 'MVR 300,000',
+    progressLabel: '20% of goal secured',
     actionPrimary: '📡 Fund a Buoy',
     actionPrimaryDone: '✅ Pledged!',
     actionSecondary: '📋 Technical Specs',
@@ -385,9 +377,7 @@ export const PROJECTS_LIST = [
     title: 'Reef Plastic Extraction',
     desc: 'Bi-monthly cleaning of the harbor and Shipyard site to remove derelict fishing gear and household waste.',
     progress: 45,
-    progressLabel: '45% of Q2 goal reached',
-    funded: 'MVR 12,000',
-    target: 'MVR 30,000',
+    progressLabel: '45% of extraction goal reached',
     actionPrimary: '🧹 Volunteer',
     actionPrimaryDone: '✅ Signed Up!',
     actionSecondary: '📊 Impact Data',
@@ -400,9 +390,7 @@ export const PROJECTS_LIST = [
     badge: "Monitoring",
     badgeClass: "badge-teal",
     progress: 100,
-    progressLabel: "Full Coverage",
-    funded: "$1.2k",
-    target: "$1.2k",
+    progressLabel: "Full 100% Coverage",
     desc: "Bi-weekly scanning of all 180+ frames in the nursery area to track survival and growth rates.",
     status: "active",
     actionPrimary: "Join Watch",
@@ -417,9 +405,7 @@ export const PROJECTS_LIST = [
     badge: 'Sweep',
     badgeClass: 'badge-coral',
     progress: 75,
-    progressLabel: 'Registration Open',
-    funded: '45/60',
-    target: 'Volunteers',
+    progressLabel: '75% Capacity Reached',
     desc: 'Community beach cleanup focused on the Shipyard vicinity and the East Lagoon shoreline.',
     title: 'Shipyard Cleanup Day',
     actionPrimary: 'Register',
@@ -434,22 +420,13 @@ export const PROJECTS_LIST = [
     badge: 'Education',
     badgeClass: 'badge-teal',
     progress: 40,
-    progressLabel: 'Curriculum Finalized',
-    funded: 'MVR 25,000',
-    target: 'MVR 60,000',
+    progressLabel: '40% Preparation Complete',
     title: 'Marine Biology Workshop',
-    desc: 'A hands-on, community-led program designed for Hinnavaru youth to master the science of reef restoration. Includes local coral ID guides, survey diving (for older students), and nursery maintenance basics using Hinnavaru Blue protocols.',
+    desc: 'A hands-on, community-led program designed for Hinnavaru youth to master the science of reef restoration.',
     actionPrimary: 'Notify Me',
     actionPrimaryDone: 'Notified',
     actionSecondary: 'Syllabus Details',
-    actionSecondaryLink: '#archive',
-    syllabus: [
-      '1. Introduction to the Hinnavaru Ecosystem',
-      '2. Coral Biology & Species ID (Lhaviyani Focus)',
-      '3. Restoration Science: The Repurposed Frame Model',
-      '4. Monitoring Tools: From Slates to IoT Buoys',
-      '5. Climate Adaptation: Finding Resilient Colonies'
-    ]
+    actionSecondaryLink: '#archive'
   },
   {
     category: 'sweep',
@@ -458,9 +435,7 @@ export const PROJECTS_LIST = [
     badge: 'Sweep',
     badgeClass: 'badge-coral',
     progress: 90,
-    progressLabel: 'In Progress',
-    funded: '12 Nets',
-    target: '15 Nets',
+    progressLabel: '90% Retrieval Plan Met',
     title: 'Ghost Net Removal',
     desc: 'Targeted retrieval of discarded fishing nets from the deep slopes of the outer reef.',
     actionPrimary: 'Join Dive',
@@ -526,7 +501,7 @@ export const SPONSOR_TIERS = [
 export const NURSERY_SUMMARY = {
   active_frames: 180,
   survival_rate: 82,
-  total_funds: 'MVR 3.2M',
+  total_funds: '100% Impact',
   field_allocation: 100
 }
 
@@ -607,7 +582,7 @@ export const HOME_CONTENT = {
   cta_banner: {
     badge: "🪸 Make an Impact",
     title: "Adopt a Coral Frame",
-    text: "For as little as MVR 500/month, you can sponsor a coral frame and watch it grow on our Live Lagoon map. Your name, forever etched in the reef.",
+    text: "Join the mission. Sponsor a coral frame and watch it grow on our Live Lagoon map. Your commitment, forever etched in the reef.",
     bg_image: "/Adopt-Frame.png"
   }
 }
@@ -678,8 +653,8 @@ export const REGISTRY_CONTENT = {
     title: "Transparency Hub",
     desc: "Accountability is not optional. Every MVR donated is tracked and reported. Every frame has a story.",
     funds: {
-      title: "💰 Fund Allocation (2024 Actuals)",
-      total: "Total raised: MVR 1,248,000"
+      title: "💰 Deployment Success Rate (2025)",
+      total: "Avg. Frame Survival: 82% Nationwide"
     },
     docs: {
       title: "📁 Official Documents",

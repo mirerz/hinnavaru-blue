@@ -286,8 +286,10 @@ export default function LiveLagoon() {
       {/* Leaflet popup custom styling */}
       <style>{`
         .lagoon-popup .leaflet-popup-content-wrapper {
-          background: #041428;
-          border: 1px solid rgba(14,165,233,0.2);
+          background: rgba(4, 20, 40, 0.85);
+          -webkit-backdrop-filter: blur(12px);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(14, 165, 233, 0.2);
           border-radius: 12px;
           color: #e2e8f0;
           box-shadow: 0 8px 32px rgba(0,0,0,0.5);

@@ -292,6 +292,35 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* 7. BLUE FRONTIER VISION */}
+      <section className="section" style={{ background: '#020b18', padding: '100px 0' }}>
+         <div className="container" style={{ textAlign: 'center' }}>
+            <div className="badge badge-teal" style={{ marginBottom: '16px' }}>🔵 The Blueprint</div>
+            <h2 className="section-title">The <span className="gradient-text">Blue Frontier</span> Vision</h2>
+            <p className="section-sub" style={{ margin: '0 auto 40px' }}>
+               Scaling the Hinnavaru model across the Noonu, Raa, Baa, and Lhaviyani Atolls. A national blueprint for community-led restoration.
+            </p>
+            
+            <div style={{ maxWidth: '1000px', margin: '0 auto 64px', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
+               <img src="/vision-banner.png" alt="Blue Frontier Vision" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            </div>
+
+            <div className="stats-grid" style={{ marginBottom: 0 }}>
+               {[
+                 { num: '14', label: 'TARGET ATOLLS' },
+                 { num: '500+', label: 'CERTIFIED DIVERS' },
+                 { num: '10k+', label: 'GARDENED CORALS' },
+                 { num: '100%', label: 'OPEN DATA' },
+               ].map((s, i) => (
+                 <div className="card" key={i} style={{ padding: '32px' }}>
+                    <div className="hero-stat-num" style={{ fontSize: '2.5rem' }}>{s.num}</div>
+                    <div className="hero-stat-label" style={{ letterSpacing: '0.1em' }}>{s.label}</div>
+                 </div>
+               ))}
+            </div>
+         </div>
+      </section>
     </>
   )
 }
