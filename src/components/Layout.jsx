@@ -81,9 +81,9 @@ export default function Layout() {
                 <Link to="/registry" onClick={() => setMenuOpen(false)}>Guardian Registry</Link>
                 <Link to="/registry#transparency" onClick={() => setMenuOpen(false)}>Transparency Hub (Amaanaiy)</Link>
                 <Link to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Lagoon Map</Link>
+                <Link to="/blog" onClick={() => setMenuOpen(false)}>Blog Posts</Link>
               </div>
             </li>
-            <li className="hide-mobile"><NavLink to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Lagoon</NavLink></li>
           </ul>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -121,46 +121,54 @@ export default function Layout() {
 
       <footer className="footer">
         <div className="container">
-          <div className="footer-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
+          <div className="footer-grid" style={{ 
+            display: 'grid', 
+            gridTemplateColumns: '1.2fr 1fr 1fr 1fr', 
+            gap: '48px',
+            alignItems: 'start'
+          }}>
             <div className="footer-brand">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" style={{ width: '48px', height: '48px' }} />
-                <span style={{ fontWeight: 800, fontSize: '1.4rem', color: '#fff', letterSpacing: '0.02em' }}>Hinnavaru <span style={{ color: 'var(--teal)' }}>Blue</span></span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', height: '32px', marginBottom: '16px' }}>
+                <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" style={{ width: '32px', height: '32px' }} />
+                <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#fff', letterSpacing: '0.02em', textTransform: 'uppercase' }}>Hinnavaru <span style={{ color: 'var(--teal)' }}>Blue</span></span>
               </div>
-              <p>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Lhaviyani Atoll, Maldives. Every frame counts.</p>
+              <p style={{ fontSize: '0.85rem', lineHeight: '1.6', opacity: 0.7 }}>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Maldives. Every frame counts.</p>
             </div>
             <div className="footer-col">
-              <h4>Navigate</h4>
+              <h4 style={{ height: '32px', display: 'flex', alignItems: 'center' }}>Navigate</h4>
               <ul>
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/about">Our Roots</Link></li>
                 <li><Link to="/projects">Projects</Link></li>
               </ul>
             </div>
-            <div className="footer-col" style={{ paddingLeft: '32px' }}>
-              <h4>Transparency</h4>
+            <div className="footer-col">
+              <h4 style={{ height: '32px', display: 'flex', alignItems: 'center' }}>Transparency</h4>
               <ul>
                 <li><Link to="/registry">Reef Guardians</Link></li>
                 <li><Link to="/registry#transparency">Transparency Hub</Link></li>
                 <li><Link to="/live-lagoon">Live Lagoon Map</Link></li>
               </ul>
             </div>
-            <div className="footer-col" style={{ paddingLeft: '32px' }}>
-              <h4>Get Involved</h4>
+            <div className="footer-col">
+              <h4 style={{ height: '32px', display: 'flex', alignItems: 'center' }}>Get Involved</h4>
               <ul>
                 <li><Link to="/sponsor">Adopt or Partner with Us</Link></li>
                 <li><a href={`mailto:${CMS_CONFIG.contact_email}`}>Contact Support</a></li>
-                <li><Link to="/blog">Blog</Link></li>
+                <li><Link to="/blog">Blog Posts</Link></li>
               </ul>
             </div>
 
           </div>
-          <div className="footer-bottom">
+          <div className="footer-bottom" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: '64px', paddingTop: '32px' }}>
             <span>© 2026 Hinnavaru Blue Initiative · NGO Reg. No. {CMS_CONFIG.ngo_registration}</span>
             <span>Made with 🪸 by Page 729</span>
           </div>
         </div>
       </footer>
+    </>
+  )
+}r>
 
 
     </>

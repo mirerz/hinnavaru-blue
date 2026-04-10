@@ -241,7 +241,6 @@ export const DOCUMENT_VAULTS = [
   { icon: '📜', title: 'NGO Registration Certificate', type: 'Official License', date: 'Feb 2026', category: 'Admin' },
   { icon: '📚', title: 'Coral ID Guide (Lhaviyani Edition)', type: 'Educational', date: '2025', category: 'Awareness' },
   { icon: '🌊', title: 'Coastal Resilience Handbook', type: 'Education', date: '2026', category: 'Awareness' },
-  { icon: '💰', title: 'Financial Audit Report 2025', type: 'Official Audit', date: 'Mar 2026', category: 'Admin' },
   { icon: '🪸', title: 'Quarterly Impact Assessment', type: 'Data Report', date: 'Mar 2026', category: 'Admin' },
 ]
 

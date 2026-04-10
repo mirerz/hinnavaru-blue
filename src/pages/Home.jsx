@@ -145,7 +145,16 @@ export default function Home() {
                       </div>
                     </div>
                   </>
-                ) : <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Awaiting hotline approval...</div>}
+                ) : (
+                  <div style={{ height: '100%', position: 'relative' }}>
+                    <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}>
+                      <source src="/pulse-update.mp4" type="video/mp4" />
+                    </video>
+                    <div className="story-overlay">
+                      <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--teal)' }}>LATEST MISSION FEED</div>
+                    </div>
+                  </div>
+                )}
                 
                 {videoStories.length > 1 && (
                   <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, transform: 'translateY(-50%)', display: 'flex', justifyContent: 'space-between', padding: '0 12px', pointerEvents: 'none' }}>
@@ -182,7 +191,14 @@ export default function Home() {
                       </div>
                     </div>
                   </>
-                ) : <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Syncing with archive...</div>}
+                ) : (
+                  <div style={{ height: '100%', position: 'relative' }}>
+                    <img src="/Living-L.png" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} alt="Lagoon Focus" />
+                    <div className="story-overlay">
+                      <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--teal)' }}>LATEST MISSION FOCUS</div>
+                    </div>
+                  </div>
+                )}
 
                 {photoStories.length > 1 && (
                   <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, transform: 'translateY(-50%)', display: 'flex', justifyContent: 'space-between', padding: '0 12px', pointerEvents: 'none' }}>

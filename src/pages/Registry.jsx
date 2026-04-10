@@ -18,6 +18,14 @@ export default function Registry() {
   const [showDocModal, setShowDocModal] = useState(false)
   const [selectedDoc, setSelectedDoc] = useState('')
   const [visibleCount, setVisibleCount] = useState(10)
+  const { hash } = window.location
+
+  useEffect(() => {
+    if (hash === '#transparency') {
+      const el = document.getElementById('transparency')
+      if (el) el.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [hash])
 
   const filtered = useMemo(() => {
     return CORAL_REGISTRY.filter(c => {

@@ -116,11 +116,10 @@ export default function Projects() {
       {/* 4. CAPTURE STREAM (Horizontal Scroller) */}
       <section className="section capture-stream-section" style={{ background: 'rgba(0,0,0,0.2)', borderTop: '1px solid rgba(255,255,255,0.05)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
         <div className="container">
-          <div className="stream-header" style={{ marginBottom: '24px' }}>
-             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--teal)', fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px' }}>
-               <span className="live-dot" /> <span>PROGRAM ARCHIVES</span>
-             </div>
-             <h2 className="section-title" style={{ fontSize: '1.5rem', margin: 0 }}>Latest <span className="gradient-text">Capture Stream</span></h2>
+          <div className="stream-header" style={{ marginBottom: '32px', textAlign: 'center' }}>
+             <div className="badge badge-teal" style={{ marginBottom: '16px' }}>📂 THE DEEP ARCHIVE</div>
+             <h2 className="section-title" style={{ fontSize: '2rem', marginBottom: '8px' }}>Program <span className="gradient-text">Capture Stream</span></h2>
+             <p style={{ opacity: 0.7, fontSize: '0.9rem' }}>Exploring the historical mission data and field observations from the Lhaviyani frontline.</p>
           </div>
 
           <div className="horizontal-scroller-container">
