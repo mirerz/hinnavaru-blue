@@ -14,14 +14,30 @@ Almost everything is managed in **[src/data/cms.js](file:///src/data/cms.js)**.
 4. **Official Terms:** Edit `CMS_CONFIG` for the current Year, Registration Number, or Atoll codes.
 5. **Media Sync Folder:** In `CMS_CONFIG`, update the `drive_id` to point to a new Google Drive folder.
 
-## 🔄 Media Pipeline Control (Google Drive Sync)
+## 🔑 1. Google Drive & API Setup
+To enable the automated media pipeline, you need to connect the website to your Google Cloud Project (**adhu-492602**).
 
-The website is synced with a Google Drive folder for live visuals.
+### **Step A: Generate Your Key**
+1.  Go to the [Google Cloud Console](https://console.cloud.google.com/iam-admin/serviceaccounts?project=adhu-492602).
+2.  Find your existing service account (or create a new one: `hbi-media-sync`).
+3.  Click on the **Actions (three dots)** for that account and select **Manage Keys**.
+4.  Click **Add Key** > **Create New Key** > **JSON**.
+5.  A file will download to your computer.
 
-### To Change the Google Drive Folder
+### **Step B: Apply the Key**
+**Option 1: The Local File Method (Quickest)**
+*   Rename the downloaded file to `service-account-key.json`.
+*   Place it in the project root folder: `c:\Users\Surface\OneDrive\Documents\hinnavaru-blue\`.
 
-1. Open your Google Drive folder.
-2. The Folder ID is the last part of the URL (e.g., `1xxx...xxx`).
+**Option 2: The Security Method (Best for GitHub)**
+*   Open the downloaded JSON file and copy all its text.
+*   Set a local environment variable named `GOOGLE_SERVICE_ACCOUNT_JSON` with that text as the value.
+*   *For GitHub Actions:* Add this as a **Secret** named `GOOGLE_SERVICE_ACCOUNT_JSON`.
+
+### **Step C: Share the Folder**
+*   Open your Google Drive.
+*   Right-click your Media Folder (`1RButp5B8quSmH1NEA6E9N8YD_uIkxtE_`).
+*   Click **Share** and add the **Email Address** of your Service Account (found in the JSON file) as a **Viewer**.
 3. Paste this ID into **[src/data/cms.js](file:///src/data/cms.js)** under `media_automation.drive_id`.
 4. The background sync script will automatically begin using the new folder during its next run.
 

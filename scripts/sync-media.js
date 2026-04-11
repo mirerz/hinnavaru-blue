@@ -33,23 +33,36 @@ const DRIVE_FOLDER_ID = process.env.DRIVE_FOLDER_ID || getDriveIdFromCMS() || '1
 const OUTPUT_DIR = path.join(__dirname, '../public/media-hub');
 const MANIFEST_PATH = path.join(__dirname, '../src/data/media-manifest.json');
 
-// 2. INITIALIZE DRIVE API
-// Note: Requires a service-account-key.json in the root directory.
-async function sync() {
-  console.log('--- Starting Media Sync from Google Drive ---');
+  // 2. INITIALIZE DRIVE API
+  // Note: Supports both service-account-key.json OR GOOGLE_SERVICE_ACCOUNT_JSON env var.
+  async function sync() {
+    console.log('--- Starting Media Sync from Google Drive ---');
 
-  // Verify key exists
-  if (!fs.existsSync(path.join(__dirname, '../service-account-key.json'))) {
-     console.error('Error: service-account-key.json not found. Please provide credentials.');
-     return;
-  }
+    let authConfig;
+    const keyPath = path.join(__dirname, '../service-account-key.json');
 
-  const auth = new google.auth.GoogleAuth({
-    keyFile: './service-account-key.json',
-    scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-  });
+    if (fs.existsSync(keyPath)) {
+      console.log('✅ Using service-account-key.json from disk.');
+      authConfig = {
+        keyFile: keyPath,
+        scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+      };
+    } else if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
+      console.log('✅ Using credentials from GOOGLE_SERVICE_ACCOUNT_JSON env var.');
+      const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
+      authConfig = {
+        credentials,
+        scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+      };
+    } else {
+      console.error('❌ Error: No credentials found.');
+      console.log('   Please place service-account-key.json in root OR set GOOGLE_SERVICE_ACCOUNT_JSON env var.');
+      console.log('   See TECHNICAL_GUIDE.md for setup instructions.');
+      return;
+    }
 
-  const drive = google.drive({ version: 'v3', auth });
+    const auth = new google.auth.GoogleAuth(authConfig);
+    const drive = google.drive({ version: 'v3', auth });
 
   try {
     // A. List Files
