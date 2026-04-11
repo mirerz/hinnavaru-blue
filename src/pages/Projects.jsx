@@ -1,16 +1,18 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { PROJECTS_LIST, PROJECT_CATEGORIES, CMS_CONFIG } from '../data/cms'
 import MANIFEST from '../data/media-manifest.json'
 
 export default function Projects() {
-  const [searchParams] = useSearchParams()
-  const initialCat = searchParams.get('cat') || 'coral'
-  
-  const [activeTab, setActiveTab] = useState(initialCat)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const activeTab = searchParams.get('cat') || 'coral'
   const [selectedProject, setSelectedProject] = useState(null)
   
   const scrollerRef = useRef(null)
+
+  const handleTabChange = (catId) => {
+    setSearchParams({ cat: catId })
+  }
 
   // Combined media from manifest for gallery and featured
   const allMedia = useMemo(() => {
@@ -19,20 +21,13 @@ export default function Projects() {
     return [...slides, ...archives]
   }, [])
 
-  // Filter media by category for the featured frame (based on filename or keyword if possible, else just use pool)
+  // Filter media by category for the featured frame
   const featuredMedia = useMemo(() => {
-    // Ideally we filter by activeTab keywords. For now, we take from pool.
     const keyword = activeTab === 'coral' ? 'coral' : activeTab === 'sweep' ? 'clean' : 'aware'
     const filtered = allMedia.filter(m => m.toLowerCase().includes(keyword))
     return filtered.length > 0 ? filtered[0] : allMedia[0] || '/Project-Progs.png'
   }, [activeTab, allMedia])
 
-  useEffect(() => {
-    const cat = searchParams.get('cat')
-    if (cat) setActiveTab(cat)
-  }, [searchParams])
-
-  const filteredProjects = PROJECTS_LIST.filter(p => p.category === activeTab)
   const activeCatObj = PROJECT_CATEGORIES.find(c => c.id === activeTab)
 
   return (
@@ -82,7 +77,7 @@ export default function Projects() {
               <button 
                 key={cat.id} 
                 className={`mockup-tab-btn ${activeTab === cat.id ? 'active' : ''}`}
-                onClick={() => setActiveTab(cat.id)}
+                onClick={() => handleTabChange(cat.id)}
               >
                 {cat.title}
               </button>
