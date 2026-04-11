@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { PROJECTS_LIST, PROJECT_CATEGORIES, CMS_CONFIG } from '../data/cms'
 import MANIFEST from '../data/media-manifest.json'
@@ -8,7 +8,6 @@ export default function Projects() {
   const activeTab = searchParams.get('cat') || 'coral'
   const [selectedProject, setSelectedProject] = useState(null)
   
-  const scrollerRef = useRef(null)
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const handleTabChange = (catId) => {

@@ -9,8 +9,7 @@ jobs:
   sync-and-deploy:
     runs-on: ubuntu-latest
     env:
-      GOOGLE_SERVICE_ACCOUNT_JSON: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}"
-      DRIVE_FOLDER_ID: "${{ secrets.DRIVE_FOLDER_ID }}"
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -18,13 +17,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install Dependencies
         run: npm install
 
       - name: Run Media Sync
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
         run: node scripts/sync-media.js
 
       - name: Build and Deploy
