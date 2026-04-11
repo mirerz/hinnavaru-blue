@@ -8,6 +8,9 @@ on:
 jobs:
   sync-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      GOOGLE_SERVICE_ACCOUNT_JSON: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}"
+      DRIVE_FOLDER_ID: "${{ secrets.DRIVE_FOLDER_ID }}"
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -22,9 +25,6 @@ jobs:
         run: npm install
 
       - name: Run Media Sync
-        env:
-          GOOGLE_SERVICE_ACCOUNT_JSON: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}"
-          DRIVE_FOLDER_ID: "${{ secrets.DRIVE_FOLDER_ID }}"
         run: node scripts/sync-media.js
 
       - name: Build and Deploy
