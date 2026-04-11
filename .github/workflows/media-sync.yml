@@ -23,8 +23,8 @@ jobs:
 
       - name: Run Media Sync
         env:
-          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-          DRIVE_FOLDER_ID: ${{ secrets.DRIVE_FOLDER_ID }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: "${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}"
+          DRIVE_FOLDER_ID: "${{ secrets.DRIVE_FOLDER_ID }}"
         run: node scripts/sync-media.js
 
       - name: Build and Deploy
