@@ -28,8 +28,7 @@ export default function Layout() {
       <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
         <div className="container nav-container">
           <Link to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
-            <img src="/logo-circle.png" alt="Hinnavaru Blue Logo" />
-            <span>Hinnavaru <span className="gradient-text">Blue</span></span>
+            <img src="/logo-circle.png" alt="Hinnavaru Blue" />
           </Link>
 
           <ul className={`nav-links ${menuOpen ? 'show' : ''}`}>
@@ -54,6 +53,7 @@ export default function Layout() {
                 Projects <span style={{ fontSize: '0.7rem', verticalAlign: 'middle', opacity: 0.6, display: 'inline-block', transform: projectsOpen ? 'rotate(180deg)' : 'none', transition: '0.2s' }}>▼</span>
               </NavLink>
               <div className={`nav-dropdown ${projectsOpen ? 'show' : ''}`}>
+                <Link to="/projects" style={{ fontWeight: 800, color: 'var(--teal)' }} onClick={() => setMenuOpen(false)}>→ VIEW ALL MISSIONS</Link>
                 <Link to="/projects?cat=coral" onClick={() => setMenuOpen(false)}>Coral Restoration</Link>
                 <Link to="/projects?cat=sweep" onClick={() => setMenuOpen(false)}>Sweep Efforts</Link>
                 <Link to="/projects?cat=edu" onClick={() => setMenuOpen(false)}>Edu Awareness</Link>
@@ -78,31 +78,32 @@ export default function Layout() {
                 Reef Guardians <span style={{ fontSize: '0.7rem', verticalAlign: 'middle', opacity: 0.6, display: 'inline-block', transform: registryOpen ? 'rotate(180deg)' : 'none', transition: '0.2s' }}>▼</span>
               </NavLink>
               <div className={`nav-dropdown ${registryOpen ? 'show' : ''}`}>
-                <Link to="/registry" onClick={() => setMenuOpen(false)}>Guardian Registry</Link>
-                <Link to="/registry#transparency" onClick={() => setMenuOpen(false)}>Transparency Hub (Amaanaiy)</Link>
-                <Link to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Lagoon Map</Link>
-                <Link to="/blog" onClick={() => setMenuOpen(false)}>Blog Posts</Link>
+                <Link to="/registry" style={{ fontWeight: 800, color: 'var(--teal)' }} onClick={() => setMenuOpen(false)}>→ GUARDIAN IMPACT HUB</Link>
+                <Link to="/registry" onClick={() => setMenuOpen(false)}>Registry Search</Link>
+                <Link to="/registry#transparency" onClick={() => setMenuOpen(false)}>Public Transparency (Amaanaiy)</Link>
+                <Link to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Mission Map</Link>
+                <Link to="/blog" onClick={() => setMenuOpen(false)}>Program Blog</Link>
               </div>
             </li>
           </ul>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div className="nav-fab-container hide-mobile">
-              <div className="nav-fab-main" style={{ padding: 0, overflow: 'hidden' }}>
+              <div className="nav-fab-main" style={{ padding: 0, overflow: 'hidden', cursor: 'pointer' }}>
                 <img src="/hotline-icon.png" alt="Support" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div className="nav-fab-menu">
-                <a href={`tel:${CMS_CONFIG.hotline}`} className="fab-item" style={{ background: 'var(--ocean-surface)' }}>
-                  <span className="fab-label">HOTLINE (Mobile)</span>
-                  📞
+                <a href={`tel:${CMS_CONFIG.hotline}`} className="fab-item" style={{ background: 'var(--ocean-surface)', cursor: 'pointer' }}>
+                  <span className="fab-label">DIRECT HOTLINE</span>
+                  <span className="fab-icon">📞</span>
                 </a>
-                <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="fab-item whatsapp-bg">
-                  <span className="fab-label">SUPPORT (WhatsApp)</span>
-                  💬
+                <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="fab-item whatsapp-bg" style={{ cursor: 'pointer' }}>
+                  <span className="fab-label">WHATSAPP CHAT</span>
+                  <span className="fab-icon">💬</span>
                 </a>
-                <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="fab-item telegram-bg">
-                  <span className="fab-label">GUARDIANS FEED (Telegram)</span>
-                  ✈️
+                <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="fab-item telegram-bg" style={{ cursor: 'pointer' }}>
+                  <span className="fab-label">TELEGRAM FEED</span>
+                  <span className="fab-icon">✈️</span>
                 </a>
               </div>
             </div>
