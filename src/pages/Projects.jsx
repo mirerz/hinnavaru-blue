@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { PROJECTS_LIST, PROJECT_CATEGORIES, CMS_CONFIG } from '../data/cms'
+import { PROJECTS_LIST, PROJECT_CATEGORIES, CMS_CONFIG, CORAL_REGISTRY } from '../data/cms'
 import MANIFEST from '../data/media-manifest.json'
 
 export default function Projects() {
@@ -14,7 +14,6 @@ export default function Projects() {
     setSearchParams({ cat: catId })
   }
 
-  // Cinematic Slideshow Logic
   const heroImages = useMemo(() => {
     return MANIFEST.slideshow.length > 0 
       ? MANIFEST.slideshow.map(m => m.startsWith('/') ? m : `/media-hub/${m}`)
@@ -29,7 +28,6 @@ export default function Projects() {
     return () => clearInterval(timer)
   }, [heroImages])
 
-  // Combined media archives
   const allMedia = useMemo(() => {
     const archives = MANIFEST.archives.map(m => `/media-hub/${m}`)
     return archives
@@ -48,7 +46,6 @@ export default function Projects() {
     <div className="projects-page">
       {/* 1. CINEMATIC HERO SLIDESHOW */}
       <section className="projects-hero section" style={{ position: 'relative', overflow: 'hidden', padding: '180px 0 120px', textAlign: 'center', minHeight: '60vh', display: 'flex', alignItems: 'center' }}>
-        {/* Animated Background Layers */}
         {heroImages.map((img, idx) => (
           <div key={idx} style={{
             position: 'absolute', inset: 0, zIndex: 0,
@@ -60,18 +57,16 @@ export default function Projects() {
             filter: 'brightness(0.7) contrast(1.1)'
           }} />
         ))}
-        
         <div style={{
           position: 'absolute', inset: 0, zIndex: 1,
           background: 'linear-gradient(to bottom, var(--ocean-deep) 0%, rgba(2,11,24,0.4) 50%, var(--ocean-deep) 100%)'
         }} />
-
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div className="badge animate-reveal" style={{ marginBottom: '24px', background: 'rgba(13,211,197,0.2)', borderColor: 'var(--teal)', color: 'white' }}>🌊 MISSION LOG</div>
-          <h1 className="section-title animate-reveal" style={{ fontSize: '4rem', marginBottom: '20px', textShadow: '0 4px 30px rgba(0,0,0,0.5)' }}>
+          <h1 className="section-title animate-reveal" style={{ fontSize: '4rem', marginBottom: '20px' }}>
             Deep Sea <span className="gradient-text">Frontlines</span>
           </h1>
-          <p className="section-sub animate-reveal" style={{ margin: '0 auto', maxWidth: '800px', fontSize: '1.3rem', lineHeight: '1.6', opacity: 0.9 }}>
+          <p className="section-sub animate-reveal" style={{ margin: '0 auto', maxWidth: '800px' }}>
             Live archives from our Hinnavaru conservation sites. From coral nurseries to waste management — the data of resilience.
           </p>
         </div>
@@ -79,10 +74,6 @@ export default function Projects() {
 
       {/* 2. EXPLORATION INTERFACE */}
       <section className="section-sm" style={{ background: 'var(--ocean-deep)', paddingTop: '60px' }}>
-        <div className="container" style={{ textAlign: 'center', marginBottom: '40px' }}>
-           <h2 className="section-title" style={{ fontSize: '2.5rem' }}>Active <span className="gradient-text">Sectors</span></h2>
-        </div>
-        
         <div className="container">
           <div className="mockup-tab-nav">
             {PROJECT_CATEGORIES.map(cat => (
@@ -102,7 +93,7 @@ export default function Projects() {
       <section className="section-sm" style={{ background: 'var(--ocean-deep)', paddingBottom: '80px' }}>
         <div className="container">
           <div className="featured-mission-container animate-reveal" key={activeTab}>
-            <div className="featured-mission-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px' }}>
               <div>
                 <div className="badge badge-teal" style={{ marginBottom: '10px' }}>MISSION: {activeCatObj?.title.toUpperCase()}</div>
                 <h2 style={{ fontSize: '2.5rem', margin: 0 }}>{activeCatObj?.title}</h2>
@@ -114,18 +105,16 @@ export default function Projects() {
             
             <div className="featured-media-frame" style={{ marginTop: '30px' }}>
               <div className="featured-media-inner">
-                <img src={featuredMedia} alt="Featured Archive" style={{ transition: 'all 0.5s ease' }} />
+                <img src={featuredMedia} alt="Featured Archive" />
                 <div className="pulse-tag">
-                  <span className="live-dot" /> 
-                  <span>LATEST CAPTURE</span>
+                  <span className="live-dot" /> <span>LATEST CAPTURE</span>
                 </div>
               </div>
             </div>
 
-            {/* Sub-grid for sector projects */}
             <div style={{ marginTop: '50px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '30px' }}>
               {filteredProjects.map((p, i) => (
-                <div key={i} className="card animate-reveal" style={{ background: 'rgba(255,255,255,0.02)', padding: '30px', cursor: 'pointer', transition: 'transform 0.3s' }} onClick={() => setSelectedProject(p)}>
+                <div key={i} className="card animate-reveal" style={{ background: 'rgba(255,255,255,0.02)', padding: '30px', cursor: 'pointer' }} onClick={() => setSelectedProject(p)}>
                   <div className="badge badge-teal" style={{ marginBottom: '15px' }}>{p.progress}% COMPLETE</div>
                   <h4 style={{ fontSize: '1.3rem', marginBottom: '10px' }}>{p.title}</h4>
                   <p style={{ opacity: 0.7, fontSize: '0.9rem' }}>{p.desc.substring(0, 100)}...</p>
@@ -134,6 +123,35 @@ export default function Projects() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. NURSERY DIRECTORY (Reef Guardians) */}
+      <section className="section" style={{ background: '#020b18', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div className="container">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
+            <div>
+              <div className="badge badge-teal" style={{ marginBottom: '12px' }}>🛡️ Nursery Directory</div>
+              <h2 className="section-title" style={{ textAlign: 'left', margin: 0 }}>Active <span className="gradient-text">Guardians</span></h2>
+            </div>
+            <Link to="/registry" className="btn btn-outline btn-sm">Full Registry →</Link>
+          </div>
+
+          <div className="guardian-slider-wrap">
+            <div className="guardian-slider-inner">
+               {CORAL_REGISTRY.slice(0, 10).map((c, i) => (
+                 <div key={i} className="guardian-slide-card card" style={{ minWidth: '220px', padding: '24px', textAlign: 'center' }}>
+                    <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>🪸</div>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--teal)', marginBottom: '4px' }}>{c.id}</div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '8px', minHeight: '2.4em' }}>{c.species}</div>
+                    <div style={{ fontSize: '0.75rem', opacity: 0.6 }}>Guardian: {c.adopter}</div>
+                    <div className="progress-bar" style={{ marginTop: '16px', height: '4px' }}>
+                      <div className="progress-fill" style={{ width: `${c.survival}%` }} />
+                    </div>
+                 </div>
+               ))}
             </div>
           </div>
         </div>
@@ -217,23 +235,39 @@ export default function Projects() {
           background: var(--teal);
           box-shadow: 0 0 15px var(--teal);
         }
-
+        .guardian-slider-wrap {
+          overflow-x: auto;
+          padding: 20px 0 40px;
+          margin: 0 -20px;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .guardian-slider-wrap::-webkit-scrollbar { display: none; }
+        .guardian-slider-inner {
+          display: flex;
+          gap: 20px;
+          padding: 0 20px;
+        }
+        .guardian-slide-card {
+          flex: 0 0 auto;
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(255,255,255,0.05);
+          transition: transform 0.3s;
+        }
+        .guardian-slide-card:hover { transform: translateY(-5px); border-color: var(--teal); }
         .featured-mission-container {
           background: rgba(255,255,255,0.02);
           border: 1px solid rgba(255,255,255,0.05);
           border-radius: 30px;
           padding: 60px;
-          -webkit-backdrop-filter: blur(20px);
           backdrop-filter: blur(20px);
         }
-
         .featured-media-frame {
           position: relative;
           padding: 15px;
           background: rgba(0,0,0,0.3);
           border: 1px solid rgba(13,211,197,0.3);
           border-radius: 30px;
-          box-shadow: 0 0 60px rgba(13,211,197,0.1);
         }
         .featured-media-inner {
           position: relative;
@@ -241,11 +275,7 @@ export default function Projects() {
           border-radius: 20px;
           overflow: hidden;
         }
-        .featured-media-inner img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
+        .featured-media-inner img { width: 100%; height: 100%; object-fit: cover; }
         .pulse-tag {
           position: absolute;
           top: 25px;
@@ -260,8 +290,6 @@ export default function Projects() {
           font-size: 0.75rem;
           font-weight: 900;
         }
-
-        .horizontal-scroller::-webkit-scrollbar { display: none; }
         .mini-card {
            background: rgba(255,255,255,0.03);
            padding: 16px;

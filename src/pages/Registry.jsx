@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { CORAL_REGISTRY, FUND_ALLOCATION, DOCUMENT_VAULTS, CMS_CONFIG, REGISTRY_CONTENT } from '../data/cms'
 import MANIFEST from '../data/media-manifest.json'

@@ -6,6 +6,7 @@ import Projects from './pages/Projects'
 import Registry from './pages/Registry'
 import Sponsor from './pages/Sponsor'
 import LiveLagoon from './pages/LiveLagoon'
+import Blog from './pages/Blog'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="registry" element={<Registry />} />
         <Route path="sponsor" element={<Sponsor />} />
         <Route path="live-lagoon" element={<LiveLagoon />} />
+        <Route path="blog" element={<Blog />} />
       </Route>
     </Routes>
   )

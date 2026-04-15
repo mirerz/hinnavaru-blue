@@ -28,7 +28,7 @@ export const CMS_CONFIG = {
   },
   media_automation: {
     // 📂 CHANGE MEDIA FOLDER: Copy the Folder ID from Google Drive URL and paste it here
-    drive_id: "1RButp5B8quSmH1NEA6E9N8YD_uIkxtE_",
+    drive_id: "12yWK3lhwcqiTNV6yUS6Insgqhg9r9jx7",
     sync_folder: "public/media-hub",
     optimize_to: "webp",
     naming_rules: {
@@ -300,9 +300,9 @@ export const LAGOON_STORIES = [
 
 // 8. PROJECT CATEGORIES (For Navbar Dropdown)
 export const PROJECT_CATEGORIES = [
-  { id: 'coral', title: 'Coral Restoration', slug: 'restoration' },
-  { id: 'sweep', title: 'Sweep Efforts', slug: 'sweep' },
-  { id: 'edu', title: 'Edu Awareness', slug: 'education' },
+  { id: 'coral', title: 'Coral Restoration', slug: 'restoration', emoji: '🪸' },
+  { id: 'sweep', title: 'Sweep Efforts', slug: 'sweep', emoji: '🧹' },
+  { id: 'edu', title: 'Edu Awareness', slug: 'education', emoji: '📚' },
 ]
 
 // 9. ACTIVE PROJECTS & PROGRAMS

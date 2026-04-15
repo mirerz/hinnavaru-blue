@@ -4,7 +4,7 @@
  * This script connects to the HBI Google Drive and synchronizes high-resolution
  * media to the local web environment, optimizing images to WebP format.
  * 
- * Folder ID: 1RButp5B8quSmH1NEA6E9N8YD_uIkxtE_
+ * Folder ID: 12yWK3lhwcqiTNV6yUS6Insgqhg9r9jx7
  */
 
 import { google } from 'googleapis';
@@ -29,8 +29,10 @@ function getDriveIdFromCMS() {
   }
 }
 
-const DRIVE_FOLDER_ID = process.env.DRIVE_FOLDER_ID || getDriveIdFromCMS() || '1RButp5B8quSmH1NEA6E9N8YD_uIkxtE_';
 const OUTPUT_DIR = path.join(__dirname, '../public/media-hub');
+if (!fs.existsSync(OUTPUT_DIR)) {
+  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+}
 const MANIFEST_PATH = path.join(__dirname, '../src/data/media-manifest.json');
 
   // 2. INITIALIZE DRIVE API
@@ -65,13 +67,29 @@ const MANIFEST_PATH = path.join(__dirname, '../src/data/media-manifest.json');
     const drive = google.drive({ version: 'v3', auth });
 
   try {
-    // A. List Files
-    const res = await drive.files.list({
-      q: `'${DRIVE_FOLDER_ID}' in parents and trashed = false`,
-      fields: 'files(id, name, mimeType, modifiedTime)',
-    });
+    // A. Improved Search: Recursive File Retrieval
+    async function getAllFiles(folderId) {
+      let results = [];
+      const res = await drive.files.list({
+        q: `'${folderId}' in parents and trashed = false`,
+        fields: 'files(id, name, mimeType, modifiedTime)',
+      });
+      
+      for (const file of res.data.files || []) {
+        if (file.mimeType === 'application/vnd.google-apps.folder') {
+          console.log(`📂 Entering subfolder: ${file.name}`);
+          const subFiles = await getAllFiles(file.id);
+          results = results.concat(subFiles);
+        } else {
+          results.push(file);
+        }
+      }
+      return results;
+    }
 
-    const files = res.data.files;
+    const DRIVE_FOLDER_ID = getDriveIdFromCMS() || '12yWK3lhwcqiTNV6yUS6Insgqhg9r9jx7';
+    const files = await getAllFiles(DRIVE_FOLDER_ID);
+    
     if (!files?.length) {
       console.log('No files found in Drive.');
       return;
@@ -89,40 +107,56 @@ const MANIFEST_PATH = path.join(__dirname, '../src/data/media-manifest.json');
       console.log(`Processing: ${file.name}...`);
       
       const isImage = file.mimeType.startsWith('image/');
-      const isVideo = file.mimeType === 'video/mp4';
+      const isVideo = file.mimeType === 'video/mp4' || file.mimeType === 'video/quicktime';
 
       if (isImage) {
         // Optimize and Download Image
-        const destPath = path.join(OUTPUT_DIR, file.name.replace(/\.[^/.]+$/, "") + '.webp');
+        const cleanName = file.name.replace(/\.[^/.]+$/, "");
+        const outputFilename = cleanName + '.webp';
+        const destPath = path.join(OUTPUT_DIR, outputFilename);
         
-        // Download logic using stream
-        const response = await drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'stream' });
-        
-        // Pipeline: Drive Stream -> Sharp (WebP) -> File Stream
-        await new Promise((resolve, reject) => {
-          response.data
-            .pipe(sharp().webp({ quality: 90 }))
-            .pipe(fs.createWriteStream(destPath))
-            .on('finish', resolve)
-            .on('error', reject);
-        });
+        try {
+          const response = await drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'stream' });
+          await new Promise((resolve, reject) => {
+            response.data
+              .pipe(sharp().webp({ quality: 85 }))
+              .pipe(fs.createWriteStream(destPath))
+              .on('finish', resolve)
+              .on('error', reject);
+          });
 
-        // Add to manifest
-        if (file.name.startsWith('HBF-')) manifest.archives.push(file.name.replace(/\.[^/.]+$/, "") + '.webp');
-        if (file.name.startsWith('PROJ_SLIDE_')) manifest.slideshow.push(file.name.replace(/\.[^/.]+$/, "") + '.webp');
+          // Grouping logic:
+          // 1. Everything goes to archives except logo
+          if (!file.name.toLowerCase().includes('logo')) {
+            manifest.archives.push(outputFilename);
+          }
+          
+          // 2. Specific project slides go to slideshow
+          const isProjectSlide = file.name.startsWith('PROJ_SLIDE_') || 
+                                ['Project-Progs', 'Living-L', 'Born-Lagoon', 'Blue-Registry'].some(n => file.name.includes(n));
+          
+          if (isProjectSlide) {
+            manifest.slideshow.push(outputFilename);
+          }
+        } catch (downloadErr) {
+          console.error(`❌ Failed to process image ${file.name}: ${downloadErr.message}`);
+        }
       }
 
-      if (isVideo && file.name === 'HERO_PULSE_LATEST.mp4') {
-        const destPath = path.join(OUTPUT_DIR, file.name);
-        const response = await drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'stream' });
-        
-        await new Promise((resolve, reject) => {
-          response.data
-            .pipe(fs.createWriteStream(destPath))
-            .on('finish', resolve)
-            .on('error', reject);
-        });
-        manifest.hero_pulse = file.name;
+      if (isVideo && (file.name.includes('HERO_PULSE') || file.name.includes('pulse-update'))) {
+        const destPath = path.join(OUTPUT_DIR, 'HERO_PULSE_LATEST.mp4');
+        try {
+          const response = await drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'stream' });
+          await new Promise((resolve, reject) => {
+            response.data
+              .pipe(fs.createWriteStream(destPath))
+              .on('finish', resolve)
+              .on('error', reject);
+          });
+          manifest.hero_pulse = '/media-hub/HERO_PULSE_LATEST.mp4';
+        } catch (downloadErr) {
+          console.error(`❌ Failed to process video ${file.name}: ${downloadErr.message}`);
+        }
       }
     }
 
@@ -131,7 +165,9 @@ const MANIFEST_PATH = path.join(__dirname, '../src/data/media-manifest.json');
     console.log('--- Sync Complete! Manifest Updated ---');
 
   } catch (err) {
-    console.error('Sync failed:', err);
+    console.error('❌ Sync failed with error:');
+    console.error(err.message || err);
+    process.exit(1); // Force GitHub Action to show failure
   }
 }
 
