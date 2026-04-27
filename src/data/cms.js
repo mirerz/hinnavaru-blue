@@ -1,10 +1,8 @@
-/*
-  ===== HINNAVARU BLUE — INDEPENDENT LIVE PROJECT =====
-  Author: Miraz (P.729)
-  Status: Standalone Live Ecosystem
-*/
+/* ===== HINNAVARU BLUE — INDEPENDENT LIVE PROJECT =====
+   Author: Miraz (P.729) | Status: Standalone Live Ecosystem */
 
 export const CMS_CONFIG = {
+  domain: "hinnavarublueinitiative.org",
   ngo_registration: "493-NGO/CERT/2026/10",
   registration_date: "February 4, 2026",
   last_updated: "March 26, 2026",
@@ -228,8 +226,8 @@ export const CORAL_REGISTRY = [
 // 3. DOCUMENT VAULTS (Awareness & Education)
 export const DOCUMENT_VAULTS = [
   { icon: '📜', title: 'NGO Registration Certificate', type: 'Official License', date: 'Feb 2026', category: 'Admin' },
-  { icon: '🧬', title: 'Restoration Genetics Guide', type: 'Scientific Guide', date: '2026', category: 'Awareness', path: '/media-hub/A_restoration_genetics_guide_for_coral_reef_conservation.pdf' },
-  { icon: '📚', title: 'Coral Restoration Terminologies', type: 'Educational', date: '2026', category: 'Awareness', path: '/media-hub/A_user’s_guide_to_coral_reef_restoration_terminologies.pdf' },
+  { icon: '🧬', title: 'Restoration Genetics Guide', type: 'Scientific Guide', date: '2026', category: 'Awareness' },
+  { icon: '📚', title: 'Coral Restoration Terminologies', type: 'Educational', date: '2026', category: 'Awareness' },
   { icon: '🌊', title: 'Coastal Resilience Handbook', type: 'Education', date: '2026', category: 'Awareness' },
   { icon: '🪸', title: 'Quarterly Impact Assessment', type: 'Data Report', date: 'Mar 2026', category: 'Admin' },
 ]

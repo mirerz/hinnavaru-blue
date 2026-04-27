@@ -8,14 +8,12 @@ export default function Layout() {
   const { pathname } = useLocation()
   const [projectsOpen, setProjectsOpen] = useState(false)
   const [registryOpen, setRegistryOpen] = useState(false)
-  const [hotlineOpen, setHotlineOpen] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    setTimeout(() => {
-        setProjectsOpen(false)
-        setRegistryOpen(false)
-    }, 0)
+    setMenuOpen(false)
+    setProjectsOpen(false)
+    setRegistryOpen(false)
   }, [pathname])
 
   useEffect(() => {
@@ -30,11 +28,21 @@ export default function Layout() {
         <div className="container nav-container">
           <Link to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
             <img src="/logo-circle.png" alt="Hinnavaru Blue" />
+            <span className="nav-name">HINNAVARU <span>BLUE</span></span>
           </Link>
 
-          <ul className={`nav-links ${menuOpen ? "show" : ""}`}>
+          <button 
+            className="nav-toggle" 
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
+
+          <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
             <li><NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink></li>
             <li><NavLink to="/about" onClick={() => setMenuOpen(false)}>Our Roots</NavLink></li>
+            
             <li
               onMouseEnter={() => setProjectsOpen(true)}
               onMouseLeave={() => setProjectsOpen(false)}
@@ -48,6 +56,7 @@ export default function Layout() {
                 <Link to="/projects?cat=edu">Edu Awareness</Link>
               </div>
             </li>
+
             <li
               onMouseEnter={() => setRegistryOpen(true)}
               onMouseLeave={() => setRegistryOpen(false)}
@@ -62,7 +71,8 @@ export default function Layout() {
               </div>
             </li>
           </ul>
-          <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta">Adopt a Frame</Link>
+
+          <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta hide-mobile">Adopt a Frame</Link>
         </div>
       </nav>
 
@@ -72,10 +82,12 @@ export default function Layout() {
         <div className="container">
           <div className="footer-grid">
             <div className="footer-brand">
-              <span style={{ fontWeight: 800 }}>HINNAVARU <span style={{ color: "var(--teal)"
-      }}>BLUE</span></span>
+              <span style={{ fontWeight: 800 }}>
+                HINNAVARU <span style={{ color: "var(--teal)" }}>BLUE</span>
+              </span>
               <p>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Maldives.</p>
             </div>
+            {/* Additional footer links could go here if needed */}
           </div>
           <div className="footer-bottom">
             <span>© 2026 Hinnavaru Blue Initiative · NGO Reg. No. {CMS_CONFIG.ngo_registration}</span>

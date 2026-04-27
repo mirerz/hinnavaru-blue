@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { CORAL_REGISTRY, FUND_ALLOCATION, DOCUMENT_VAULTS, CMS_CONFIG, REGISTRY_CONTENT } from '../data/cms'
 import MANIFEST from '../data/media-manifest.json'
@@ -258,17 +258,16 @@ export default function Registry() {
             </div>
               {/* DYNAMIC FIELD OBSERVATION PHOTO */}
               {(() => {
-                const latestPhoto = MANIFEST.archives.find(p => p.startsWith(selected.id));
-                if (!latestPhoto) return null;
+                const latestPhoto = MANIFEST.archives.find(p => p.startsWith(selected.id)) || 'vibrant-coral-reef-stockcake.webp';
                 return (
                   <div style={{ marginBottom: '20px' }}>
                     <div style={{ fontSize: '0.75rem', color: 'var(--teal)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '8px', letterSpacing: '0.05rem' }}>
                       📸 Latest Field Observation
                     </div>
                     <div style={{ position: 'relative', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(13,211,197,0.2)', height: '180px' }}>
-                       <img src={`/media-hub/${latestPhoto}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Field update" />
+                       <img src={latestPhoto.startsWith('/') ? latestPhoto : `/media-hub/${latestPhoto}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="Field update" />
                        <div style={{ position: 'absolute', bottom: 10, right: 10, background: 'rgba(0,0,0,0.6)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.65rem' }}>
-                         Verified Sync: {latestPhoto.split('_')[1]?.split('.')[0] || 'Recent'}
+                         {MANIFEST.archives.find(p => p.startsWith(selected.id)) ? `Verified Sync: ${latestPhoto.split('_')[1]?.split('.')[0] || 'Recent'}` : 'Reference Gallery'}
                        </div>
                     </div>
                   </div>
