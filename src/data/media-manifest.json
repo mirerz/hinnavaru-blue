@@ -1,13 +1,46 @@
 {
-  "last_sync": "2026-04-15T10:57:19.050Z",
+  "last_sync": "2026-04-15T21:00:00.000Z",
   "archives": [
-    "cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp",
-    "vibrant-coral-reef-stockcake.webp",
-    "dhero-island-T2Vzo2IN.webp",
     "Hinnavaru-Harbor-Extension-Project-Mobilized-1.webp",
-    "468935784_563334113148327_3285024386015099630_n.webp",
-    "329567670_599749564986500_5209262465781353000_n-1714976176673.webp"
+    "Lh.-Hinnavaru-harbor-4.webp",
+    "hinnavaru_areal_view.webp",
+    "hinnavar_map.webp",
+    "GPAE2334.webp",
+    "GPAF2336.webp",
+    "GPAF2338.webp",
+    "GPAG2341.webp",
+    "GPAI2343.webp",
+    "GPAL2352.webp",
+    "GPAO2357.webp",
+    "GPAQ2359.webp",
+    "GPAT2363.webp",
+    "GPAV2372.webp",
+    "GPBA2373.webp",
+    "vibrant-coral-reef-stockcake.webp"
   ],
-  "slideshow": [],
-  "hero_pulse": null
+  "slideshow": [
+    "GPAE2334.webp",
+    "GPAF2336.webp"
+  ],
+  "hero_pulse": "/media-hub/HERO_PULSE_LATEST.mp4",
+  "videos": [
+    {
+      "name": "Lagoon Traverse Update",
+      "path": "/media-hub/GL012381.mp4"
+    },
+    {
+      "name": "Nursery Dive Footage",
+      "path": "/media-hub/GL012415.mp4"
+    }
+  ],
+  "pdfs": [
+    {
+      "name": "Restoration Genetics Guide",
+      "path": "/media-hub/A_restoration_genetics_guide_for_coral_reef_conservation.pdf"
+    },
+    {
+      "name": "Coral Restoration Terminologies",
+      "path": "/media-hub/A_user’s_guide_to_coral_reef_restoration_terminologies.pdf"
+    }
+  ]
 }

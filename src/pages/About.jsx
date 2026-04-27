@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ABOUT_CONTENT, PILLARS, CMS_CONFIG } from '../data/cms'
+import { ABOUT_CONTENT, PILLARS, CMS_CONFIG, PROJECT_ARCHIVE } from '../data/cms'
 
 export default function About() {
   const { hero, narrative } = ABOUT_CONTENT
@@ -143,6 +143,45 @@ export default function About() {
                 <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.8rem', marginBottom: '4px', fontStyle: 'italic', letterSpacing: '0.5px', color: 'var(--white)' }}>{p.title}</h3>
                 <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--teal)', letterSpacing: '3px', marginBottom: '20px', fontWeight: 800 }}>{p.sub}</h4>
                 <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1rem', margin: 0 }}>{p.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      {/* 5. MISSION ARCHIVE (The Timeline) */}
+      <section className="section" id="archive" style={{ background: 'rgba(2,11,24,0.4)' }}>
+        <div className="container">
+          <div className="badge badge-teal" style={{ marginBottom: '16px' }}>📂 History</div>
+          <h2 className="section-title">Mission <span className="gradient-text">Archive</span></h2>
+          <p className="section-sub">A chronological log of our journey from local family initiative to a national reef restoration model.</p>
+          
+          <div className="archive-timeline" style={{ marginTop: '48px', display: 'flex', flexDirection: 'column', gap: '2px', position: 'relative' }}>
+            <div style={{ position: 'absolute', left: '20px', top: 0, bottom: 0, width: '2px', background: 'var(--card-border)', zIndex: 0 }} />
+            {PROJECT_ARCHIVE.map((item, i) => (
+              <div key={i} className="archive-entry" style={{ 
+                display: 'flex', 
+                gap: '24px', 
+                padding: '32px 0 32px 48px',
+                position: 'relative'
+              }}>
+                <div style={{ 
+                  position: 'absolute', 
+                  left: '12px', 
+                  top: '40px', 
+                  width: '18px', 
+                  height: '18px', 
+                  borderRadius: '50%', 
+                  background: 'var(--ocean-deep)',
+                  border: '3px solid var(--teal)',
+                  zIndex: 1
+                }} />
+                <div style={{ minWidth: '100px', fontWeight: 800, color: 'var(--teal)', fontSize: '0.9rem', paddingTop: '8px' }}>
+                  {item.year}
+                </div>
+                <div className="glass-card" style={{ flex: 1, padding: '24px', borderRadius: '12px' }}>
+                  <h4 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '8px', color: 'var(--white)' }}>{item.title}</h4>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: 0 }}>{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>

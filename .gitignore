@@ -29,3 +29,6 @@ service-account-key.json
 *.njsproj
 *.sln
 *.sw?
+
+/net-commander
+.copilot-specs-cache/

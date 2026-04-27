@@ -45,7 +45,7 @@ export default function Projects() {
   return (
     <div className="projects-page">
       {/* 1. CINEMATIC HERO SLIDESHOW */}
-      <section className="projects-hero section" style={{ position: 'relative', overflow: 'hidden', padding: '180px 0 120px', textAlign: 'center', minHeight: '60vh', display: 'flex', alignItems: 'center' }}>
+      <section className="projects-hero section" style={{ position: 'relative', overflow: 'hidden', padding: '180px 0 120px', textAlign: 'center', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {heroImages.map((img, idx) => (
           <div key={idx} style={{
             position: 'absolute', inset: 0, zIndex: 0,
@@ -63,17 +63,17 @@ export default function Projects() {
         }} />
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div className="badge animate-reveal" style={{ marginBottom: '24px', background: 'rgba(13,211,197,0.2)', borderColor: 'var(--teal)', color: 'white' }}>🌊 MISSION LOG</div>
-          <h1 className="section-title animate-reveal" style={{ fontSize: '4rem', marginBottom: '20px' }}>
+          <h1 className="section-title animate-reveal" style={{ fontSize: '4.8rem', marginBottom: '20px', textAlign: 'center', width: '100%' }}>
             Deep Sea <span className="gradient-text">Frontlines</span>
           </h1>
-          <p className="section-sub animate-reveal" style={{ margin: '0 auto', maxWidth: '800px' }}>
+          <p className="section-sub animate-reveal" style={{ margin: '0 auto', maxWidth: '800px', textAlign: 'center' }}>
             Live archives from our Hinnavaru conservation sites. From coral nurseries to waste management — the data of resilience.
           </p>
         </div>
       </section>
 
       {/* 2. EXPLORATION INTERFACE */}
-      <section className="section-sm" style={{ background: 'var(--ocean-deep)', paddingTop: '60px' }}>
+      <section className="section-sm" style={{ background: 'var(--ocean-deep)', paddingTop: '40px', paddingBottom: '0' }}>
         <div className="container">
           <div className="mockup-tab-nav">
             {PROJECT_CATEGORIES.map(cat => (
@@ -90,7 +90,7 @@ export default function Projects() {
       </section>
 
       {/* 3. CORE DISPLAY FRAME */}
-      <section className="section-sm" style={{ background: 'var(--ocean-deep)', paddingBottom: '80px' }}>
+      <section className="section-sm" style={{ background: 'var(--ocean-deep)', paddingTop: '30px', paddingBottom: '80px' }}>
         <div className="container">
           <div className="featured-mission-container animate-reveal" key={activeTab}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px' }}>
@@ -201,6 +201,72 @@ export default function Projects() {
           </div>
         </div>
       )}
+
+      {/* 5. MISSION ARCHIVE (Gallery) */}
+      <section className="section" id="archive" style={{ background: 'var(--ocean-deep)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+            <div className="badge badge-teal" style={{ marginBottom: '16px' }}>📸 Mission Archive</div>
+            <h2 className="section-title">Visual <span className="gradient-text">Bulletins</span></h2>
+            <p className="section-sub" style={{ margin: '0 auto' }}>Synchronized high-resolution captures from the Hinnavaru lagoon and field operations.</p>
+          </div>
+
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
+            gap: '20px' 
+          }}>
+            {MANIFEST.archives.slice(0, 8).map((img, i) => (
+              <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', height: '240px', position: 'relative', cursor: 'zoom-in' }}>
+                <img 
+                  src={`/media-hub/${img}`} 
+                  alt={`Mission update ${i}`} 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'var(--transition)' }} 
+                  onMouseOver={e => e.currentTarget.style.transform = 'scale(1.1)'}
+                  onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
+                />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '15px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', fontSize: '0.7rem', opacity: 0.8 }}>
+                  FILE: {img.split('.')[0]}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {(MANIFEST.videos && MANIFEST.videos.length > 0) && (
+            <>
+              <div style={{ textAlign: 'center', margin: '60px 0 40px' }}>
+                <div className="badge badge-coral" style={{ marginBottom: '16px' }}>🎥 Field Footage</div>
+                <h3 className="section-title" style={{ fontSize: '2rem' }}>Lagoon <span className="gradient-text">Clips</span></h3>
+              </div>
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', 
+                gap: '20px' 
+              }}>
+                {MANIFEST.videos.map((vid, i) => (
+                  <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', background: '#000', border: '1px solid rgba(255,107,107,0.3)' }}>
+                    <video 
+                      controls 
+                      style={{ width: '100%', aspectRatio: '16/9', display: 'block' }}
+                      poster="/Living-L.png"
+                    >
+                      <source src={vid.path} type="video/mp4" />
+                    </video>
+                    <div style={{ padding: '15px' }}>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 700 }}>{vid.name}</div>
+                      <div style={{ fontSize: '0.65rem', opacity: 0.6, marginTop: '4px' }}>MISSION SIG: {vid.id?.substring(0,8)}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          
+          <div style={{ textAlign: 'center', marginTop: '60px' }}>
+            <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="btn btn-outline">View Full Channel History →</a>
+          </div>
+        </div>
+      </section>
 
       <style>{`
         .mockup-tab-nav {

@@ -396,6 +396,7 @@ body {
   z-index: 100;
 }
 
+.nav-dropdown-trigger:hover .nav-dropdown,
 .nav-dropdown.show {
   display: flex;
 }
@@ -607,7 +608,7 @@ body {
   /* Dark teal-to-ocean gradient overlay to keep it 'Blue Kit' consistent */
   background:
     linear-gradient(to bottom, rgba(2, 11, 24, 0.95) 0%, rgba(2, 11, 24, 0.45) 50%, var(--ocean-deep) 100%),
-    url('/hero-bg.png') center/cover no-repeat;
+    url('/media-hub/dhero-island-T2Vzo2IN.webp') center/cover no-repeat;
   opacity: 0.8;
   /* Higher opacity because the gradient handles the dimming */
   filter: contrast(1.1) saturate(1.2);

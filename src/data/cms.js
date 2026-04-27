@@ -20,11 +20,11 @@ export const CMS_CONFIG = {
   support_email: "admin@hinnavarublueinitiative.org",
   hotline: "+9607714340",
   mailer_url: "https://mailer-service-1085797488900.asia-southeast1.run.app/send",
-  whatsapp_link: "https://wa.me/9607714340",
-  telegram_link: "tg://resolve?phone=9607714340",
+  whatsapp_link: "https://wa.me/9607714340?text=START",
+  telegram_link: "https://t.me/HinnavaruBlue_bot",
   socials: {
-    whatsapp_link: "https://wa.me/9607714340",
-    telegram_link: "tg://resolve?phone=9607714340"
+    whatsapp_link: "https://wa.me/9607714340?text=START",
+    telegram_link: "https://t.me/HinnavaruBlue_bot"
   },
   media_automation: {
     // 📂 CHANGE MEDIA FOLDER: Copy the Folder ID from Google Drive URL and paste it here
@@ -239,13 +239,16 @@ export const CORAL_REGISTRY = [
 // 3. DOCUMENT VAULTS (Awareness & Education)
 export const DOCUMENT_VAULTS = [
   { icon: '📜', title: 'NGO Registration Certificate', type: 'Official License', date: 'Feb 2026', category: 'Admin' },
-  { icon: '📚', title: 'Coral ID Guide (Lhaviyani Edition)', type: 'Educational', date: '2025', category: 'Awareness' },
+  { icon: '🧬', title: 'Restoration Genetics Guide', type: 'Scientific Guide', date: '2026', category: 'Awareness', path: '/media-hub/A_restoration_genetics_guide_for_coral_reef_conservation.pdf' },
+  { icon: '📚', title: 'Coral Restoration Terminologies', type: 'Educational', date: '2026', category: 'Awareness', path: '/media-hub/A_user’s_guide_to_coral_reef_restoration_terminologies.pdf' },
   { icon: '🌊', title: 'Coastal Resilience Handbook', type: 'Education', date: '2026', category: 'Awareness' },
   { icon: '🪸', title: 'Quarterly Impact Assessment', type: 'Data Report', date: 'Mar 2026', category: 'Admin' },
 ]
 
 // 4. THE NOTICE BOARD (Live Feed Updates)
 export const LATEST_BULLETINS = [
+  { icon: '📚', type: 'New Document', text: 'Official User Guide to Coral Restoration Terminologies published. Read now in the Vault.' },
+  { icon: '🧬', type: 'Science', text: 'Restoration Genetics Guide updated with heat-tolerant species metrics.' },
   { icon: '🌍', type: 'Global', text: 'UN Ocean Decade target aligned: Hinnavaru blueprint scaling to 14 atolls.' },
   { icon: '📡', type: 'Live Feed', text: 'Global network detects 0.2°C temp anomaly. High-frequency monitoring activated.' },
   { icon: '🌊', type: 'Mission', text: 'Vision 2030: Restoring critical nursery corridors for 5,000+ localized reef species.' },
@@ -509,7 +512,7 @@ export const ABOUT_CONTENT = {
   hero: {
     badge: "📖 Our Roots",
     title: "The Channel: The Rise of Blue",
-    bg_image: "/Born-Lagoon.png"
+    bg_image: "/media-hub/Hinnavaru-Harbor-Extension-Project-Mobilized-1.webp"
   },
   narrative: {
     intro: `For over forty years, two silent giants have stood watch over our waters at the east side of <strong>Felivaru Kandu</strong>. To the world, they are "The Shipyard," a premier diving attraction in the Lhaviyani Atoll and a staple of Maldivian tourism. To us, the people of Hinnavaru, they are <strong>Skipjack I (Mother Boat)</strong> and <strong>Skipjack II</strong>—living monuments to our industrial heritage and the iron foundation of a new blue future.`,
@@ -582,7 +585,7 @@ export const HOME_CONTENT = {
     badge: "🪸 Make an Impact",
     title: "Adopt a Coral Frame",
     text: "Join the mission. Sponsor a coral frame and watch it grow on our Live Lagoon map. Your commitment, forever etched in the reef.",
-    bg_image: "/Adopt-Frame.png"
+    bg_image: "/media-hub/vibrant-coral-reef-stockcake.webp"
   }
 }
 
@@ -625,7 +628,7 @@ export const SPONSOR_CONTENT = {
     badge: "🪸 Adopt a Frame",
     title: "Leave Your Legacy in the Reef",
     desc: "Every coral frame you adopt is named after you, tracked in the registry, and visible on the Live Lagoon map. Your commitment grows with the coral.",
-    bg_image: "/planning-cycle.png"
+    bg_image: "/media-hub/cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp"
   },
   guarantee: {
     badge: "💯 Our Guarantee",
@@ -645,7 +648,7 @@ export const REGISTRY_CONTENT = {
     badge: "🪸 Coral Registry",
     title: "The Reef Guardians Registry",
     desc: "Every coral frame tracked, every dive logged, every adopter acknowledged. Full transparency starts here.",
-    bg_image: "/Blue-Registry.png"
+    bg_image: "/media-hub/468935784_563334113148327_3285024386015099630_n.webp"
   },
   transparency: {
     badge: "🏛️ Amaanaiy",
@@ -668,6 +671,6 @@ export const LIVE_LAGOON_CONTENT = {
     badge: "🗺️ Live Monitoring",
     title: "Live Lagoon Map",
     desc: "Real-time visualization of all active coral nursery frames in Hinnavaru lagoon. Click any marker to view frame details, survival data, and adopter info.",
-    bg_image: "/Living-L.png"
+    bg_image: "/media-hub/329567670_599749564986500_5209262465781353000_n-1714976176673.webp"
   }
 }

@@ -39,22 +39,71 @@ export default function Home() {
               <span className="gradient-text">{HOME_CONTENT.hero.subtitle}</span>
             </h1>
 
-            {/* LIVEUP TICKER */}
-            <div className="liveup-ticker animate-reveal" style={{ 
-              marginTop: '16px', 
-              background: 'rgba(13,211,197,0.1)', 
-              border: '1px solid rgba(13,211,197,0.2)',
-              borderRadius: '24px',
-              padding: '6px 20px',
+            <div className="mission-chat-container animate-reveal" style={{ 
+              marginTop: '32px', 
+              background: 'rgba(2, 11, 24, 0.4)', 
+              border: '1px solid rgba(13, 211, 197, 0.2)',
+              borderRadius: '20px',
+              padding: '24px',
+              width: '100%',
+              maxWidth: '500px',
+              backdropFilter: 'blur(10px)',
+              textAlign: 'left',
               display: 'flex',
-              alignItems: 'center',
-              gap: '12px'
+              flexDirection: 'column',
+              gap: '16px',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
             }}>
-              <span className="live-dot" />
-              <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--teal)' }}>LIVE UPDATE:</span>
-              <span key={updateIdx} className="fade-in" style={{ fontSize: '0.8rem', opacity: 0.9 }}>
-                {LATEST_BULLETINS[updateIdx % LATEST_BULLETINS.length].text}
-              </span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span className="live-dot" />
+                    <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--teal)', letterSpacing: '2px' }}>MISSION LOG</span>
+                 </div>
+                 <span style={{ fontSize: '0.65rem', opacity: 0.5, fontWeight: 700 }}>UPDATED REAL-TIME</span>
+              </div>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {LATEST_BULLETINS.slice(0, 3).map((msg, i) => (
+                  <div key={i} className="fade-in" style={{ 
+                    display: 'flex', 
+                    gap: '12px', 
+                    alignItems: 'flex-start',
+                    animationDelay: `${i * 0.2}s`
+                  }}>
+                    <div style={{ padding: '6px 14px', background: 'rgba(13,211,197,0.06)', borderRadius: '16px 16px 16px 0', border: '1px solid rgba(13,211,197,0.1)', flex: 1 }}>
+                       <div style={{ fontSize: '0.62rem', fontWeight: 900, color: 'var(--teal)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '1px' }}>{msg.type}</div>
+                       <div style={{ fontSize: '0.82rem', lineHeight: '1.4', opacity: 0.9 }}>{msg.text}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* LIVE TEXTING INTERFACE */}
+              <div style={{ marginTop: '12px', display: 'flex', gap: '8px' }}>
+                 <input 
+                   disabled 
+                   placeholder="Type to HinnavaruBlue_bot..." 
+                   className="chat-input-sim"
+                   style={{ 
+                     flex: 1, 
+                     background: 'rgba(255,255,255,0.03)', 
+                     border: '1px solid rgba(255,255,255,0.1)', 
+                     borderRadius: '12px', 
+                     padding: '10px 16px', 
+                     fontSize: '0.85rem',
+                     color: 'var(--white)',
+                     cursor: 'pointer'
+                   }} 
+                   onClick={() => window.open(CMS_CONFIG.telegram_link, '_blank')}
+                 />
+                 <button onClick={() => window.open(CMS_CONFIG.telegram_link, '_blank')} className="btn btn-primary" style={{ minWidth: '48px', padding: 0, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                   <span style={{ fontSize: '1.2rem' }}>⚡</span>
+                 </button>
+              </div>
+
+              <div style={{ textAlign: 'center', marginTop: '8px' }}>
+                <span style={{ fontSize: '0.65rem', opacity: 0.3, letterSpacing: '1px', textTransform: 'uppercase' }}>Secure Encrypted Mission Link</span>
+              </div>
             </div>
 
             <p className="hero-sub" style={{ textAlign: 'center', marginTop: '24px' }}>
@@ -77,7 +126,7 @@ export default function Home() {
             </g>
           </svg>
         </div>
-        <div className="hero-scroll">
+        <div className="hero-scroll" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <span style={{ letterSpacing: '0.1em', fontSize: '0.7rem' }}>SCROLL</span>
           <span>↓</span>
         </div>
@@ -231,7 +280,7 @@ export default function Home() {
                     <button onClick={() => setUpdateIdx(prev => Math.max(0, prev - 1))} className="btn-story-nav" style={{ padding: '6px 12px' }}>←</button>
                     <button onClick={() => setUpdateIdx(prev => Math.min(Math.ceil(LATEST_BULLETINS.length / 3) - 1, prev + 1))} className="btn-story-nav" style={{ padding: '6px 12px' }}>→</button>
                  </div>
-                 <Link to="/about" className="btn btn-outline btn-sm" style={{ flex: 2 }}>Our Mission</Link>
+                 <Link to="/about#archive" className="btn btn-outline btn-sm" style={{ flex: 2 }}>Our Mission</Link>
               </div>
             </div>
           </div>
@@ -323,7 +372,7 @@ export default function Home() {
             </p>
             
             <div style={{ maxWidth: '1000px', margin: '0 auto 64px', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
-               <img src="/vision-banner.png" alt="Blue Frontier Vision" style={{ width: '100%', height: 'auto', display: 'block' }} />
+               <img src="/media-hub/cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp" alt="Blue Frontier Vision" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
 
             <div className="stats-grid" style={{ marginBottom: 0 }}>

@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { CORAL_REGISTRY, FUND_ALLOCATION, DOCUMENT_VAULTS, CMS_CONFIG, REGISTRY_CONTENT } from '../data/cms'
 import MANIFEST from '../data/media-manifest.json'
 import TransparencyModal from '../components/TransparencyModal'
@@ -18,7 +18,8 @@ export default function Registry() {
   const [showDocModal, setShowDocModal] = useState(false)
   const [selectedDoc, setSelectedDoc] = useState('')
   const [visibleCount, setVisibleCount] = useState(10)
-  const { hash } = window.location
+  const { hash } = useLocation()
+  const scrollRef = useRef(null)
 
   useEffect(() => {
     if (hash === '#transparency') {
@@ -41,7 +42,7 @@ export default function Registry() {
 
   return (
     <>
-      <section className="registry-hero section" style={{ position: 'relative', overflow: 'hidden', paddingBottom: '160px' }}>
+      <section className="registry-hero section" style={{ position: 'relative', overflow: 'hidden', paddingBottom: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {/* Background Overlay */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 0,
@@ -54,12 +55,12 @@ export default function Registry() {
           background: 'linear-gradient(to bottom, var(--ocean-deep) 0%, transparent 30%, transparent 70%, var(--ocean-deep) 100%)'
         }} />
 
-        <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div className="badge badge-teal" style={{ marginBottom: '16px' }}>🛡️ Reef Guardians</div>
-          <h1 className="section-title">
+          <h1 className="section-title" style={{ fontSize: '4.8rem' }}>
             Reef <span className="gradient-text">Guardians</span>
           </h1>
-          <p className="section-sub" style={{ margin: '0 auto' }}>
+          <p className="section-sub" style={{ margin: '0 auto', maxWidth: '850px' }}>
             {REGISTRY_CONTENT.hero.desc}
           </p>
         </div>
@@ -199,16 +200,30 @@ export default function Registry() {
                       <div style={{ fontSize: '0.88rem', fontWeight: 600 }}>{d.title}</div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{d.type} · {d.date}</div>
                     </div>
-                        <button 
-                          className="btn btn-outline btn-sm" 
-                          style={{ fontSize: '0.75rem', padding: '6px 12px' }}
-                          onClick={() => {
-                            setSelectedDoc(d.title)
-                            setShowDocModal(true)
-                          }}
-                        >
-                          ✉️ Request
-                        </button>
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          {d.path ? (
+                            <a 
+                              href={d.path} 
+                              target="_blank" 
+                              rel="noopener" 
+                              className="btn btn-primary btn-sm" 
+                              style={{ fontSize: '0.75rem', padding: '6px 12px', textDecoration: 'none' }}
+                            >
+                              📥 Download
+                            </a>
+                          ) : (
+                            <button 
+                              className="btn btn-outline btn-sm" 
+                              style={{ fontSize: '0.75rem', padding: '6px 12px' }}
+                              onClick={() => {
+                                setSelectedDoc(d.title)
+                                setShowDocModal(true)
+                              }}
+                            >
+                              ✉️ Request
+                            </button>
+                          )}
+                        </div>
                   </div>
                 ))}
               </div>

@@ -8,6 +8,7 @@ export default function Layout() {
   const { pathname } = useLocation()
   const [projectsOpen, setProjectsOpen] = useState(false)
   const [registryOpen, setRegistryOpen] = useState(false)
+  const [hotlineOpen, setHotlineOpen] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -88,25 +89,75 @@ export default function Layout() {
           </ul>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div className="nav-fab-container hide-mobile">
-              <div className="nav-fab-main" style={{ padding: 0, overflow: 'hidden', cursor: 'pointer' }}>
+            <div className={`nav-fab-container hide-mobile ${hotlineOpen ? 'open' : ''}`}>
+              <div 
+                className="nav-fab-main" 
+                style={{ padding: 0, overflow: 'hidden', cursor: 'pointer' }}
+                onClick={() => setHotlineOpen(!hotlineOpen)}
+              >
                 <img src="/hotline-icon.png" alt="Support" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
-              <div className="nav-fab-menu">
-                <a href={`tel:${CMS_CONFIG.hotline}`} className="fab-item" style={{ background: 'var(--ocean-surface)', cursor: 'pointer' }}>
-                  <span className="fab-label">DIRECT HOTLINE</span>
-                  <span className="fab-icon">📞</span>
+              <div className={`nav-fab-menu ${hotlineOpen ? 'show' : ''}`} style={{ width: '320px', padding: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '12px' }}>
+                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00ffaa', boxShadow: '0 0 10px #00ffaa' }} />
+                  <span style={{ fontSize: '0.7rem', fontWeight: 800, letterSpacing: '2px', textTransform: 'uppercase', opacity: 0.8 }}>Mission Control Online</span>
+                </div>
+
+                <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="fab-item" style={{ background: 'rgba(0,136,204,0.1)', border: '1px solid rgba(0,136,204,0.3)', marginBottom: '10px', height: 'auto', padding: '12px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <span style={{ fontSize: '1.5rem' }}>🤖</span>
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#fff' }}>GUARDIAN BOT</div>
+                    <div style={{ fontSize: '0.7rem', opacity: 0.7 }}>@HinnavaruBlue_bot</div>
+                  </div>
                 </a>
-                <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="fab-item whatsapp-bg" style={{ cursor: 'pointer' }}>
-                  <span className="fab-label">WHATSAPP CHAT</span>
-                  <span className="fab-icon">💬</span>
+
+                <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" className="fab-item" style={{ background: 'rgba(37,211,102,0.1)', border: '1px solid rgba(37,211,102,0.3)', marginBottom: '10px', height: 'auto', padding: '12px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <span style={{ fontSize: '1.5rem' }}>💬</span>
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#fff' }}>DIRECT LIAISON</div>
+                    <div style={{ fontSize: '0.7rem', opacity: 0.7 }}>Talk to Human Personnel</div>
+                  </div>
                 </a>
-                <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="fab-item telegram-bg" style={{ cursor: 'pointer' }}>
-                  <span className="fab-label">TELEGRAM FEED</span>
-                  <span className="fab-icon">✈️</span>
+
+                <a href={`mailto:${CMS_CONFIG.contact_email}`} className="fab-item" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', height: 'auto', padding: '12px', display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <span style={{ fontSize: '1.5rem' }}>📧</span>
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#fff' }}>PULSE SUPPORT</div>
+                    <div style={{ fontSize: '0.7rem', opacity: 0.7 }}>Official Requests & Data</div>
+                  </div>
                 </a>
               </div>
             </div>
+            <a 
+              href={CMS_CONFIG.telegram_link} 
+              target="_blank" 
+              className="live-text-widget hide-mobile"
+              style={{
+                position: 'fixed',
+                bottom: '32px',
+                left: '32px',
+                zIndex: 1000,
+                background: 'rgba(2,11,24,0.8)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(13,211,197,0.3)',
+                borderRadius: '100px',
+                padding: '10px 20px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                textDecoration: 'none',
+                color: 'var(--white)',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+                transition: '0.3s'
+              }}
+            >
+              <div className="live-dot" style={{ width: '10px', height: '10px' }} />
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '0.6rem', fontWeight: 800, color: 'var(--teal)', letterSpacing: '1px' }}>LIVE TEXTING</span>
+                <span style={{ fontSize: '0.75rem', fontWeight: 700 }}>Connect to Bot →</span>
+              </div>
+            </a>
+
             <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta">Adopt a Frame</Link>
           </div>
 

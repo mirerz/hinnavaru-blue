@@ -143,8 +143,43 @@ const MANIFEST_PATH = path.join(__dirname, '../src/data/media-manifest.json');
         }
       }
 
-      if (isVideo && (file.name.includes('HERO_PULSE') || file.name.includes('pulse-update'))) {
-        const destPath = path.join(OUTPUT_DIR, 'HERO_PULSE_LATEST.mp4');
+      if (isVideo || file.name.toLowerCase().endsWith('.lrv')) {
+        const cleanName = file.name.replace(/\.[^/.]+$/, "");
+        const outputFilename = cleanName + (file.name.toLowerCase().endsWith('.lrv') ? '.lrv' : '.mp4');
+        const destPath = path.join(OUTPUT_DIR, outputFilename);
+        
+        try {
+          // Special handling for HERO_PULSE (always latest)
+          const isPulse = file.name.includes('HERO_PULSE') || file.name.includes('pulse-update');
+          const finalDest = isPulse ? path.join(OUTPUT_DIR, 'HERO_PULSE_LATEST.mp4') : destPath;
+
+          const response = await drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'stream' });
+          await new Promise((resolve, reject) => {
+            response.data
+              .pipe(fs.createWriteStream(finalDest))
+              .on('finish', resolve)
+              .on('error', reject);
+          });
+          
+          if (isPulse) {
+            manifest.hero_pulse = '/media-hub/HERO_PULSE_LATEST.mp4';
+          } else {
+            if (!manifest.videos) manifest.videos = [];
+            manifest.videos.push({
+              name: file.name,
+              path: '/media-hub/' + outputFilename,
+              id: file.id
+            });
+          }
+          console.log(`✅ Synced Video: ${file.name}`);
+        } catch (downloadErr) {
+          console.error(`❌ Failed to process video ${file.name}: ${downloadErr.message}`);
+        }
+      }
+
+      if (file.mimeType === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
+        const outputFilename = file.name.replace(/\s+/g, '_');
+        const destPath = path.join(OUTPUT_DIR, outputFilename);
         try {
           const response = await drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'stream' });
           await new Promise((resolve, reject) => {
@@ -153,9 +188,15 @@ const MANIFEST_PATH = path.join(__dirname, '../src/data/media-manifest.json');
               .on('finish', resolve)
               .on('error', reject);
           });
-          manifest.hero_pulse = '/media-hub/HERO_PULSE_LATEST.mp4';
+          if (!manifest.pdfs) manifest.pdfs = [];
+          manifest.pdfs.push({
+            name: file.name,
+            path: '/media-hub/' + outputFilename,
+            id: file.id
+          });
+          console.log(`✅ Synced PDF: ${file.name}`);
         } catch (downloadErr) {
-          console.error(`❌ Failed to process video ${file.name}: ${downloadErr.message}`);
+          console.error(`❌ Failed to process PDF ${file.name}: ${downloadErr.message}`);
         }
       }
     }
