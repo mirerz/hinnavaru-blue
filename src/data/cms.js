@@ -1,15 +1,13 @@
-/* 
-  ===== HINNAVARU BLUE — CONTENT MANAGEMENT SYSTEM (CMS) =====
-  Use this file to update the site's dynamic content without touching the UI code.
-  Simply edit the arrays and strings below.
+/*
+  ===== HINNAVARU BLUE — INDEPENDENT LIVE PROJECT =====
+  Author: Miraz (P.729)
+  Status: Standalone Live Ecosystem
 */
 
 export const CMS_CONFIG = {
   ngo_registration: "493-NGO/CERT/2026/10",
   registration_date: "February 4, 2026",
   last_updated: "March 26, 2026",
-
-
   atoll: "Lhaviyani (Lh.)",
   location_code: "LH..G1",
   country_code: "MV",
@@ -22,22 +20,13 @@ export const CMS_CONFIG = {
   mailer_url: "https://mailer-service-1085797488900.asia-southeast1.run.app/send",
   whatsapp_link: "https://wa.me/9607714340?text=START",
   telegram_link: "https://t.me/HinnavaruBlue_bot",
-  socials: {
-    whatsapp_link: "https://wa.me/9607714340?text=START",
-    telegram_link: "https://t.me/HinnavaruBlue_bot"
-  },
   media_automation: {
-    // 📂 CHANGE MEDIA FOLDER: Copy the Folder ID from Google Drive URL and paste it here
     drive_id: "12yWK3lhwcqiTNV6yUS6Insgqhg9r9jx7",
     sync_folder: "public/media-hub",
-    optimize_to: "webp",
-    naming_rules: {
-      frame_update: "{FRAMEID}_{DATE}.jpg",
-      slideshow: "PROJ_SLIDE_{N}.jpg",
-      hero_pulse: "HERO_PULSE_LATEST.mp4"
-    }
+    optimize_to: "webp"
   }
 }
+
 
 // 1. PROJECT TIMELINE / ARCHIVE (History Page)
 export const PROJECT_ARCHIVE = [
