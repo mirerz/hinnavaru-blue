@@ -28,7 +28,10 @@ export default function Layout() {
         <div className="container nav-container">
           <Link to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
             <img src="/logo-circle.png" alt="Hinnavaru Blue" />
-            <span className="nav-name">HINNAVARU <span>BLUE</span></span>
+            <span className="nav-name" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center' }}>
+              <span>HINNAVARU <span>BLUE</span></span>
+              <span style={{ fontSize: '0.65em', fontWeight: 500, letterSpacing: '2px', opacity: 0.8, textTransform: 'uppercase', marginTop: '-2px' }}>Initiative</span>
+            </span>
           </Link>
 
           <button 
@@ -86,9 +89,12 @@ export default function Layout() {
         <div className="container">
           <div className="footer-grid">
             <div className="footer-brand">
-              <div className="footer-logo">
+              <div className="footer-logo" style={{ alignItems: 'center' }}>
                 <img src="/logo-circle.png" alt="Hinnavaru Blue" />
-                <span>HINNAVARU <span className="teal">BLUE</span></span>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1.1 }}>
+                  <span>HINNAVARU <span className="teal">BLUE</span></span>
+                  <span style={{ fontSize: '0.65em', fontWeight: 500, letterSpacing: '2px', opacity: 0.8, textTransform: 'uppercase', marginTop: '2px' }}>Initiative</span>
+                </div>
               </div>
               <p>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Lhaviyani Atoll, Maldives.</p>
             </div>
