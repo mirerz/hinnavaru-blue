@@ -95,13 +95,13 @@ export default function Layout() {
                 <h5>Navigation</h5>
                 <Link to="/">Home</Link>
                 <Link to="/about">Our Roots</Link>
-                <Link to="/projects">Missions</Link>
+                <Link to="/projects">Projects</Link>
               </div>
               <div className="footer-col">
                 <h5>Guardians</h5>
-                <Link to="/registry">Registry</Link>
+                <Link to="/registry">Reef Guardians</Link>
                 <Link to="/live-lagoon">Live Map</Link>
-                <Link to="/sponsor">Sponsor</Link>
+                <Link to="/sponsor">Adopt a Frame</Link>
               </div>
               <div className="footer-col">
                 <h5>Contact</h5>

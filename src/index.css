@@ -649,7 +649,7 @@ body {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('/media-hub/dhero-island-T2Vzo2IN.webp');
+  background-image: url('/media-hub/hinnavaru areal view.webp');
   background-size: cover;
   background-position: center;
   opacity: 0.4;
@@ -669,7 +669,7 @@ body {
   inset: 0;
   z-index: 0;
   background: linear-gradient(to bottom, rgba(2, 11, 24, 0.95) 0%, rgba(2, 11, 24, 0.45) 50%, var(--ocean-deep) 100%),
-              url('/media-hub/dhero-island-T2Vzo2IN.webp') center/cover no-repeat;
+              url('/media-hub/hinnavaru areal view.webp') center/cover no-repeat;
   opacity: 0.8;
   filter: contrast(1.1) saturate(1.2);
 }
