@@ -69,10 +69,12 @@ export default function Layout() {
                 <Link to="/blog" onClick={() => setMenuOpen(false)}>Program Blog</Link>
               </div>
             </li>
-            <li><a href={`mailto:${CMS_CONFIG.hello_email}`} onClick={() => setMenuOpen(false)}>Contact</a></li>
           </ul>
 
-          <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta hide-mobile">Adopt a Frame</Link>
+          <div className="nav-actions" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <a href={`mailto:${CMS_CONFIG.hello_email}`} className="btn btn-outline btn-sm hide-mobile">Contact</a>
+            <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta hide-mobile">Adopt a Frame</Link>
+          </div>
         </div>
       </nav>
 

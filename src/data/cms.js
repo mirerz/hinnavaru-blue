@@ -572,7 +572,7 @@ export const HOME_CONTENT = {
     badge: "🪸 Make an Impact",
     title: "Adopt a Coral Frame",
     text: "Join the mission. Sponsor a coral frame and watch it grow on our Live Lagoon map. Your commitment, forever etched in the reef.",
-    bg_image: "/media-hub/underwater.webp"
+    bg_image: "/media-hub/cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp"
   }
 }
 
@@ -615,7 +615,7 @@ export const SPONSOR_CONTENT = {
     badge: "🪸 Adopt a Frame",
     title: "Leave Your Legacy in the Reef",
     desc: "Every coral frame you adopt is named after you, tracked in the registry, and visible on the Live Lagoon map. Your commitment grows with the coral.",
-    bg_image: "/media-hub/underwater.webp"
+    bg_image: "/media-hub/cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp"
   },
   guarantee: {
     badge: "💯 Our Guarantee",
