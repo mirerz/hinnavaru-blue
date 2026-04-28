@@ -87,34 +87,35 @@ export default function Layout() {
 
       <footer className="footer">
         <div className="container">
-          <div className="footer-grid">
+          <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '48px', alignItems: 'start', justifyContent: 'space-between' }}>
             <div className="footer-brand">
-              <div className="footer-logo" style={{ alignItems: 'center' }}>
-                <img src="/logo-circle.png" alt="Hinnavaru Blue" />
+              <div className="footer-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                <img src="/logo-circle.png" alt="Hinnavaru Blue" style={{ width: '48px' }} />
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: 1.1 }}>
-                  <span>HINNAVARU <span className="teal">BLUE</span></span>
+                  <span style={{ fontSize: '1.2rem', fontWeight: 800 }}>HINNAVARU <span className="teal">BLUE</span></span>
                   <span style={{ fontSize: '0.65em', fontWeight: 500, letterSpacing: '2px', opacity: 0.8, textTransform: 'uppercase', marginTop: '2px' }}>Initiative</span>
                 </div>
               </div>
-              <p>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Lhaviyani Atoll, Maldives.</p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6', maxWidth: '320px' }}>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Lhaviyani Atoll, Maldives.</p>
             </div>
-            <div className="footer-links">
-              <div className="footer-col">
-                <h5>Navigation</h5>
-                <Link to="/">Home</Link>
-                <Link to="/about">Our Roots</Link>
-                <Link to="/projects">Projects</Link>
+            <div className="footer-links" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px', flex: 1, width: '100%', maxWidth: '800px' }}>
+              <div className="footer-col" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <h5 style={{ color: 'var(--white)', fontSize: '0.9rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>Navigation</h5>
+                <Link to="/" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Home</Link>
+                <Link to="/about" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Our Roots</Link>
+                <Link to="/projects" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Projects</Link>
               </div>
-              <div className="footer-col">
-                <h5>Guardians</h5>
-                <Link to="/registry">Reef Guardians</Link>
-                <Link to="/live-lagoon">Live Map</Link>
-                <Link to="/sponsor">Adopt a Frame</Link>
+              <div className="footer-col" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <h5 style={{ color: 'var(--white)', fontSize: '0.9rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>Guardians</h5>
+                <Link to="/registry" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Reef Guardians</Link>
+                <Link to="/live-lagoon" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Live Map</Link>
+                <Link to="/sponsor" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Adopt a Frame</Link>
               </div>
-              <div className="footer-col">
-                <h5>Contact</h5>
-                <a href={`mailto:${CMS_CONFIG.hello_email}`}>Email Us</a>
-                <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener">WhatsApp</a>
+              <div className="footer-col" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <h5 style={{ color: 'var(--white)', fontSize: '0.9rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '8px' }}>Contact</h5>
+                <a href={`mailto:${CMS_CONFIG.hello_email}`} style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Email Us</a>
+                <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>WhatsApp</a>
+                <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" style={{ color: 'var(--text-secondary)', textDecoration: 'none' }}>Telegram Bot</a>
               </div>
             </div>
           </div>
