@@ -35,8 +35,44 @@ export default function About() {
         </div>
       </section>
 
-      {/* OVERLAY NARRATIVE (Block Methods) */}
-      <div className="container" style={{ position: 'relative', marginTop: '-120px', zIndex: 10, marginBottom: '64px' }}>
+      {/* 2. VISION, MISSION, AND CORE VALUES */}
+      <section className="section" style={{ position: 'relative', marginTop: '-120px', zIndex: 10, marginBottom: '64px' }}>
+        <div className="container">
+          {/* Vision and Mission Cards */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', marginBottom: '32px' }}>
+             <div className="glass-card" style={{ padding: '48px 32px', borderLeft: '6px solid var(--blue-primary)' }}>
+                <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '16px', color: 'var(--white)' }}>Vision</h2>
+                <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: '1.8', margin: 0 }}>{narrative.vision}</p>
+             </div>
+             <div className="glass-card" style={{ padding: '48px 32px', borderLeft: '6px solid var(--teal)' }}>
+                <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '16px', color: 'var(--white)' }}>Mission</h2>
+                <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: '1.8', margin: 0 }}>{narrative.mission}</p>
+             </div>
+          </div>
+
+          {/* Core Values */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+            <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: '48px 32px' }}>
+              <div className="badge" style={{ marginBottom: '24px' }}>⚓ Guiding Principles</div>
+              <h2 className="section-title" style={{ fontSize: '2.5rem', marginBottom: '16px', lineHeight: 1.1 }}>
+                Core <br/><span className="gradient-text">Values</span>
+              </h2>
+            </div>
+            {PILLARS.map((p, i) => (
+              <div className="glass-card" key={i} style={{ position: 'relative', padding: '48px 32px', zIndex: 1 }}>
+                <div style={{ position: 'absolute', top: 0, left: '32px', right: '32px', height: '2px', background: 'linear-gradient(90deg, var(--blue-primary), var(--teal))', opacity: 0.6 }} />
+                <div style={{ fontSize: '2.5rem', marginBottom: '24px', filter: 'drop-shadow(0 4px 12px rgba(13,211,197,0.3))' }}>{p.icon}</div>
+                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.8rem', marginBottom: '4px', fontStyle: 'italic', letterSpacing: '0.5px', color: 'var(--white)' }}>{p.title}</h3>
+                <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--teal)', letterSpacing: '3px', marginBottom: '20px', fontWeight: 800 }}>{p.sub}</h4>
+                <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1rem', margin: 0 }}>{p.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. NARRATIVE BLOCKS */}
+      <div className="container" style={{ position: 'relative', zIndex: 10, marginBottom: '64px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           
           {/* Shipyard Block */}
@@ -44,8 +80,9 @@ export default function About() {
             <div style={{ maxWidth: '720px' }}>
               <div className="badge" style={{ marginBottom: '16px' }}>⚓ The Legacy</div>
               <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '24px' }}>{narrative.shipyard.title}</h2>
-              <p style={{ fontSize: '1.15rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '32px' }}>{narrative.shipyard.text}</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+              <p style={{ fontSize: '1.15rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '32px', whiteSpace: 'pre-line' }}>{narrative.shipyard.text}</p>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '24px', color: 'var(--white)' }}>Wreck Details:</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
                 {narrative.shipyard.vessels.map((v, i) => (
                   <div key={i} className="card" style={{ background: 'rgba(255,255,255,0.02)', padding: '24px' }}>
                     <h4 style={{ color: 'var(--teal)', fontSize: '1.2rem', marginBottom: '10px' }}>{v.name}</h4>
@@ -74,12 +111,11 @@ export default function About() {
             <div style={{ maxWidth: '720px' }}>
               <div className="badge badge-teal" style={{ marginBottom: '16px' }}>🧬 The Blueprint</div>
               <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '24px' }}>{narrative.model.title}</h2>
-              <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '32px' }}>{narrative.model.p1}</p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
                 {narrative.model.bullets.map((b, i) => (
-                  <div key={i}>
-                    <h5 style={{ color: 'var(--teal)', fontSize: '1rem', fontWeight: 800, marginBottom: '8px' }}>{b.label}</h5>
-                    <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>{b.text}</p>
+                  <div key={i} className="card" style={{ background: 'rgba(255,255,255,0.02)', padding: '24px' }}>
+                    <h5 style={{ color: 'var(--teal)', fontSize: '1.2rem', fontWeight: 800, marginBottom: '10px' }}>{b.label}</h5>
+                    <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>{b.text}</p>
                   </div>
                 ))}
               </div>
@@ -90,62 +126,14 @@ export default function About() {
 
       <section className="section" style={{ background: 'var(--ocean-mid)', padding: '120px 0' }}>
         <div className="container">
-           <div className="card" style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', padding: '64px' }}>
+           <div className="card" style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center', padding: '64px' }}>
               <h2 style={{ fontSize: '2.8rem', fontWeight: 900, marginBottom: '24px' }}>Secure the <span className="gradient-text">Heart of Maldives</span></h2>
-              <p style={{ fontSize: '1.3rem', color: 'var(--text-secondary)', lineHeight: '1.7', marginBottom: '40px' }}>"{narrative.footer_quote}"</p>
+              <p style={{ fontSize: '1.15rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '40px', textAlign: 'left' }}>{narrative.footer_quote}</p>
               <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
                 <Link to="/projects" className="btn btn-primary">Our Programs</Link>
                 <Link to="/registry#transparency" className="btn btn-outline" style={{ color: 'var(--teal)' }}>Transparency Hub →</Link>
               </div>
            </div>
-        </div>
-      </section>
-
-      {/* 4. THE 5 PILLARS (Premium Grid) */}
-      <section className="section" style={{ position: 'relative' }}>
-        <div className="container">
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', 
-            gap: '32px' 
-          }}>
-            {/* The Intro & Anchor Card */}
-            <div className="glass-card" style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              justifyContent: 'center', 
-              alignItems: 'flex-start',
-              padding: '48px 32px',
-            }}>
-              <div className="badge" style={{ marginBottom: '24px' }}>⚓ Mission Anchors</div>
-              <h2 className="section-title" style={{ fontSize: '2.5rem', marginBottom: '16px', lineHeight: 1.1 }}>
-                The Five <br/><span className="gradient-text">Vitals</span>
-              </h2>
-              <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', lineHeight: '1.8', margin: 0 }}>
-                Our values are the currents that guide us. Every fragment is rooted in indigenous sea-wisdom and radical accountability.
-              </p>
-            </div>
-
-            {/* The 5 Pillar Cards using CMS data */}
-            {PILLARS.map((p, i) => (
-              <div 
-                className="glass-card" 
-                key={i}
-                style={{
-                  position: 'relative',
-                  padding: '48px 32px',
-                  zIndex: 1
-                }}
-              >
-                <div style={{ position: 'absolute', top: 0, left: '32px', right: '32px', height: '2px', background: 'linear-gradient(90deg, var(--blue-primary), var(--teal))', opacity: 0.6 }} />
-                
-                <div style={{ fontSize: '2.5rem', marginBottom: '24px', filter: 'drop-shadow(0 4px 12px rgba(13,211,197,0.3))' }}>{p.icon}</div>
-                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.8rem', marginBottom: '4px', fontStyle: 'italic', letterSpacing: '0.5px', color: 'var(--white)' }}>{p.title}</h3>
-                <h4 style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: 'var(--teal)', letterSpacing: '3px', marginBottom: '20px', fontWeight: 800 }}>{p.sub}</h4>
-                <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1rem', margin: 0 }}>{p.text}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
       {/* 5. MISSION ARCHIVE (The Timeline) */}

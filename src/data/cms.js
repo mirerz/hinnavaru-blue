@@ -498,57 +498,45 @@ export const NURSERY_SUMMARY = {
 export const ABOUT_CONTENT = {
   hero: {
     badge: "📖 Our Roots",
-    title: "The Channel: The Rise of Blue",
+    title: "The Hinnavaru Blue Model: A Paradigm for Island-Led Environmental Resilience",
     bg_image: "/media-hub/Hinnavaru-Harbor-Extension-Project-Mobilized-1.webp"
   },
   narrative: {
-    intro: `For over forty years, two silent giants have stood watch over our waters at the east side of <strong>Felivaru Kandu</strong>. To the world, they are "The Shipyard," a premier diving attraction in the Lhaviyani Atoll and a staple of Maldivian tourism. To us, the people of Hinnavaru, they are <strong>Skipjack I (Mother Boat)</strong> and <strong>Skipjack II</strong>—living monuments to our industrial heritage and the iron foundation of a new blue future.`,
+    intro: `In the face of escalating global climate threats, the island community of Hinnavaru (G1) in the Maldives’ Faadhippolhu (Lhaviyani (Lh.) Atoll) has pioneered a powerful, locally-driven conservation strategy: The Hinnavaru Blue Model. This purely homegrown initiative was born out of a critical realization following the 2004 Tsunami and observations by veteran fishermen of alarming sea level changes, which confirmed that the island’s survival is intrinsically linked to the health of its surrounding reef. Rejecting the reliance on external aid, the community initiated the RiseUP movement, leveraging a unique blend of traditional Maldivian environmental wisdom and repurposed innovation. Central to this ethos is "The Shipyard," a site featuring the Skipjack I and Skipjack II wrecks, which stand as "living monuments" to the island's industrial past and now serve as flourishing artificial reefs—providing a natural foundation for coral restoration efforts. By utilizing indigenous knowledge of "micro-currents" and transforming seafaring iron frames into the "cradles of a restored ecosystem," the Hinnavaru Blue Initiative demonstrates an inspiring paradigm for island-led environmental resilience.`,
+    vision: "To see Hinnavaru lead the Maldives as a model of island-led environmental resilience, where a thriving marine ecosystem and a conscious community coexist in harmony.",
+    mission: "To protect and preserve the unique natural environment through community-driven conservation, innovative restoration projects, and sustainable advocacy.",
     shipyard: {
       title: "The Shipyard: A Legacy of the Lhaviyani Industry",
-      text: "The Shipyard is unique for featuring two distinct vessels that met their end just as the modern Maldives was taking shape. Both have since been reclaimed by the sea, becoming thriving artificial reefs that support a vast metropolis of marine life.",
+      text: "The Shipyard is internationally recognized as a premier diving attraction in the Faadhippolhu (Lhaviyani Atoll). Located on the east side of Felivaru Kandu, this site features two distinct vessel wrecks, Skipjack I (Mother Boat) and Skipjack II, which have watched over the waters for over forty years. For Hinnavaru, these wrecks are living monuments that reflect their industrial heritage and serve as the \"iron foundation of a new blue future\".\n\nBoth vessels sank as the modern Maldives was taking shape and have since been naturally reclaimed by the sea, transforming into thriving artificial reefs that support a vast metropolis of marine life. This natural growth demonstrated the possibility of coral restoration to the community, establishing The Shipyard as a critical success factor in demonstrating reef restoration potential.",
       vessels: [
-        { name: "Skipjack II (The Sentinel)", desc: "The site’s most iconic feature. Originally a vessel for the Felivaru fish factory, it was meant to be scuttled in 1985. However, it caught fire and sank stern-first, leaving its bow protruding vertically out of the water—a rusted North Star for every Hinnavarian traveler." },
-        { name: "Skipjack I (The Mother Boat)", desc: "Known affectionately as the Mother Boat, this former cargo ship (Gaafaru) rests at a depth of roughly 30 meters. It sank in 1984 while attempting to reach Felivaru for repairs. It lies approximately 40 meters away from its companion, creating a sheltered underwater corridor where life flourishes." }
+        { name: "Skipjack II's Dramatic End", desc: "Originally commissioned for the Felivaru fish factory, the vessel was scheduled for scuttling in 1985. It caught fire and sank stern-first, leaving its bow protruding vertically out of the water. This remnant acts as a \"rusted North Star for every Hinnavarian traveler\"." },
+        { name: "Skipjack I (Mother Boat)", desc: "This former cargo ship, Gaafaru, attempted to reach Felivaru for repairs but sank in 1984. It rests at a depth of approximately 30 meters, lying roughly 40 meters away from its companion, creating a cool, sheltered underwater corridor where life flourishes." }
       ]
     },
     catalyst: {
-      title: "The 2004 Catalyst: From Survival to Stewardship",
-      p1: "Our commitment to this site was born from the intersection of industry and tragedy. In 2004, our veteran fishermen—men who had spent their lives navigating the Felivaru fleet—noticed alarming changes in the sea levels at their ancestral grounds.",
-      p2: "For the families living near the Harbor Jetty, the December Tsunami was a defining moment of trauma. It forced a realization that changed our community forever: our island’s survival is inextricably linked to the health of our reef.",
-      p3: "Driven by this urgency, the idea to <strong>Rise uP</strong> and protect our home was ignited within a single immediate family. Led by founder <strong>Ahmed Nabeel Hussain Didi</strong>, and supported by the shared vision of <strong>Moosa Shaan Hussain Didi</strong>, <strong>Mariyam Nasha</strong>, <strong>Hawwa Shazra</strong>, and <strong>Aminath Rayyan</strong>, the family pledged to transform their experience into action. They realized the reef is our first and most vital line of defense; if the reef dies, the island follows."
+      title: "The Catalyst for Conservation and Homegrown Restoration",
+      p1: "The community’s conservation efforts were profoundly impacted by the December 2004 Tsunami, which served as a critical wake-up call. Families realized that the island's survival was entirely dependent on the health of the surrounding reef. This trauma, coupled with veteran fishermen observing alarming sea level changes at their ancestral grounds, spurred a fundamental change in community behavior.",
+      p2: "Instead of waiting for external aid, the island developed the Hinnavaru Blue Model—a purely homegrown conservation strategy.",
+      p3: "The urgency of the crisis prompted an immediate family to initiate the RiseUP movement to protect their home. The movement was founded by <strong>Ahmed Nabeel Hussain Didi</strong>, with support from <strong>Moosa Shaan Hussain Didi</strong>, <strong>Mariyam Nasha</strong>, <strong>Hawwa Shazra</strong>, and <strong>Aminath Rayyan</strong>."
     },
     model: {
-      title: "The Hinnavaru Blue Model",
-      p1: "Rather than waiting for outside intervention, the family combined their technical ingenuity with marine science. Their brainstorming led to the island’s first coral nursery—using repurposed boat frames to turn the tools of their seafaring trade into the cradles of a restored ecosystem.",
-      p2: "By 2026, this grassroots movement evolved into Hinnavaru Blue, a formally registered non-profit organization. We are now recognized as one of the Maldives' most successful community-led reef restoration programs, blending technology, indigenous knowledge, and local ownership.",
+      title: "The Model is characterized by two key elements:",
       bullets: [
-        { label: "Indigenous Knowledge", text: "We understand the specific \"micro-currents\" of Felivaru Kandu better than any external survey. We work with the ocean, not against it." },
-        { label: "Repurposed Innovation", text: "By using boat frames and local materials, we have achieved exceptionally high survival rates, proving that the best solutions are often found within the community." },
-        { label: "The Northern Blueprint", text: "Our model—combining community ownership with open data—is now being studied for expansion across the Noonu, Raa, Baa, and Lhaviyani Atolls." }
-      ],
-      note: "<p style=\"color: var(--text-secondary); margin-bottom: 24px; font-size: 0.95rem; line-height: 1.6;\">To protect sensitive data while maintaining radical openness, we process document requests manually. Our team will verify your request and respond via email or hotline within <strong>30 to 60 minutes</strong>.</p>"
-    },
-    why: {
-      title: "Why We Restore: The Three Pillars",
-      p1: "We recognize that as the climate shifts, we cannot remain passive observers of our own backyard. We restore because of:",
-      bullets: [
-        { label: "Identity", text: "The vertical bow of Skipjack II and the deep hull of the Mother Boat are monuments to our history. To lose the life beneath them is to lose a chapter of the Hinnavarian story." },
-        { label: "Sustainability", text: "From the guesthouses on our shores to the dive dhonis in the channel, our economy relies on the vibrancy of these \"Skipjack Wrecks.\"" },
-        { label: "Legacy", text: "The 2004 Tsunami taught us how fragile our home is. Through Hinnavaru Blue, we ensure that forty years from now, our children inherit a \"Blue Frontier\" that is more resilient than the one we fought to save." }
+        { label: "Indigenous Knowledge", text: "The community leverages its traditional understanding to grasp the specific \"micro-currents\" of Felivaru Kandu, optimizing their conservation efforts." },
+        { label: "Repurposed Innovation", text: "The island established its first coral nursery by utilizing repurposed iron frames. This method effectively transformed tools of their seafaring trade into the \"cradles of a restored ecosystem,\" and by using local materials, it has achieved exceptionally high coral survival rates." }
       ]
     },
-    footer_quote: "By protecting the Shipyard and scaling the Hinnavaru Blue model, we aren't just saving two old ships—we are securing the heart of the Maldives.",
-    footer_tagline: "For Hinnavaru, for the Atolls, and for the Blue Frontier."
+    footer_quote: "In embodying the Core Values of Amaanaiy (Integrity), Tharika (Legacy), Vindhu (Vitality), Ekuekee (Unity), and Irushaadu (Guidance), the Hinnavaru Blue Model has moved beyond mere local survival to offer a globally relevant case study in island resilience. The community, by translating its industrial legacy at The Shipyard into a commitment to marine restoration, has created a blueprint that is both deeply traditional and technologically smart. As global climate challenges intensify, Hinnavaru’s success—evidenced by the exceptionally high survival rates of its coral nursery, built from repurposed seafaring iron—demonstrates the profound impact of self-initiated, community-driven conservation. The island’s ongoing efforts prove that protecting the unique natural environment is not dependent on external mandates, but is a possibility realized through unity and belief in the interconnected health of the ocean and its people. The Hinnavaru Blue Model stands ready to scale its approach, offering a tangible, replicable pathway for at-risk coastal communities worldwide and urgently seeking international partnership and investment to safeguard the future of this vital Maldivian ecosystem."
   }
 }
 
 // 13. CORE VALUES / PILLARS (Archive/General)
 export const PILLARS = [
-  { icon: '🤝', title: 'Ekuveri', sub: 'Unity', text: 'Fostering shared ownership through inclusive education. We believe restoration succeeds only when we act as one community.' },
-  { icon: '🔬', title: 'Ilmu', sub: 'Knowledge', text: 'Blending ancestral Maldivian sea-wisdom with cutting-edge marine science to drive every restoration decision we make.' },
-  { icon: '🏛️', title: 'Amaanaiy', sub: 'Integrity', text: 'Absolute transparency in data, community interactions, and funding execution. We are accountable to the reef.' },
-  { icon: '🧬', title: 'Tharika', sub: 'Legacy', text: 'Protecting natural capital and preserving our thriving ecosystem to ensure the reefs are there for the generations of tomorrow.' },
-  { icon: '🫀', title: 'Vindhu', sub: 'Vitality', text: 'Recognizing the reef as the pulse of Hinnavaru. We prioritize the health of the lagoon as our island’s absolute heartbeat.' },
+  { icon: '🏛️', title: 'Amaanaiy', sub: 'Integrity', text: 'Being transparent stewards of resources and trust.' },
+  { icon: '🧬', title: 'Tharika', sub: 'Legacy', text: 'Saving the natural beauty of the reefs for future generations.' },
+  { icon: '🫀', title: 'Vindhu', sub: 'Vitality', text: 'Believing the ocean and people\'s health are interconnected.' },
+  { icon: '🤝', title: 'Ekuekee', sub: 'Unity', text: 'Getting everyone—locals, experts, and youth—to work together.' },
+  { icon: '🧭', title: 'Irushaadu', sub: 'Guidance', text: 'Leading through evidence-based conservation and traditional Maldivian environmental wisdom.' },
 ]
 
 // 14. HOME PAGE CONTENT
