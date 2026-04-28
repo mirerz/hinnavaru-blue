@@ -72,7 +72,7 @@ export default function Layout() {
           </ul>
 
           <div className="nav-actions" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <a href={`mailto:${CMS_CONFIG.hello_email}`} className="btn btn-outline btn-sm hide-mobile">Contact</a>
+            <a href={`mailto:${CMS_CONFIG.hello_email}`} className="btn btn-outline btn-sm">Contact</a>
             <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta hide-mobile">Adopt a Frame</Link>
           </div>
         </div>
