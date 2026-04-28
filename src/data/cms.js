@@ -234,6 +234,7 @@ export const DOCUMENT_VAULTS = [
 
 // 4. THE NOTICE BOARD (Live Feed Updates)
 export const LATEST_BULLETINS = [
+  { icon: '👁️', type: 'Guardian Log', text: '<Salaam>' },
   { icon: '📚', type: 'New Document', text: 'Official User Guide to Coral Restoration Terminologies published. Read now in the Vault.' },
   { icon: '🧬', type: 'Science', text: 'Restoration Genetics Guide updated with heat-tolerant species metrics.' },
   { icon: '🌍', type: 'Global', text: 'UN Ocean Decade target aligned: Hinnavaru blueprint scaling to 14 atolls.' },
