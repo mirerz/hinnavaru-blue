@@ -1,11 +1,151 @@
 {
-  "archives": [],
-  "slideshow": [
-    "/media-hub/vibrant-coral-reef-stockcake.webp",
-    "/media-hub/cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp",
-    "/media-hub/468935784_563334113148327_3285024386015099630_n.webp",
-    "/media-hub/Hinnavaru-Harbor-Extension-Project-Mobilized-1.webp"
+  "last_sync": "2026-04-27T18:52:34.630Z",
+  "archives": [
+    "skipjacii.webp",
+    "hinn top view.webp",
+    "hinnavaru areal view.webp",
+    "underwater.webp",
+    "GPAL2352.webp",
+    "GPAF2336.webp",
+    "GPAG2341.webp",
+    "GPAF2338.webp",
+    "GPAI2343.webp",
+    "GPAO2357.webp",
+    "GPAQ2359.webp",
+    "GPAE2334.webp",
+    "GPBA2374.webp",
+    "GPAU2365.webp",
+    "GPAT2363.webp",
+    "GPBA2373.webp",
+    "GPBG2380.webp",
+    "GPAZ2372.webp",
+    "GPBW2413.webp",
+    "GPBI2384.webp",
+    "GPBV2412.webp",
+    "GPCG2434.webp",
+    "GPCI2436.webp",
+    "GPCH2435.webp",
+    "GPDR2606.webp",
+    "GPDR2638.webp",
+    "GPDR2648.webp",
+    "GPDR2649.webp",
+    "GPDR2615.webp",
+    "GPDR2675.webp",
+    "GPDR2672.webp",
+    "GPDR2684.webp",
+    "GPDR2646.webp",
+    "GPDR2673.webp",
+    "GPDR2755.webp",
+    "GPDR2718.webp",
+    "GPDR2747.webp",
+    "hinnavar artificial beach.webp",
+    "hinnavar map.webp",
+    "CoverBK.webp",
+    "vibrant-coral-reef-stockcake.webp",
+    "dhero-island-T2Vzo2IN.webp",
+    "Hinnavaru-Harbor-Extension-Project-Mobilized-1.webp",
+    "Lh.-Hinnavaru-harbor-4.webp",
+    "NGO HBI Certificate.webp"
   ],
-  "videos": [],
-  "pdfs": []
+  "slideshow": [],
+  "hero_pulse": null,
+  "videos": [
+    {
+      "name": "GL012381.LRV",
+      "path": "/media-hub/GL012381.lrv",
+      "id": "16jcrgsYOAWgruLcEF01BbLH2ln76bWaY"
+    },
+    {
+      "name": "GL012415.LRV",
+      "path": "/media-hub/GL012415.lrv",
+      "id": "1G60Vze7P0AOEDz3KigOJBDv2gghQYAaN"
+    },
+    {
+      "name": "GL012601.LRV",
+      "path": "/media-hub/GL012601.lrv",
+      "id": "1tkTjswQNQVlVi3TRzqXhKUleViEYzRJd"
+    },
+    {
+      "name": "GL012603.LRV",
+      "path": "/media-hub/GL012603.lrv",
+      "id": "1FVwNLIUd-R82NnHvbwXZNPlwahpgh6Co"
+    },
+    {
+      "name": "GL012600.LRV",
+      "path": "/media-hub/GL012600.lrv",
+      "id": "1T1uYs97mAweHav1j2UXA6TIjn286QBG6"
+    },
+    {
+      "name": "GL012602.LRV",
+      "path": "/media-hub/GL012602.lrv",
+      "id": "1uucIh55OfVQrHNkeqMymfN7C8CfVJU4e"
+    }
+  ],
+  "pdfs": [
+    {
+      "name": "Useful references for coral reef rehabilitation.pdf",
+      "path": "/media-hub/Useful_references_for_coral_reef_rehabilitation.pdf",
+      "id": "1-cjV0knDzM2JZzpNGpu0xfLaZkta80IF"
+    },
+    {
+      "name": "Methods to evaluate restoration success from local to ecosystem scales.pdf",
+      "path": "/media-hub/Methods_to_evaluate_restoration_success_from_local_to_ecosystem_scales.pdf",
+      "id": "1WyCkERNFUNs8dEFU3PGLVEvPX6hwuWEA"
+    },
+    {
+      "name": "Coral Restoration FoundationTM boulder coral.pdf",
+      "path": "/media-hub/Coral_Restoration_FoundationTM_boulder_coral.pdf",
+      "id": "1BpWPpnTCCe7Oh3AsOzIMXmJKKIhMXEHn"
+    },
+    {
+      "name": "A restoration genetics guide for coral reef conservation.pdf",
+      "path": "/media-hub/A_restoration_genetics_guide_for_coral_reef_conservation.pdf",
+      "id": "1KQ_q5OowW_qDBkjYHruY0ib94F85V2mT"
+    },
+    {
+      "name": "A user’s guide to coral reef restoration terminologies.pdf",
+      "path": "/media-hub/A_user’s_guide_to_coral_reef_restoration_terminologies.pdf",
+      "id": "15rhk_3z5OOz7aMZQ14wdZVIY0qPATN4w"
+    },
+    {
+      "name": "Handbook on Coral Reef Impacts.pdf",
+      "path": "/media-hub/Handbook_on_Coral_Reef_Impacts.pdf",
+      "id": "1kUYRJwL-rIZixqi39mHXomR4MXeU7sJc"
+    },
+    {
+      "name": "Coral_Restoration_Guide_for_the_Tourism_Sector.pdf",
+      "path": "/media-hub/Coral_Restoration_Guide_for_the_Tourism_Sector.pdf",
+      "id": "1J9JDYGZPYw4SRbSX6YO3vGNazGxnyAAx"
+    },
+    {
+      "name": "Coral Reef Restoration in the Maldives.pdf",
+      "path": "/media-hub/Coral_Reef_Restoration_in_the_Maldives.pdf",
+      "id": "15tBrpuShC_3O_pACRARGdz66vrMV515o"
+    },
+    {
+      "name": "Workbook-for-the-Managers-Guide-to-Restoration-Planning.pdf",
+      "path": "/media-hub/Workbook-for-the-Managers-Guide-to-Restoration-Planning.pdf",
+      "id": "1C77ShrjkDm_NTcLfnWTBV4HG1oMGSSr-"
+    },
+    {
+      "name": "ACTIVE CORAL REST.pdf",
+      "path": "/media-hub/ACTIVE_CORAL_REST.pdf",
+      "id": "1XlweK-dVC69kz9kWuyRLxG3-0a_pINto"
+    },
+    {
+      "name": "Reef Rehabilitation Manual_web.pdf",
+      "path": "/media-hub/Reef_Rehabilitation_Manual_web.pdf",
+      "id": "1iRhknq5Qf2PX73lS8FEpvcurq93ciAu6"
+    },
+    {
+      "name": "Hein-et-al.-2020_UNEP-report-1.pdf",
+      "path": "/media-hub/Hein-et-al.-2020_UNEP-report-1.pdf",
+      "id": "1jpMcFyJyL8g39y9fs3O7jBzMneFF0kxk"
+    },
+    {
+      "name": "Toolkit-CoralReefRestoration(2018).pdf",
+      "path": "/media-hub/Toolkit-CoralReefRestoration(2018).pdf",
+      "id": "1GYdZ4ZJ0OlhpblarQQVSqnLxbeRdK93u"
+    }
+  ]
 }

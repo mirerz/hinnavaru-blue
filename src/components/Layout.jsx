@@ -23,7 +23,7 @@ export default function Layout() {
   }, [])
 
   return (
-    <>
+    <div className="app-wrapper">
       <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
         <div className="container nav-container">
           <Link to="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
@@ -43,58 +43,83 @@ export default function Layout() {
             <li><NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink></li>
             <li><NavLink to="/about" onClick={() => setMenuOpen(false)}>Our Roots</NavLink></li>
             
-            <li
+            <li 
+              className={`nav-dropdown-trigger ${projectsOpen ? "active" : ""}`}
               onMouseEnter={() => setProjectsOpen(true)}
               onMouseLeave={() => setProjectsOpen(false)}
-              className="nav-dropdown-trigger"
             >
               <NavLink to="/projects">Projects</NavLink>
-              <div className={`nav-dropdown ${projectsOpen ? "show" : ""}`}>
-                <Link to="/projects">→ VIEW ALL MISSIONS</Link>
-                <Link to="/projects?cat=coral">Coral Restoration</Link>
-                <Link to="/projects?cat=sweep">Sweep Efforts</Link>
-                <Link to="/projects?cat=edu">Edu Awareness</Link>
+              <div className="nav-dropdown">
+                <Link to="/projects" onClick={() => setMenuOpen(false)}>→ VIEW ALL MISSIONS</Link>
+                <Link to="/projects?cat=coral" onClick={() => setMenuOpen(false)}>Coral Restoration</Link>
+                <Link to="/projects?cat=sweep" onClick={() => setMenuOpen(false)}>Sweep Efforts</Link>
+                <Link to="/projects?cat=edu" onClick={() => setMenuOpen(false)}>Edu Awareness</Link>
               </div>
             </li>
 
-            <li
+            <li 
+              className={`nav-dropdown-trigger ${registryOpen ? "active" : ""}`}
               onMouseEnter={() => setRegistryOpen(true)}
               onMouseLeave={() => setRegistryOpen(false)}
-              className="nav-dropdown-trigger"
             >
               <NavLink to="/registry">Reef Guardians</NavLink>
-              <div className={`nav-dropdown ${registryOpen ? "show" : ""}`}>
-                <Link to="/registry">→ GUARDIAN IMPACT HUB</Link>
-                <Link to="/registry#transparency">Public Transparency (Amaanaiy)</Link>
-                <Link to="/live-lagoon">Live Mission Map</Link>
-                <Link to="/blog">Program Blog</Link>
+              <div className="nav-dropdown">
+                <Link to="/registry#transparency" onClick={() => setMenuOpen(false)}>Public Transparency (Amaanaiy)</Link>
+                <Link to="/live-lagoon" onClick={() => setMenuOpen(false)}>Live Mission Map</Link>
+                <Link to="/blog" onClick={() => setMenuOpen(false)}>Program Blog</Link>
               </div>
             </li>
+            <li><a href={`mailto:${CMS_CONFIG.hello_email}`} onClick={() => setMenuOpen(false)}>Contact</a></li>
           </ul>
 
           <Link to="/sponsor" className="btn btn-primary btn-sm nav-cta hide-mobile">Adopt a Frame</Link>
         </div>
       </nav>
 
-      <main><Outlet /></main>
+      <main className="main-content">
+        <Outlet />
+      </main>
 
       <footer className="footer">
         <div className="container">
           <div className="footer-grid">
             <div className="footer-brand">
-              <span style={{ fontWeight: 800 }}>
-                HINNAVARU <span style={{ color: "var(--teal)" }}>BLUE</span>
-              </span>
-              <p>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Maldives.</p>
+              <div className="footer-logo">
+                <img src="/logo-circle.png" alt="Hinnavaru Blue" />
+                <span>HINNAVARU <span className="teal">BLUE</span></span>
+              </div>
+              <p>A community-led coral restoration initiative protecting the lagoon of Hinnavaru, Lhaviyani Atoll, Maldives.</p>
             </div>
-            {/* Additional footer links could go here if needed */}
+            <div className="footer-links">
+              <div className="footer-col">
+                <h5>Navigation</h5>
+                <Link to="/">Home</Link>
+                <Link to="/about">Our Roots</Link>
+                <Link to="/projects">Missions</Link>
+              </div>
+              <div className="footer-col">
+                <h5>Guardians</h5>
+                <Link to="/registry">Registry</Link>
+                <Link to="/live-lagoon">Live Map</Link>
+                <Link to="/sponsor">Sponsor</Link>
+              </div>
+              <div className="footer-col">
+                <h5>Contact</h5>
+                <a href={`mailto:${CMS_CONFIG.hello_email}`}>Email Us</a>
+                <a href={CMS_CONFIG.whatsapp_link} target="_blank" rel="noopener">WhatsApp</a>
+              </div>
+            </div>
           </div>
           <div className="footer-bottom">
-            <span>© 2026 Hinnavaru Blue Initiative · NGO Reg. No. {CMS_CONFIG.ngo_registration}</span>
-            <span>Made with 🪸 by P.729</span>
+            <div className="footer-legal">
+              © 2026 Hinnavaru Blue Initiative · NGO Reg: {CMS_CONFIG.ngo_registration}
+            </div>
+            <div className="footer-credit">
+              <span>Made with 🪸 by P.729</span>
+            </div>
           </div>
         </div>
       </footer>
-    </>
+    </div>
   )
 }

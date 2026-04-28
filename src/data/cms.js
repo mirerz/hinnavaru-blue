@@ -268,7 +268,7 @@ export const LAGOON_STORIES = [
     url: '/pulse-update.mp4', 
     guardianId: 'GD-01', 
     timestamp: '2026-03-27T08:00:00Z', 
-    expiryDate: '2026-04-10T00:00:00Z' 
+    expiryDate: '2026-05-10T00:00:00Z' 
   },
   { 
     id: 'ST-002', 
@@ -276,7 +276,7 @@ export const LAGOON_STORIES = [
     url: '/Born-Lagoon.png', 
     guardianId: 'GD-02', 
     timestamp: '2026-03-26T12:00:00Z', 
-    expiryDate: '2026-04-12T00:00:00Z' 
+    expiryDate: '2026-05-12T00:00:00Z' 
   },
   { 
     id: 'ST-003', 
@@ -284,7 +284,7 @@ export const LAGOON_STORIES = [
     url: '/we-are.png', 
     guardianId: 'GD-03', 
     timestamp: '2026-03-25T15:00:00Z', 
-    expiryDate: '2026-04-10T00:00:00Z' 
+    expiryDate: '2026-05-10T00:00:00Z' 
   }
 ]
 

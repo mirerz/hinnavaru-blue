@@ -122,25 +122,12 @@ export default function LiveLagoon() {
 
   return (
     <>
-      <section className="lagoon-hero section" style={{ position: 'relative', overflow: 'hidden', paddingBottom: '200px' }}>
-        {/* Background Overlay */}
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 0,
-          backgroundImage: `url('${LIVE_LAGOON_CONTENT.hero.bg_image}')`,
-          backgroundSize: 'cover', backgroundPosition: 'center',
-          opacity: 0.3
-        }} />
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 0,
-          background: 'linear-gradient(to bottom, var(--ocean-deep) 0%, transparent 30%, transparent 70%, var(--ocean-deep) 100%)'
-        }} />
-
-        <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <div className="badge badge-teal" style={{ marginBottom: '16px' }}>{LIVE_LAGOON_CONTENT.hero.badge}</div>
-          <h1 className="section-title">Live <span className="gradient-text">Lagoon Map</span></h1>
-          <p className="section-sub" style={{ margin: '0 auto' }}>
-            {LIVE_LAGOON_CONTENT.hero.desc}
-          </p>
+      <section className="sub-hero">
+        <div className="sub-hero-bg" style={{ backgroundImage: `url('${LIVE_LAGOON_CONTENT.hero.bg_image}')` }} />
+        <div className="container">
+          <div className="badge badge-teal">{LIVE_LAGOON_CONTENT.hero.badge}</div>
+          <h1 className="sub-hero-title">Live <span className="gradient-text">Lagoon Map</span></h1>
+          <p className="sub-hero-desc">{LIVE_LAGOON_CONTENT.hero.desc}</p>
         </div>
       </section>
 
