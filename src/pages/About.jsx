@@ -94,7 +94,7 @@ export default function About() {
           </div>
 
           {/* Catalyst Block */}
-          <div className="glass-card animate-reveal" style={{ padding: '64px 48px', borderRight: '6px solid var(--coral)', textAlign: 'right', display: 'flex', justifyContent: 'flex-end' }}>
+          <div className="glass-card animate-reveal" style={{ padding: '64px 48px', borderRight: '6px solid var(--coral)', textAlign: 'left', display: 'flex', justifyContent: 'flex-end' }}>
             <div style={{ maxWidth: '720px' }}>
               <div className="badge badge-coral animate-float" style={{ marginBottom: '16px' }}>🔥 The Spark</div>
               <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '24px' }}>{narrative.catalyst.title}</h2>
