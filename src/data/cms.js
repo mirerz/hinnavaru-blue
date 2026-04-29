@@ -234,6 +234,7 @@ export const DOCUMENT_VAULTS = [
 
 // 4. THE NOTICE BOARD (Live Feed Updates)
 export const LATEST_BULLETINS = [
+  { icon: '👁️', type: 'Guardian Log', text: 'https://adhadhu.com/81102' },
   { icon: '👁️', type: 'Guardian Log', text: 'https://share.google/t8tLH5CMGxCow1l60' },
   { icon: '👁️', type: 'Guardian Log', text: '<Adhakee Hinnavaru Rayyithun Fahuruverivaane Dhuvaheh>' },
   { icon: '🌍', type: 'Global News', text: 'Renewables rising, Part 1: How four countries are reshaping energy security (news.un.org)' },
