@@ -234,6 +234,7 @@ export const DOCUMENT_VAULTS = [
 
 // 4. THE NOTICE BOARD (Live Feed Updates)
 export const LATEST_BULLETINS = [
+  { icon: '👁️', type: 'Guardian Log', text: 'އަދަދު ހުއްޓުވުމަށް ފުލުހުން ފޮނުވައިގެން ރެއިޑް ކުރުން ބައިނަލްއަގުވާމީ މީޑިއާތަކުގެ ސުރުހީއަށް' },
   { icon: '👁️', type: 'Guardian Log', text: 'https://adhadhu.com/81102' },
   { icon: '👁️', type: 'Guardian Log', text: 'https://share.google/t8tLH5CMGxCow1l60' },
   { icon: '👁️', type: 'Guardian Log', text: '<Adhakee Hinnavaru Rayyithun Fahuruverivaane Dhuvaheh>' },
