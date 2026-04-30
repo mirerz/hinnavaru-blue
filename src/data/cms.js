@@ -237,20 +237,16 @@ export const DOCUMENT_VAULTS = [
 
 // 4. THE NOTICE BOARD (Live Feed Updates)
 export const LATEST_BULLETINS = [
-  { icon: '👁️', type: 'Guardian Log', text: 'އަދަދު ހުއްޓުވުމަށް ފުލުހުން ފޮނުވައިގެން ރެއިޑް ކުރުން ބައިނަލްއަގުވާމީ މީޑިއާތަކުގެ ސުރުހީއަށް' },
-  { icon: '👁️', type: 'Guardian Log', text: 'https://adhadhu.com/81102' },
-  { icon: '👁️', type: 'Guardian Log', text: 'https://share.google/t8tLH5CMGxCow1l60' },
-  { icon: '👁️', type: 'Guardian Log', text: '<Adhakee Hinnavaru Rayyithun Fahuruverivaane Dhuvaheh>' },
-  { icon: '🌍', type: 'Global News', text: 'Renewables rising, Part 1: How four countries are reshaping energy security (news.un.org)' },
-  { icon: '🌍', type: 'Global News', text: 'Renewables rising, Part 2: Seeking stability amid volatile fossil fuel markets (news.un.org)' },
-  { icon: '👁️', type: 'Guardian Log', text: '<Salaam>' },
-  { icon: '📚', type: 'New Document', text: 'Official User Guide to Coral Restoration Terminologies published. Read now in the Vault.' },
-  { icon: '🧬', type: 'Science', text: 'Restoration Genetics Guide updated with heat-tolerant species metrics.' },
-  { icon: '🌍', type: 'Global', text: 'UN Ocean Decade target aligned: Hinnavaru blueprint scaling to 14 atolls.' },
-  { icon: '📡', type: 'Live Feed', text: 'Global network detects 0.2°C temp anomaly. High-frequency monitoring activated.' },
-  { icon: '🌊', type: 'Mission', text: 'Vision 2030: Restoring critical nursery corridors for 5,000+ localized reef species.' },
-  { icon: '📢', type: 'Milestone', text: 'Operational milestone passed! 100% of global funding allocated directly to field operations.' },
-  { icon: '🪸', type: 'Data', text: 'March survival rates show 82% healthy coverage across 180 tracked frames.' }
+  { icon: '🌍', type: 'Global News', text: 'Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’ (news.un.org)'},
+  { icon: '🌍', type: 'Global News', text: 'World News in Brief: Europe warming twice as fast, acute hunger in Lebanon, peacekeepers deployed in Congo (news.un.org)'},
+  { icon: '👁️', type: 'Guardian Log', text: 'އަދަދު ހުއްޓުވުމަށް ފުލުހުން ފޮނުވައިގެން ރެއިޑް ކުރުން ބައިނަލްއަގުވާމީ މީޑިއާތަކުގެ ސުރުހީއަށް'},
+  { icon: '👁️', type: 'Guardian Log', text: 'https://adhadhu.com/81102'},
+  { icon: '👁️', type: 'Guardian Log', text: 'https://share.google/t8tLH5CMGxCow1l60'},
+  { icon: '👁️', type: 'Guardian Log', text: '<Adhakee Hinnavaru Rayyithun Fahuruverivaane Dhuvaheh>'},
+  { icon: '🌍', type: 'Global News', text: 'Renewables rising, Part 1: How four countries are reshaping energy security (news.un.org)'},
+  { icon: '🌍', type: 'Global News', text: 'Renewables rising, Part 2: Seeking stability amid volatile fossil fuel markets (news.un.org)'},
+  { icon: '👁️', type: 'Guardian Log', text: '<Salaam>'},
+  { icon: '📚', type: 'New Document', text: 'Official User Guide to Coral Restoration Terminologies published. Read now in the Vault.'},
 ]
 
 // 5. FINANCIAL ALLOCATION (Transparency Hub)
