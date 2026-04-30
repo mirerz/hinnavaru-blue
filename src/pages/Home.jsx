@@ -27,108 +27,101 @@ export default function Home() {
       {/* 1. HERO */}
       <section className="hero">
         <div className="hero-bg" />
-        <div className="hero-img" />
+        <div className="hero-img-wrap">
+          <div className="hero-img" />
+          <div className="hero-img-overlay" />
+        </div>
         <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-          <div className="hero-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div className="hero-eyebrow" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '4px' }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: 800 }}>HINNAVARU BLUE INITIATIVE</span>
-              <span style={{ fontSize: '0.75rem', fontWeight: 600, opacity: 0.8 }}>{CMS_CONFIG.atoll} · ({CMS_CONFIG.location_code}) · Maldives ({CMS_CONFIG.country_code})</span>
+          <div className="hero-content">
+            <div className="hero-eyebrow">
+              <div className="badge badge-teal animate-float">
+                <span className="live-dot" /> LIVE FROM LH. HINNAVARU
+              </div>
+              <p className="atoll-code">{CMS_CONFIG.atoll} · {CMS_CONFIG.location_code} · MALDIVES</p>
             </div>
-            <h1 className="animate-reveal" style={{ textAlign: 'center' }}>
+            
+            <h1 className="animate-reveal main-hero-title">
               {HOME_CONTENT.hero.title} <br />
               <span className="gradient-text">{HOME_CONTENT.hero.subtitle}</span>
             </h1>
 
-            <div className="mission-chat-container animate-reveal" style={{ 
-              marginTop: '32px', 
-              background: 'rgba(2, 11, 24, 0.4)', 
-              border: '1px solid rgba(13, 211, 197, 0.2)',
-              borderRadius: '20px',
-              padding: '24px',
-              width: '100%',
-              maxWidth: '500px',
-              backdropFilter: 'blur(10px)',
-              textAlign: 'left',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '16px',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span className="live-dot" />
-                    <span style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--teal)', letterSpacing: '2px' }}>MISSION LOG</span>
-                 </div>
-                 <span style={{ fontSize: '0.65rem', opacity: 0.5, fontWeight: 700 }}>UPDATED REAL-TIME</span>
+            {/* MISSION CONTROL TERMINAL */}
+            <div className="mission-terminal animate-reveal">
+              <div className="terminal-header">
+                <div className="terminal-controls">
+                  <span className="dot red"></span>
+                  <span className="dot yellow"></span>
+                  <span className="dot green"></span>
+                </div>
+                <div className="terminal-title">MISSION_LOG_TERMINAL_V2.0</div>
+                <div className="terminal-status">ENCRYPTED // {new Date().toLocaleTimeString()}</div>
               </div>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {LATEST_BULLETINS.slice(0, 3).map((msg, i) => (
-                  <div key={i} className="fade-in" style={{ 
-                    display: 'flex', 
-                    gap: '12px', 
-                    alignItems: 'flex-start',
-                    animationDelay: `${i * 0.2}s`
-                  }}>
-                    <div style={{ padding: '6px 14px', background: 'rgba(13,211,197,0.06)', borderRadius: '16px 16px 16px 0', border: '1px solid rgba(13,211,197,0.1)', flex: 1 }}>
-                       <div style={{ fontSize: '0.62rem', fontWeight: 900, color: 'var(--teal)', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '1px' }}>{msg.type}</div>
-                       <div style={{ fontSize: '0.82rem', lineHeight: '1.4', opacity: 0.9 }}>{msg.text}</div>
+              <div className="terminal-body">
+                <div className="terminal-feed">
+                  {LATEST_BULLETINS.slice(0, 4).map((msg, i) => (
+                    <div key={i} className="terminal-line">
+                      <span className="line-timestamp">[{new Date().getHours()}:{new Date().getMinutes()}:{10 + i}]</span>
+                      <span className={`line-type ${msg.type.toLowerCase()}`}>_{msg.type}:</span>
+                      <span className="line-text">{msg.text}</span>
                     </div>
+                  ))}
+                  <div className="terminal-line cursor-line">
+                    <span className="line-timestamp">[{new Date().getHours()}:{new Date().getMinutes()}:{25}]</span>
+                    <span className="line-type system">_SYSTEM:</span>
+                    <span className="line-text">Awaiting input...</span>
+                    <span className="terminal-cursor">_</span>
                   </div>
-                ))}
+                </div>
               </div>
 
-              {/* LIVE TEXTING INTERFACE */}
-              <div style={{ marginTop: '12px', display: 'flex', gap: '8px' }}>
+              <div className="terminal-input-wrap">
+                 <div className="terminal-prompt">&gt;</div>
                  <input 
-                   disabled 
-                   placeholder="Type to HinnavaruBlue_bot..." 
-                   className="chat-input-sim"
-                   style={{ 
-                     flex: 1, 
-                     background: 'rgba(255,255,255,0.03)', 
-                     border: '1px solid rgba(255,255,255,0.1)', 
-                     borderRadius: '12px', 
-                     padding: '10px 16px', 
-                     fontSize: '0.85rem',
-                     color: 'var(--white)',
-                     cursor: 'pointer'
-                   }} 
+                   readOnly 
+                   value="hinnavaru_blue --status --all" 
+                   className="terminal-input"
                    onClick={() => window.open(CMS_CONFIG.telegram_link, '_blank')}
                  />
-                 <button onClick={() => window.open(CMS_CONFIG.telegram_link, '_blank')} className="btn btn-primary" style={{ minWidth: '48px', padding: 0, borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                   <span style={{ fontSize: '1.2rem' }}>⚡</span>
+                 <button className="terminal-enter" onClick={() => window.open(CMS_CONFIG.telegram_link, '_blank')}>
+                   <i className="fas fa-arrow-right"></i>
                  </button>
-              </div>
-
-              <div style={{ textAlign: 'center', marginTop: '8px' }}>
-                <span style={{ fontSize: '0.65rem', opacity: 0.3, letterSpacing: '1px', textTransform: 'uppercase' }}>Secure Encrypted Mission Link</span>
               </div>
             </div>
 
-            <p className="hero-sub" style={{ textAlign: 'center', marginTop: '24px' }}>
+            <p className="hero-sub">
               {HOME_CONTENT.hero.desc}
             </p>
-            <div className="hero-actions" style={{ justifyContent: 'center' }}>
-              <Link to="/live-lagoon" className="btn btn-outline">🗺️ Explore Live Map</Link>
+            
+            <div className="hero-actions">
+              <Link to="/sponsor" className="btn btn-primary btn-shimmer">Join the Mission</Link>
+              <Link to="/live-lagoon" className="btn btn-outline">🗺️ Tactical Map</Link>
             </div>
           </div>
         </div>
+        
         <div className="waves-container">
-          <svg className="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" style={{ height: '60px' }}>
+          <svg className="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none">
             <defs>
               <path id="wave" d="M-160 44c30 0 58-18 88-18s58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
             </defs>
-            <g>
+            <g className="parallax">
               <use href="#wave" x="48" y="0" fill="rgba(14,165,233,0.05)" />
               <use href="#wave" x="48" y="3" fill="rgba(13,211,197,0.04)" />
               <use href="#wave" x="48" y="5" fill="rgba(2,11,24,0.8)" />
             </g>
           </svg>
         </div>
-        <div className="hero-scroll" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <span style={{ letterSpacing: '0.1em', fontSize: '0.7rem' }}>SCROLL</span>
-          <span>↓</span>
+        
+        <div className="hero-scroll-indicator">
+          <div className="mouse">
+            <div className="wheel"></div>
+          </div>
+          <div>
+            <span className="m-scroll-ball"></span>
+            <span className="m-scroll-ball"></span>
+            <span className="m-scroll-ball"></span>
+          </div>
         </div>
       </section>
 

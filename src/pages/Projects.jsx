@@ -33,11 +33,17 @@ export default function Projects() {
     return archives
   }, [])
 
-  const featuredMedia = useMemo(() => {
+  const [currentArchiveIdx, setCurrentArchiveIdx] = useState(0)
+
+  const tabMedia = useMemo(() => {
     const keyword = activeTab === 'coral' ? 'coral' : activeTab === 'sweep' ? 'clean' : 'aware'
     const filtered = allMedia.filter(m => m.toLowerCase().includes(keyword))
-    return filtered.length > 0 ? filtered[0] : heroImages[0]
+    return filtered.length > 0 ? filtered : heroImages
   }, [activeTab, allMedia, heroImages])
+
+  useEffect(() => {
+    setCurrentArchiveIdx(0)
+  }, [activeTab])
 
   const activeCatObj = PROJECT_CATEGORIES.find(c => c.id === activeTab)
   const filteredProjects = PROJECTS_LIST.filter(p => p.category === activeTab)
@@ -103,17 +109,23 @@ export default function Projects() {
               </div>
             </div>
             
-            <div className="featured-media-frame" style={{ marginTop: '30px' }}>
+            <div className="featured-media-frame" style={{ marginTop: '30px', position: 'relative' }}>
               <div className="featured-media-inner">
-                <img src={featuredMedia} alt="Featured Archive" />
+                <img src={tabMedia[currentArchiveIdx] || heroImages[0]} alt="Featured Archive" />
                 <div className="pulse-tag">
                   <span className="live-dot" /> <span>LATEST CAPTURE</span>
                 </div>
+                {tabMedia.length > 1 && (
+                  <div style={{ position: 'absolute', bottom: '20px', right: '20px', display: 'flex', gap: '10px', zIndex: 10 }}>
+                    <button onClick={() => setCurrentArchiveIdx(prev => (prev > 0 ? prev - 1 : tabMedia.length - 1))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'<'}</button>
+                    <button onClick={() => setCurrentArchiveIdx(prev => (prev < tabMedia.length - 1 ? prev + 1 : 0))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'>'}</button>
+                  </div>
+                )}
               </div>
             </div>
 
             <div style={{ marginTop: '50px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '30px' }}>
-              {filteredProjects.map((p, i) => (
+              {filteredProjects.slice(0, 3).map((p, i) => (
                 <div key={i} className="card animate-reveal" style={{ background: 'rgba(255,255,255,0.02)', padding: '30px', cursor: 'pointer' }} onClick={() => setSelectedProject(p)}>
                   <div className="badge badge-teal" style={{ marginBottom: '15px' }}>{p.progress}% COMPLETE</div>
                   <h4 style={{ fontSize: '1.3rem', marginBottom: '10px' }}>{p.title}</h4>
@@ -140,7 +152,7 @@ export default function Projects() {
           </div>
 
           <div className="guardian-slider-wrap">
-            <div className="guardian-slider-inner">
+            <div className="guardian-slider-inner" id="guardian-slider">
                {CORAL_REGISTRY.slice(0, 10).map((c, i) => (
                  <div key={i} className="guardian-slide-card card" style={{ minWidth: '220px', padding: '24px', textAlign: 'center' }}>
                     <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>🪸</div>
@@ -153,6 +165,10 @@ export default function Projects() {
                  </div>
                ))}
             </div>
+          </div>
+          <div style={{ display: 'flex', gap: '16px', marginTop: '30px', justifyContent: 'center' }}>
+            <button onClick={() => document.getElementById('guardian-slider').scrollBy({ left: -250, behavior: 'smooth' })} className="btn btn-outline" style={{ borderRadius: '50%', width: '48px', height: '48px', padding: 0 }}>{'<'}</button>
+            <button onClick={() => document.getElementById('guardian-slider').scrollBy({ left: 250, behavior: 'smooth' })} className="btn btn-outline" style={{ borderRadius: '50%', width: '48px', height: '48px', padding: 0 }}>{'>'}</button>
           </div>
         </div>
       </section>
@@ -216,7 +232,7 @@ export default function Projects() {
             gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
             gap: '20px' 
           }}>
-            {MANIFEST.archives.slice(0, 8).map((img, i) => (
+            {MANIFEST.archives.slice(0, 3).map((img, i) => (
               <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', height: '240px', position: 'relative', cursor: 'zoom-in' }}>
                 <img 
                   src={`/media-hub/${img}`} 
@@ -243,7 +259,7 @@ export default function Projects() {
                 gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', 
                 gap: '20px' 
               }}>
-                {MANIFEST.videos.map((vid, i) => (
+                {MANIFEST.videos.slice(0, 3).map((vid, i) => (
                   <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', background: '#000', border: '1px solid rgba(255,107,107,0.3)' }}>
                     <video 
                       controls 
@@ -263,7 +279,7 @@ export default function Projects() {
           )}
           
           <div style={{ textAlign: 'center', marginTop: '60px' }}>
-            <a href={CMS_CONFIG.telegram_link} target="_blank" rel="noopener" className="btn btn-outline">View Full Channel History →</a>
+            <a href={`https://drive.google.com/drive/folders/${CMS_CONFIG.media_automation.drive_id}`} target="_blank" rel="noopener" className="btn btn-outline">Explore Full Archive on Drive →</a>
           </div>
         </div>
       </section>

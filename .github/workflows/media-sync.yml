@@ -31,11 +31,19 @@ jobs:
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
         run: node scripts/sync-media.js
 
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "HBI Automation Bot"
+          git config --global user.email "bot@hinnavarublueinitiative.org"
+          git add src/data/cms.js public/media-hub/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "automation: sync media hub from Google Drive [skip ci]" && git push origin main)
+        continue-on-error: true
+
       - name: Build and Deploy
         run: |
+          npm install # Ensure sharp is available for the build if needed
           npm run build
           touch dist/.nojekyll
-          # GitHub Pages expects 404.html for SPA routing
           cp dist/index.html dist/404.html
         
       - name: Deploy to GitHub Pages

@@ -46,6 +46,22 @@ async function diagnose() {
     const folder = await drive.files.get({ fileId: folderId, fields: 'name' });
     console.log(`✅ Connection Successful! Folder name: "${folder.data.name}"`);
 
+    async function listRecursive(id, indent = '   ') {
+      const res = await drive.files.list({
+        q: `'${id}' in parents and trashed = false`,
+        fields: 'files(id, name, mimeType)',
+      });
+      const files = res.data.files;
+      if (files?.length) {
+        for (const f of files) {
+          console.log(`${indent}- [${f.mimeType}] ${f.name} (ID: ${f.id})`);
+          if (f.mimeType === 'application/vnd.google-apps.folder') {
+            await listRecursive(f.id, indent + '  ');
+          }
+        }
+      }
+    }
+
     const res = await drive.files.list({
       q: `'${folderId}' in parents and trashed = false`,
       fields: 'files(id, name, mimeType)',
@@ -54,7 +70,12 @@ async function diagnose() {
     const files = res.data.files;
     if (files?.length) {
       console.log(`✅ Found ${files.length} items in root:`);
-      files.forEach(f => console.log(`   - [${f.mimeType}] ${f.name}`));
+      for (const f of files) {
+        console.log(`   - [${f.mimeType}] ${f.name} (ID: ${f.id})`);
+        if (f.mimeType === 'application/vnd.google-apps.folder') {
+          await listRecursive(f.id, '     ');
+        }
+      }
     } else {
       console.log('⚠️ No files found in root. Check permissions.');
     }

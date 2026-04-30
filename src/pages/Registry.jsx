@@ -18,6 +18,7 @@ export default function Registry() {
   const [showDocModal, setShowDocModal] = useState(false)
   const [selectedDoc, setSelectedDoc] = useState('')
   const [visibleCount, setVisibleCount] = useState(10)
+  const [docCategory, setDocCategory] = useState('all')
   const { hash } = useLocation()
 
   useEffect(() => {
@@ -38,6 +39,11 @@ export default function Registry() {
       return matchSearch && matchFilter
     })
   }, [search, filter])
+
+  const filteredDocs = useMemo(() => {
+    if (docCategory === 'all') return DOCUMENT_VAULTS
+    return DOCUMENT_VAULTS.filter(d => d.category === docCategory)
+  }, [docCategory])
 
   const paginated = filtered.slice(0, visibleCount)
 
@@ -151,20 +157,37 @@ export default function Registry() {
       {/* TRANSPARENCY HUB */}
       <section className="section transparency-section" id="transparency">
         <div className="container">
-          <div className="badge badge-coral">{REGISTRY_CONTENT.transparency.badge}</div>
-          <h2 className="section-title">Transparency <span className="gradient-text">Hub</span></h2>
-          <p className="section-sub">{REGISTRY_CONTENT.transparency.desc}</p>
+          <div className="section-header-row">
+            <div className="animate-reveal">
+              <div className="badge badge-coral">{REGISTRY_CONTENT.transparency.badge}</div>
+              <h2 className="section-title">Public <span className="gradient-text">Transparency Hub</span></h2>
+              <p className="section-sub">{REGISTRY_CONTENT.transparency.desc}</p>
+            </div>
+            <div className="trust-badge animate-reveal">
+              <div className="trust-score">
+                <span className="score-num">98.4</span>
+                <span className="score-label">Trust Score</span>
+              </div>
+              <div className="trust-icon">
+                <i className="fas fa-shield-check"></i>
+              </div>
+            </div>
+          </div>
 
           <div className="transparency-grid">
-            <div className="card transparency-card">
-              <h4>{REGISTRY_CONTENT.transparency.funds.title}</h4>
+            {/* Financial Distribution Card */}
+            <div className="card glass-card transparency-card animate-reveal">
+              <div className="card-header-icon">
+                <i className="fas fa-chart-pie"></i>
+                <h3>{REGISTRY_CONTENT.transparency.funds.title}</h3>
+              </div>
               <p className="text-secondary-small">{REGISTRY_CONTENT.transparency.funds.total}</p>
               <div className="fund-bars">
                 {FUND_ALLOCATION.map((f, i) => (
                   <div className="fund-bar-item" key={i}>
                     <div className="fund-bar-label">
                       <span>{f.label}</span>
-                      <span>{f.pct}%</span>
+                      <span className="teal-small">{f.pct}%</span>
                     </div>
                     <div className="fund-bar-track">
                       <div className="fund-bar-fill" style={{ width: `${f.pct}%` }} />
@@ -172,30 +195,104 @@ export default function Registry() {
                   </div>
                 ))}
               </div>
+              <div className="card-footer-info">
+                <i className="fas fa-info-circle"></i> Last audited: Oct 2025 · Verified by Blockchain
+              </div>
             </div>
 
-            <div className="card transparency-card">
-              <h4>{REGISTRY_CONTENT.transparency.docs.title}</h4>
-              <p className="text-secondary-small">{REGISTRY_CONTENT.transparency.docs.desc}</p>
-              <div className="docs-list">
-                {DOCUMENT_VAULTS.map((d, i) => (
-                  <div key={i} className="doc-item">
+            {/* Live Ledger / Activity Card */}
+            <div className="card glass-card transparency-card animate-reveal">
+              <div className="card-header-icon">
+                <i className="fas fa-stream"></i>
+                <h3>Live Activity Ledger</h3>
+              </div>
+              <div className="live-ledger">
+                <div className="ledger-item">
+                  <div className="ledger-dot"></div>
+                  <div className="ledger-content">
+                    <span className="ledger-time">2 mins ago</span>
+                    <p>Status change: <span className="teal">Frame B-202</span> updated to <span className="dot-healthy-text">Healthy</span></p>
+                  </div>
+                </div>
+                <div className="ledger-item">
+                  <div className="ledger-dot"></div>
+                  <div className="ledger-content">
+                    <span className="ledger-time">45 mins ago</span>
+                    <p>New Audit Report uploaded for <span className="teal">Coastal Restoration</span></p>
+                  </div>
+                </div>
+                <div className="ledger-item">
+                  <div className="ledger-dot"></div>
+                  <div className="ledger-content">
+                    <span className="ledger-time">3 hours ago</span>
+                    <p>Funding allocation approved: <span className="teal">Reef Expansion Phase 4</span></p>
+                  </div>
+                </div>
+                <div className="ledger-item">
+                  <div className="ledger-dot"></div>
+                  <div className="ledger-content">
+                    <span className="ledger-time">5 hours ago</span>
+                    <p>New registration: <span className="teal">Deep Lagoon Coral A-45</span></p>
+                  </div>
+                </div>
+              </div>
+              <button className="btn btn-outline btn-sm w-full mt-24">
+                View Full Audit Trail
+              </button>
+            </div>
+
+            {/* Document Vault Card (Full Width) */}
+            <div className="card glass-card transparency-card docs-vault-card col-span-full">
+              <div className="vault-header">
+                <div className="card-header-icon">
+                  <i className="fas fa-file-shield"></i>
+                  <h3>{REGISTRY_CONTENT.transparency.docs.title}</h3>
+                </div>
+                <div className="doc-filters">
+                  {['all', 'Admin', 'Awareness', 'Scientific'].map(cat => (
+                    <button 
+                      key={cat} 
+                      className={`doc-filter-btn ${docCategory === cat ? 'active' : ''}`}
+                      onClick={() => setDocCategory(cat)}
+                    >
+                      {cat === 'all' ? 'All' : cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="docs-list-grid">
+                {filteredDocs.map((d, i) => (
+                  <div key={i} className="doc-item animate-reveal">
                     <span className="doc-icon">{d.icon}</span>
                     <div className="doc-info">
                       <div className="doc-title">{d.title}</div>
-                      <div className="doc-meta">{d.type} · {d.date}</div>
+                      <div className="doc-meta">
+                        <span className="doc-cat">{d.category}</span> · {d.type} · {d.date}
+                      </div>
                     </div>
                     <div className="doc-actions">
                       {d.path ? (
-                        <a href={d.path} target="_blank" rel="noopener" className="btn btn-primary btn-sm">📥 Download</a>
+                        <a href={d.path} target="_blank" rel="noopener" className="btn btn-primary btn-sm btn-icon-only">
+                          <i className="fas fa-download"></i>
+                        </a>
                       ) : (
-                        <button className="btn btn-outline btn-sm" onClick={() => { setSelectedDoc(d.title); setShowDocModal(true); }}>✉️ Request</button>
+                        <button className="btn btn-outline btn-sm btn-icon-only" onClick={() => { setSelectedDoc(d.title); setShowDocModal(true); }}>
+                          <i className="fas fa-paper-plane"></i>
+                        </button>
                       )}
                     </div>
                   </div>
                 ))}
+                {filteredDocs.length === 0 && (
+                  <div className="empty-state col-span-full">No documents in this category.</div>
+                )}
               </div>
             </div>
+          </div>
+          
+          <div className="transparency-footer-cta">
+            <p>Are you a Hinnavaru citizen or investor? <a href="#" className="teal">Access the Private Oversight Portal</a></p>
           </div>
         </div>
       </section>
@@ -206,7 +303,7 @@ export default function Registry() {
           <div className="modal" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
               <div>
-                <div className="badge badge-teal" style={{ marginBottom: '8px' }}>{selected.id}</div>
+                <div className="badge badge-teal mb-8">{selected.id}</div>
                 <h3>{selected.species}</h3>
               </div>
               <button className="modal-close" onClick={() => setSelected(null)}>×</button>

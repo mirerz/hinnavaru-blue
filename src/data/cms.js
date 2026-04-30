@@ -20,6 +20,9 @@ export const CMS_CONFIG = {
   telegram_link: "https://t.me/HinnavaruBlue_bot",
   media_automation: {
     drive_id: "12yWK3lhwcqiTNV6yUS6Insgqhg9r9jx7",
+    docs_id: "1NGwKXGaQs0S7hMLTJd5nhz_DboPas0Bw",
+    images_id: "1vbeY96DGn3aXshplZjmzsERlNG72KRbs",
+    vids_id: "1JDy0lTHiP2c-7KI4SlWGHR9Wbzly9FjG",
     sync_folder: "public/media-hub",
     optimize_to: "webp"
   }
@@ -226,7 +229,7 @@ export const CORAL_REGISTRY = [
 // 3. DOCUMENT VAULTS (Awareness & Education)
 export const DOCUMENT_VAULTS = [
   { icon: '📜', title: 'NGO Registration Certificate', type: 'Official License', date: 'Feb 2026', category: 'Admin' },
-  { icon: '🧬', title: 'Restoration Genetics Guide', type: 'Scientific Guide', date: '2026', category: 'Awareness' },
+  { icon: '🧬', title: 'Restoration Genetics Guide', type: 'Scientific Guide', date: '2026', category: 'Scientific' },
   { icon: '📚', title: 'Coral Restoration Terminologies', type: 'Educational', date: '2026', category: 'Awareness' },
   { icon: '🌊', title: 'Coastal Resilience Handbook', type: 'Education', date: '2026', category: 'Awareness' },
   { icon: '🪸', title: 'Quarterly Impact Assessment', type: 'Data Report', date: 'Mar 2026', category: 'Admin' },
@@ -261,7 +264,7 @@ export const FUND_ALLOCATION = [
 
 // 6. APPROVED LAGOON GUARDIANS (Certified Volunteers)
 export const APPROVED_GUARDIANS = [
-  { id: 'GD-00', name: 'Mirror', role: 'Initiator', avatar: '👁️', telegramId: '1116569241' },
+  { id: 'GD-00', name: 'Initiator', role: 'Initiator', avatar: '👁️', telegramId: '1116569241' },
   { id: 'GD-01', name: 'Nabeel Hussain', role: 'Lead Diver', avatar: '🤿', telegramId: '1305116955' },
   { id: 'GD-02', name: 'Zoya Ahmed', role: 'Initiator', avatar: '👩‍🔬', telegramId: '8594545357' },
   { id: 'GD-03', name: 'Ibrahim Ali', role: 'Initiator', avatar: '🌊', telegramId: '8594545357' },
@@ -275,7 +278,7 @@ export const LAGOON_STORIES = [
     url: '/pulse-update.mp4', 
     guardianId: 'GD-01', 
     timestamp: '2026-03-27T08:00:00Z', 
-    expiryDate: '2026-05-10T00:00:00Z' 
+    expiryDate: '2026-07-28T16:13:37Z' 
   },
   { 
     id: 'ST-002', 
@@ -283,7 +286,7 @@ export const LAGOON_STORIES = [
     url: '/Born-Lagoon.png', 
     guardianId: 'GD-02', 
     timestamp: '2026-03-26T12:00:00Z', 
-    expiryDate: '2026-05-12T00:00:00Z' 
+    expiryDate: '2026-07-28T16:13:37Z' 
   },
   { 
     id: 'ST-003', 
@@ -291,7 +294,7 @@ export const LAGOON_STORIES = [
     url: '/we-are.png', 
     guardianId: 'GD-03', 
     timestamp: '2026-03-25T15:00:00Z', 
-    expiryDate: '2026-05-10T00:00:00Z' 
+    expiryDate: '2026-07-28T16:13:37Z' 
   }
 ]
 

@@ -6,10 +6,11 @@
   "homepage": "https://hinnavarublueinitiative.org",
   "scripts": {
     "dev": "vite",
+    "extend-expiry": "node scripts/extend-expiry.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "vite build",
+    "predeploy": "npm run extend-expiry && vite build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

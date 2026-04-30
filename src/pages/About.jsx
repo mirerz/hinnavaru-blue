@@ -121,6 +121,40 @@ export default function About() {
               </div>
             </div>
           </div>
+
+          {/* 4. THE DEEP ARCHIVES (Timeline) */}
+          <section id="archives" className="section-sm" style={{ padding: '40px 0' }}>
+            <div className="badge badge-teal" style={{ marginBottom: '24px' }}>📂 The Deep Archives</div>
+            <h2 className="section-title" style={{ fontSize: '2.5rem', marginBottom: '48px' }}>Project <span className="gradient-text">Timeline</span></h2>
+            
+            <div className="archive-scroll-container" style={{ 
+              display: 'flex', 
+              gap: '24px', 
+              overflowX: 'auto', 
+              padding: '20px 4px',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none'
+            }}>
+              {PROJECT_ARCHIVE.map((item, i) => (
+                <div key={i} className="glass-card archive-card" style={{ 
+                  flex: '0 0 320px', 
+                  padding: '32px',
+                  borderTop: '4px solid var(--teal)',
+                  transition: 'var(--transition)'
+                }}>
+                  <div className="archive-year" style={{ color: 'var(--teal)', fontWeight: 800, fontSize: '1.2rem', marginBottom: '12px' }}>{item.year}</div>
+                  <h3 style={{ fontSize: '1.3rem', marginBottom: '16px', color: 'var(--white)' }}>{item.title}</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>{item.desc}</p>
+                </div>
+              ))}
+            </div>
+            
+            <div style={{ marginTop: '32px', textAlign: 'center' }}>
+              <a href={CMS_CONFIG.media_automation.drive_id} target="_blank" rel="noopener" className="btn btn-outline btn-sm">
+                Explore Full Archive on Drive ↗
+              </a>
+            </div>
+          </section>
         </div>
       </div>
 

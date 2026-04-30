@@ -17,6 +17,9 @@ src/data/media-manifest.json
 
 # Secrets
 service-account-key.json
+adhu-*.json
+.env
+.env.yaml
 *.local
 
 # Editor directories and files
@@ -32,3 +35,5 @@ service-account-key.json
 
 /net-commander
 .copilot-specs-cache/
+# Agent Checkpoint Manager
+.vscode/.agent-checkpoints/
