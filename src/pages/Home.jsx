@@ -45,49 +45,7 @@ export default function Home() {
               <span className="gradient-text">{HOME_CONTENT.hero.subtitle}</span>
             </h1>
 
-            {/* MISSION CONTROL TERMINAL */}
-            <div className="mission-terminal animate-reveal">
-              <div className="terminal-header">
-                <div className="terminal-controls">
-                  <span className="dot red"></span>
-                  <span className="dot yellow"></span>
-                  <span className="dot green"></span>
-                </div>
-                <div className="terminal-title">MISSION_LOG_TERMINAL_V2.0</div>
-                <div className="terminal-status">ENCRYPTED // {new Date().toLocaleTimeString()}</div>
-              </div>
-              
-              <div className="terminal-body">
-                <div className="terminal-feed">
-                  {LATEST_BULLETINS.slice(0, 4).map((msg, i) => (
-                    <div key={i} className="terminal-line">
-                      <span className="line-timestamp">[{new Date().getHours()}:{new Date().getMinutes()}:{10 + i}]</span>
-                      <span className={`line-type ${msg.type.toLowerCase()}`}>_{msg.type}:</span>
-                      <span className="line-text">{msg.text}</span>
-                    </div>
-                  ))}
-                  <div className="terminal-line cursor-line">
-                    <span className="line-timestamp">[{new Date().getHours()}:{new Date().getMinutes()}:{25}]</span>
-                    <span className="line-type system">_SYSTEM:</span>
-                    <span className="line-text">Awaiting input...</span>
-                    <span className="terminal-cursor">_</span>
-                  </div>
-                </div>
-              </div>
 
-              <div className="terminal-input-wrap">
-                 <div className="terminal-prompt">&gt;</div>
-                 <input 
-                   readOnly 
-                   value="hinnavaru_blue --status --all" 
-                   className="terminal-input"
-                   onClick={() => window.open(CMS_CONFIG.telegram_link, '_blank')}
-                 />
-                 <button className="terminal-enter" onClick={() => window.open(CMS_CONFIG.telegram_link, '_blank')}>
-                   <i className="fas fa-arrow-right"></i>
-                 </button>
-              </div>
-            </div>
 
             <p className="hero-sub">
               {HOME_CONTENT.hero.desc}

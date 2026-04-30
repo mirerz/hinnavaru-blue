@@ -188,14 +188,14 @@ export default function Registry() {
             </div>
           </div>
 
-          <div className="transparency-grid">
-            {/* Financial Distribution Card */}
+          <div className="transparency-grid-simple">
+            {/* Deployment Success Rate Card */}
             <div className="card glass-card transparency-card animate-reveal">
               <div className="card-header-icon">
-                <i className="fas fa-chart-pie"></i>
+                <i className="fas fa-chart-line teal"></i>
                 <h3>{REGISTRY_CONTENT.transparency.funds.title}</h3>
               </div>
-              <p className="text-secondary-small">{REGISTRY_CONTENT.transparency.funds.total}</p>
+              <p className="text-secondary-small mb-16">{REGISTRY_CONTENT.transparency.funds.total}</p>
               <div className="fund-bars">
                 {FUND_ALLOCATION.map((f, i) => (
                   <div className="fund-bar-item" key={i}>
@@ -209,42 +209,13 @@ export default function Registry() {
                   </div>
                 ))}
               </div>
-              <div className="card-footer-info">
-                <i className="fas fa-info-circle"></i> Last audited: Oct 2025 · Verified by Blockchain
+              <div className="card-footer-info mt-16">
+                <i className="fas fa-info-circle"></i> Verified by Blockchain · Last update: {CMS_CONFIG.last_updated}
               </div>
             </div>
 
-            {/* Live Ledger / Activity Card */}
-            <div className="card glass-card transparency-card animate-reveal">
-              <div className="card-header-icon">
-                <i className="fas fa-list-check teal"></i>
-                <h3>Live Activity Ledger</h3>
-              </div>
-              <div className="live-ledger">
-                {[
-                  { time: '2 mins ago', msg: <>Status change: <span className="teal">Frame B-202</span> updated to <span className="dot-healthy-text">Healthy</span></>, icon: 'fa-rotate' },
-                  { time: '45 mins ago', msg: <>New Audit Report uploaded for <span className="teal">Coastal Restoration</span></>, icon: 'fa-file-circle-check' },
-                  { time: '3 hours ago', msg: <>Funding allocation approved: <span className="teal">Reef Expansion Phase 4</span></>, icon: 'fa-circle-check' },
-                  { time: '5 hours ago', msg: <>New registration: <span className="teal">Deep Lagoon Coral A-45</span></>, icon: 'fa-plus-circle' }
-                ].map((item, idx) => (
-                  <div className="ledger-item" key={idx}>
-                    <div className="ledger-icon-wrap">
-                      <i className={`fas ${item.icon}`}></i>
-                    </div>
-                    <div className="ledger-content">
-                      <span className="ledger-time">{item.time}</span>
-                      <p>{item.msg}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <button className="btn btn-outline btn-sm w-full mt-24">
-                <i className="fas fa-arrow-right-long mr-8"></i> View Full Audit Trail
-              </button>
-            </div>
-
-            {/* Document Vault Card (Full Width) */}
-            <div className="card glass-card transparency-card docs-vault-card col-span-full">
+            {/* Document Vault Card */}
+            <div className="card glass-card transparency-card docs-vault-card">
               <div className="vault-header">
                 <div className="card-header-icon">
                   <i className="fas fa-file-shield"></i>
@@ -287,7 +258,7 @@ export default function Registry() {
                   </div>
                 ))}
                 {filteredDocs.length === 0 && (
-                  <div className="empty-state col-span-full">No documents in this category.</div>
+                  <div className="empty-state">No documents in this category.</div>
                 )}
               </div>
             </div>

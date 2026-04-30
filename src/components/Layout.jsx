@@ -6,15 +6,10 @@ export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { pathname } = useLocation()
-  const [projectsOpen, setProjectsOpen] = useState(false)
-  const [registryOpen, setRegistryOpen] = useState(false)
-  const [supportOpen, setSupportOpen] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
     setMenuOpen(false)
-    setProjectsOpen(false)
-    setRegistryOpen(false)
   }, [pathname])
 
   useEffect(() => {
@@ -44,123 +39,11 @@ export default function Layout() {
           </button>
 
           <ul className={`nav-links ${menuOpen ? "open" : ""}`}>
-          <li><NavLink to="/" onClick={() => setMenuOpen(false)}>Overview</NavLink></li>
-          
-          <li 
-            className={`nav-dropdown-trigger ${projectsOpen ? "active" : ""}`}
-            onMouseEnter={() => setProjectsOpen(true)}
-            onMouseLeave={() => setProjectsOpen(false)}
-          >
-            <div className="nav-link-with-arrow">
-              <NavLink to="/projects">Project Intelligence</NavLink>
-              <span className="nav-arrow"></span>
-            </div>
-            <div className="nav-dropdown">
-              <Link to="/projects" onClick={() => setMenuOpen(false)}>
-                <span className="dropdown-icon">📑</span>
-                <div className="dropdown-text">
-                  <strong>Deep Archives</strong>
-                  <span>Full project documentation</span>
-                </div>
-              </Link>
-              <Link to="/projects?cat=coral" onClick={() => setMenuOpen(false)}>
-                <span className="dropdown-icon">🪸</span>
-                <div className="dropdown-text">
-                  <strong>Coral Restoration</strong>
-                  <span>Lagoon nursery vitals</span>
-                </div>
-              </Link>
-              <Link to="/projects?cat=sweep" onClick={() => setMenuOpen(false)}>
-                <span className="dropdown-icon">🧹</span>
-                <div className="dropdown-text">
-                  <strong>Sweep Efforts</strong>
-                  <span>Marine debris intelligence</span>
-                </div>
-              </Link>
-              <div className="dropdown-divider"></div>
-              <Link to="/about#vitals" onClick={() => setMenuOpen(false)}>
-                <span className="dropdown-icon">🧬</span>
-                <div className="dropdown-text">
-                  <strong>The Five Vitals</strong>
-                  <span>Core mission principles</span>
-                </div>
-              </Link>
-            </div>
-          </li>
-
-          <li 
-            className={`nav-dropdown-trigger ${registryOpen ? "active" : ""}`}
-            onMouseEnter={() => setRegistryOpen(true)}
-            onMouseLeave={() => setRegistryOpen(false)}
-          >
-            <div className="nav-link-with-arrow">
-              <NavLink to="/registry">Transparency Hub</NavLink>
-              <span className="nav-arrow"></span>
-            </div>
-            <div className="nav-dropdown">
-              <Link to="/registry#transparency" onClick={() => setMenuOpen(false)}>
-                <span className="dropdown-icon">💎</span>
-                <div className="dropdown-text">
-                  <strong>Public Amaanaiy</strong>
-                  <span>Financial & asset transparency</span>
-                </div>
-              </Link>
-              <Link to="/live-lagoon" onClick={() => setMenuOpen(false)}>
-                <span className="dropdown-icon">🗺️</span>
-                <div className="dropdown-text">
-                  <strong>Mission Map</strong>
-                  <span>Live satellite positioning</span>
-                </div>
-              </Link>
-              <Link to="/blog" onClick={() => setMenuOpen(false)}>
-                <span className="dropdown-icon">📝</span>
-                <div className="dropdown-text">
-                  <strong>Guardian Logs</strong>
-                  <span>Field updates & stories</span>
-                </div>
-              </Link>
-            </div>
-          </li>
-
-          <li 
-            className={`nav-dropdown-trigger ${supportOpen ? "active" : ""}`}
-            onMouseEnter={() => setSupportOpen(true)}
-            onMouseLeave={() => setSupportOpen(false)}
-          >
-            <div className="nav-link-with-arrow">
-              <span className="nav-link-highlight">Command Center</span>
-              <span className="nav-arrow"></span>
-            </div>
-            <div className="nav-dropdown">
-              <a href="/#in-action" onClick={() => setMenuOpen(false)}>
-                <span className="dropdown-icon">⚡</span>
-                <div className="dropdown-text">
-                  <strong>Live Pulse</strong>
-                  <span>Real-time lagoon reels</span>
-                </div>
-              </a>
-              <a href="/#in-action" onClick={() => setMenuOpen(false)}>
-                <span className="dropdown-icon">🎯</span>
-                <div className="dropdown-text">
-                  <strong>Focus Area</strong>
-                  <span>Verified community captures</span>
-                </div>
-              </a>
-              <a href="/#notice-board" onClick={() => setMenuOpen(false)}>
-                <span className="dropdown-icon">📢</span>
-                <div className="dropdown-text">
-                  <strong>Notice Board</strong>
-                  <span>Official mission transmissions</span>
-                </div>
-              </a>
-              <div className="dropdown-divider"></div>
-              <Link to="/sponsor" onClick={() => setMenuOpen(false)} className="dropdown-cta">
-                <span>Adopt a Frame</span>
-                <span className="cta-arrow">→</span>
-              </Link>
-            </div>
-          </li>
-        </ul>
+            <li><NavLink to="/" onClick={() => setMenuOpen(false)}>Home</NavLink></li>
+            <li><NavLink to="/about" onClick={() => setMenuOpen(false)}>Our Roots</NavLink></li>
+            <li><NavLink to="/projects" onClick={() => setMenuOpen(false)}>Projects</NavLink></li>
+            <li><NavLink to="/registry" onClick={() => setMenuOpen(false)}>Reef Guardians</NavLink></li>
+          </ul>
 
           <div className="nav-actions" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
             <a href={`mailto:${CMS_CONFIG.hello_email}`} className="btn btn-outline btn-sm">Contact</a>
