@@ -174,6 +174,9 @@ export default function Registry() {
               <p className="section-sub">{REGISTRY_CONTENT.transparency.desc}</p>
             </div>
             <div className="trust-meter animate-reveal">
+              <div className="trust-live-indicator">
+                <span className="pulse-dot"></span> Live
+              </div>
               <svg viewBox="0 0 100 100" className="trust-circle">
                 <circle cx="50" cy="50" r="45" className="circle-bg" />
                 <circle cx="50" cy="50" r="45" className="circle-fill" style={{ strokeDashoffset: `${282.7 * (1 - animatedScore/100)}` }} />
