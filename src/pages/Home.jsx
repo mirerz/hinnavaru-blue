@@ -300,7 +300,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. MISSION STRIP */}
+      {/* 5. TRANSPARENCY HUB PREVIEW */}
+      <section className="section transparency-preview-section" style={{ background: 'linear-gradient(to top, #020b18 0%, var(--ocean-mid) 100%)' }}>
+        <div className="container">
+          <div className="glass-card transparency-preview-card animate-reveal">
+            <div className="grid-2-col">
+              <div>
+                <div className="badge badge-coral">Transparency</div>
+                <h2 className="section-title" style={{ textAlign: 'left', marginTop: '16px' }}>
+                  Radical <span className="gradient-text">Accountability</span>
+                </h2>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', fontSize: '1.1rem', lineHeight: '1.7' }}>
+                  Hinnavaru Blue is the first Maldivian conservation project with a live audit ledger. Track every dollar, every coral frame, and every scientific report in real-time.
+                </p>
+                <div className="trust-preview">
+                  <div className="trust-item">
+                    <span className="trust-val">98.4%</span>
+                    <span className="trust-label">Audit Score</span>
+                  </div>
+                  <div className="trust-item">
+                    <span className="trust-val">100%</span>
+                    <span className="trust-label">Open Data</span>
+                  </div>
+                </div>
+                <Link to="/registry#transparency" className="btn btn-primary" style={{ marginTop: '32px' }}>
+                  View Transparency Hub →
+                </Link>
+              </div>
+              <div className="transparency-preview-visual">
+                 <div className="preview-ledger-mini">
+                    <div className="ledger-line-item"></div>
+                    <div className="ledger-line-item"></div>
+                    <div className="ledger-line-item"></div>
+                 </div>
+                 <div className="preview-chart-mini"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. MISSION STRIP */}
       <section className="section-sm">
         <div className="container">
           <div className="mission-strip">

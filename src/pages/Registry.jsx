@@ -19,7 +19,17 @@ export default function Registry() {
   const [selectedDoc, setSelectedDoc] = useState('')
   const [visibleCount, setVisibleCount] = useState(10)
   const [docCategory, setDocCategory] = useState('all')
+  const [animatedScore, setAnimatedScore] = useState(0)
   const { hash } = useLocation()
+
+  const trustScore = 98.4
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimatedScore(trustScore)
+    }, 800)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     if (hash === '#transparency') {
@@ -163,13 +173,14 @@ export default function Registry() {
               <h2 className="section-title">Public <span className="gradient-text">Transparency Hub</span></h2>
               <p className="section-sub">{REGISTRY_CONTENT.transparency.desc}</p>
             </div>
-            <div className="trust-badge animate-reveal">
-              <div className="trust-score">
-                <span className="score-num">98.4</span>
+            <div className="trust-meter animate-reveal">
+              <svg viewBox="0 0 100 100" className="trust-circle">
+                <circle cx="50" cy="50" r="45" className="circle-bg" />
+                <circle cx="50" cy="50" r="45" className="circle-fill" style={{ strokeDashoffset: `${282.7 * (1 - animatedScore/100)}` }} />
+              </svg>
+              <div className="trust-content">
+                <span className="score-num">{animatedScore.toFixed(1)}</span>
                 <span className="score-label">Trust Score</span>
-              </div>
-              <div className="trust-icon">
-                <i className="fas fa-shield-check"></i>
               </div>
             </div>
           </div>
@@ -203,41 +214,29 @@ export default function Registry() {
             {/* Live Ledger / Activity Card */}
             <div className="card glass-card transparency-card animate-reveal">
               <div className="card-header-icon">
-                <i className="fas fa-stream"></i>
+                <i className="fas fa-list-check teal"></i>
                 <h3>Live Activity Ledger</h3>
               </div>
               <div className="live-ledger">
-                <div className="ledger-item">
-                  <div className="ledger-dot"></div>
-                  <div className="ledger-content">
-                    <span className="ledger-time">2 mins ago</span>
-                    <p>Status change: <span className="teal">Frame B-202</span> updated to <span className="dot-healthy-text">Healthy</span></p>
+                {[
+                  { time: '2 mins ago', msg: <>Status change: <span className="teal">Frame B-202</span> updated to <span className="dot-healthy-text">Healthy</span></>, icon: 'fa-rotate' },
+                  { time: '45 mins ago', msg: <>New Audit Report uploaded for <span className="teal">Coastal Restoration</span></>, icon: 'fa-file-circle-check' },
+                  { time: '3 hours ago', msg: <>Funding allocation approved: <span className="teal">Reef Expansion Phase 4</span></>, icon: 'fa-circle-check' },
+                  { time: '5 hours ago', msg: <>New registration: <span className="teal">Deep Lagoon Coral A-45</span></>, icon: 'fa-plus-circle' }
+                ].map((item, idx) => (
+                  <div className="ledger-item" key={idx}>
+                    <div className="ledger-icon-wrap">
+                      <i className={`fas ${item.icon}`}></i>
+                    </div>
+                    <div className="ledger-content">
+                      <span className="ledger-time">{item.time}</span>
+                      <p>{item.msg}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="ledger-item">
-                  <div className="ledger-dot"></div>
-                  <div className="ledger-content">
-                    <span className="ledger-time">45 mins ago</span>
-                    <p>New Audit Report uploaded for <span className="teal">Coastal Restoration</span></p>
-                  </div>
-                </div>
-                <div className="ledger-item">
-                  <div className="ledger-dot"></div>
-                  <div className="ledger-content">
-                    <span className="ledger-time">3 hours ago</span>
-                    <p>Funding allocation approved: <span className="teal">Reef Expansion Phase 4</span></p>
-                  </div>
-                </div>
-                <div className="ledger-item">
-                  <div className="ledger-dot"></div>
-                  <div className="ledger-content">
-                    <span className="ledger-time">5 hours ago</span>
-                    <p>New registration: <span className="teal">Deep Lagoon Coral A-45</span></p>
-                  </div>
-                </div>
+                ))}
               </div>
               <button className="btn btn-outline btn-sm w-full mt-24">
-                View Full Audit Trail
+                <i className="fas fa-arrow-right-long mr-8"></i> View Full Audit Trail
               </button>
             </div>
 
