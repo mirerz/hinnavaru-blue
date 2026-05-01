@@ -5,7 +5,7 @@
     "test-plan",
     "implement",
     "review",
-    "uat",
+    "execute-test",
     "release",
     "monitor",
     "doc-sync"

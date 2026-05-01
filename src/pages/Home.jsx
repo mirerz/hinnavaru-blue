@@ -33,13 +33,6 @@ export default function Home() {
         </div>
         <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
           <div className="hero-content">
-            <div className="hero-eyebrow">
-              <div className="badge badge-teal animate-float">
-                <span className="live-dot" /> LIVE FROM LH. HINNAVARU
-              </div>
-              <p className="atoll-code">{CMS_CONFIG.atoll} · {CMS_CONFIG.location_code} · MALDIVES</p>
-            </div>
-            
             <h1 className="animate-reveal main-hero-title">
               {HOME_CONTENT.hero.title} <br />
               <span className="gradient-text">{HOME_CONTENT.hero.subtitle}</span>
@@ -52,8 +45,8 @@ export default function Home() {
             </p>
             
             <div className="hero-actions">
-              <Link to="/sponsor" className="btn btn-primary btn-shimmer">Join the Mission</Link>
-              <Link to="/live-lagoon" className="btn btn-outline">🗺️ Tactical Map</Link>
+              <Link to="/sponsor" className="btn btn-primary btn-shimmer">Adopt a Frame</Link>
+              <Link to="/live-lagoon" className="btn btn-outline">🗺️ Explore the Lagoon</Link>
             </div>
           </div>
         </div>
@@ -264,33 +257,28 @@ export default function Home() {
           <div className="glass-card transparency-preview-card animate-reveal">
             <div className="grid-2-col">
               <div>
-                <div className="badge badge-coral">Transparency</div>
+                <div className="badge badge-coral">Impact</div>
                 <h2 className="section-title" style={{ textAlign: 'left', marginTop: '16px' }}>
-                  Radical <span className="gradient-text">Accountability</span>
+                  Public <span className="gradient-text">Transparency</span>
                 </h2>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', fontSize: '1.1rem', lineHeight: '1.7' }}>
-                  Hinnavaru Blue is the first Maldivian conservation project with a live audit ledger. Track every dollar, every coral frame, and every scientific report in real-time.
+                  The Hinnavaru Blue Initiative is committed to radical openness. Every coral frame, scientific report, and impact metric is publicly accessible through our transparency dashboard.
                 </p>
                 <div className="trust-preview">
                   <div className="trust-item">
                     <span className="trust-val">98.4%</span>
-                    <span className="trust-label">Audit Score</span>
+                    <span className="trust-label">Impact Score</span>
                   </div>
                   <div className="trust-item">
                     <span className="trust-val">100%</span>
-                    <span className="trust-label">Open Data</span>
+                    <span className="trust-label">Open Access</span>
                   </div>
                 </div>
                 <Link to="/registry#transparency" className="btn btn-primary" style={{ marginTop: '32px' }}>
-                  View Transparency Hub →
+                  View Impact Dashboard →
                 </Link>
               </div>
               <div className="transparency-preview-visual">
-                 <div className="preview-ledger-mini">
-                    <div className="ledger-line-item"></div>
-                    <div className="ledger-line-item"></div>
-                    <div className="ledger-line-item"></div>
-                 </div>
                  <div className="preview-chart-mini"></div>
               </div>
             </div>

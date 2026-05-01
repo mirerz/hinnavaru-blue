@@ -170,7 +170,7 @@ export default function Registry() {
           <div className="section-header-row">
             <div className="animate-reveal">
               <div className="badge badge-coral">{REGISTRY_CONTENT.transparency.badge}</div>
-              <h2 className="section-title">Public <span className="gradient-text">Transparency Hub</span></h2>
+              <h2 className="section-title">Impact & <span className="gradient-text">Accountability Hub</span></h2>
               <p className="section-sub">{REGISTRY_CONTENT.transparency.desc}</p>
             </div>
             <div className="trust-meter animate-reveal">
@@ -183,7 +183,7 @@ export default function Registry() {
               </svg>
               <div className="trust-content">
                 <span className="score-num">{animatedScore.toFixed(1)}</span>
-                <span className="score-label">Trust Score</span>
+                <span className="score-label">Impact Score</span>
               </div>
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function Registry() {
                 ))}
               </div>
               <div className="card-footer-info mt-16">
-                <i className="fas fa-info-circle"></i> Verified by Blockchain · Last update: {CMS_CONFIG.last_updated}
+                <i className="fas fa-info-circle"></i> Last update: {CMS_CONFIG.last_updated}
               </div>
             </div>
 
@@ -265,7 +265,7 @@ export default function Registry() {
           </div>
           
           <div className="transparency-footer-cta">
-            <p>Are you a Hinnavaru citizen or investor? <a href="#" className="teal">Access the Private Oversight Portal</a></p>
+            <p>Are you a Hinnavaru citizen or supporter? <a href="#" className="teal">Contact the Initiative for more info.</a></p>
           </div>
         </div>
       </section>
