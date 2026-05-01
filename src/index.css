@@ -294,6 +294,7 @@ body {
 .nav-logo {
   display: flex;
   align-items: center;
+  gap: 16px;
   text-decoration: none;
 }
 
@@ -732,6 +733,7 @@ body {
   position: relative;
   z-index: 1;
   max-width: 900px;
+  margin-top: -80px;
   /* Modern wider layout */
 }
 
@@ -747,12 +749,13 @@ body {
   font-size: 1.2rem;
   color: var(--text-secondary);
   max-width: 560px;
-  margin-bottom: 40px;
+  margin: 0 auto 40px;
   line-height: 1.7;
 }
 
 .hero-actions {
   display: flex;
+  justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
 }

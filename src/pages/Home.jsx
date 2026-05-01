@@ -6,12 +6,28 @@ export default function Home() {
   const [pulseIdx, setPulseIdx] = useState(0)
   const [focusIdx, setFocusIdx] = useState(0)
   const [updateIdx, setUpdateIdx] = useState(0)
+  const [heroTickerIdx, setHeroTickerIdx] = useState(0)
+
+  const HERO_TICKER_ITEMS = [
+    "Science-backed Coral Restoration",
+    "Real-time Lagoon Monitoring",
+    "Community-led Ocean Action",
+    "Open Data Transparency"
+  ]
 
   // Auto-cycle the LiveUp ticker
   useEffect(() => {
     const timer = setInterval(() => {
       setUpdateIdx(prev => (prev + 1) % LATEST_BULLETINS.length)
     }, 5000)
+    return () => clearInterval(timer)
+  }, [])
+
+  // Auto-cycle the Hero ticker
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroTickerIdx(prev => (prev + 1) % HERO_TICKER_ITEMS.length)
+    }, 3000)
     return () => clearInterval(timer)
   }, [])
 
@@ -38,7 +54,12 @@ export default function Home() {
               <span className="gradient-text">{HOME_CONTENT.hero.subtitle}</span>
             </h1>
 
-
+            <div className="hero-ticker-wrap animate-reveal delay-100" style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', background: 'rgba(13, 211, 197, 0.08)', padding: '8px 20px', borderRadius: '100px', border: '1px solid rgba(13, 211, 197, 0.2)', marginBottom: '32px' }}>
+              <span style={{ display: 'inline-block', width: '8px', height: '8px', background: 'var(--teal)', borderRadius: '50%', boxShadow: '0 0 10px var(--teal)', animation: 'pulse-dot 2s infinite' }}></span>
+              <span style={{ color: 'var(--teal)', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', minWidth: '240px' }}>
+                {HERO_TICKER_ITEMS[heroTickerIdx]}
+              </span>
+            </div>
 
             <p className="hero-sub">
               {HOME_CONTENT.hero.desc}
