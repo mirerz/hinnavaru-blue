@@ -672,7 +672,7 @@ export const SPONSOR_TIERS = [
 
 // 11. NURSERY SUMMARY (Used in multiple pages)
 export const NURSERY_SUMMARY = {
-  active_frames: 180,
+  active_frames: 19,
   survival_rate: 82,
   total_funds: '100% Impact',
   field_allocation: 100
