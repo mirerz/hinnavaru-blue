@@ -138,16 +138,13 @@ export default function Home() {
                 {videoStories.length > 0 ? (
                   <>
                     <a href={videoStories[pulseIdx].url} target="_blank" rel="noopener" style={{ display: 'block', height: '100%', cursor: 'pointer' }}>
-                      <video 
-                        key={pulseIdx} 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline 
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      >
-                        <source src={videoStories[pulseIdx].url} type="video/mp4" />
-                      </video>
+                      {videoStories[pulseIdx].url.toLowerCase().endsWith('.mp4') ? (
+                        <video key={pulseIdx} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }}>
+                          <source src={videoStories[pulseIdx].url} type="video/mp4" />
+                        </video>
+                      ) : (
+                        <img key={pulseIdx} src={videoStories[pulseIdx].url} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.5s' }} alt="Pulse capture" />
+                      )}
                     </a>
                     <div className="story-overlay">
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -170,12 +167,10 @@ export default function Home() {
                   </div>
                 )}
                 
-                {videoStories.length > 1 && (
-                  <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, transform: 'translateY(-50%)', display: 'flex', justifyContent: 'space-between', padding: '0 12px', pointerEvents: 'none' }}>
-                    <button onClick={() => setPulseIdx(prev => (prev - 1 + videoStories.length) % videoStories.length)} style={{ pointerEvents: 'auto' }} className="btn-story-nav">←</button>
-                    <button onClick={() => setPulseIdx(prev => (prev + 1) % videoStories.length)} style={{ pointerEvents: 'auto' }} className="btn-story-nav">→</button>
-                  </div>
-                )}
+                <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, transform: 'translateY(-50%)', display: 'flex', justifyContent: 'space-between', padding: '0 12px', pointerEvents: 'none' }}>
+                  <button onClick={() => videoStories.length > 0 && setPulseIdx(prev => (prev - 1 + videoStories.length) % videoStories.length)} style={{ pointerEvents: 'auto' }} className="btn-story-nav">←</button>
+                  <button onClick={() => videoStories.length > 0 && setPulseIdx(prev => (prev + 1) % videoStories.length)} style={{ pointerEvents: 'auto' }} className="btn-story-nav">→</button>
+                </div>
               </div>
             </div>
 
@@ -207,7 +202,7 @@ export default function Home() {
                   </>
                 ) : (
                   <div style={{ height: '100%', position: 'relative' }}>
-                    <img src="/Living-L.png" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} alt="Lagoon Focus" />
+                    <img src="/deep-archives/media-hub/Living-L.png" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8 }} alt="Lagoon Focus" />
                     <div className="story-overlay">
                       <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--teal)' }}>LATEST MISSION FOCUS</div>
                     </div>
@@ -363,17 +358,24 @@ export default function Home() {
       </section>
 
       {/* 7. BLUE FRONTIER VISION */}
-      <section className="section" style={{ background: '#020b18', padding: '100px 0' }}>
-         <div className="container" style={{ textAlign: 'center' }}>
+      <section className="section" style={{ position: 'relative', overflow: 'hidden', padding: '120px 0', background: '#020b18' }}>
+         <div style={{
+           position: 'absolute', inset: 0, zIndex: 0,
+           backgroundImage: `url('/deep-archives/media-hub/GPAT2363.webp')`,
+           backgroundSize: 'cover', backgroundPosition: 'center',
+           opacity: 0.25
+         }} />
+         <div style={{
+           position: 'absolute', inset: 0, zIndex: 0,
+           background: 'linear-gradient(to bottom, #020b18 0%, transparent 20%, transparent 80%, #020b18 100%)'
+         }} />
+
+         <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
             <div className="badge badge-teal" style={{ marginBottom: '16px' }}>🔵 The Blueprint</div>
             <h2 className="section-title">The <span className="gradient-text">Blue Frontier</span> Vision</h2>
-            <p className="section-sub" style={{ margin: '0 auto 40px' }}>
+            <p className="section-sub" style={{ margin: '0 auto 64px' }}>
                Scaling the Hinnavaru model across the Noonu, Raa, Baa, and Lhaviyani Atolls. A national blueprint for community-led restoration.
             </p>
-            
-            <div style={{ maxWidth: '1000px', margin: '0 auto 64px', borderRadius: '24px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
-               <img src="/media-hub/cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp" alt="Blue Frontier Vision" style={{ width: '100%', height: 'auto', display: 'block' }} />
-            </div>
 
             <div className="stats-grid" style={{ marginBottom: 0 }}>
                {[
@@ -382,7 +384,7 @@ export default function Home() {
                  { num: '10k+', label: 'GARDENED CORALS' },
                  { num: '100%', label: 'OPEN DATA' },
                ].map((s, i) => (
-                 <div className="card" key={i} style={{ padding: '32px' }}>
+                 <div className="glass-card" key={i} style={{ padding: '32px' }}>
                     <div className="hero-stat-num" style={{ fontSize: '2.5rem' }}>{s.num}</div>
                     <div className="hero-stat-label" style={{ letterSpacing: '0.1em' }}>{s.label}</div>
                  </div>

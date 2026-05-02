@@ -101,6 +101,34 @@ async function handleCallback(callback) {
     await handleMediaUpload(callback);
   }
 
+  // 4.5 Registration Flow
+  else if (data.startsWith('register:')) {
+    const role = data.split(':')[1];
+    PENDING_INPUTS.set(chatId, { type: 'register_name', role });
+    await telegram.sendMessage(chatId, `You selected *${role}*. Please reply with your full name:`);
+  }
+  else if (data.startsWith('approve_new:')) {
+    const parts = data.split(':');
+    const targetChatId = parts[1];
+    const targetName = parts[2];
+    const targetRole = parts[3];
+
+    const { content, sha } = await CMSManager.getCMS();
+    const admins = CMSManager.getAdmins(content);
+    if (!admins.includes(chatId)) return;
+
+    const updatedContent = CMSManager.addNewGuardian(content, {
+      name: targetName,
+      role: targetRole,
+      telegramId: targetChatId,
+      avatar: targetRole === 'Reef Guardian' ? '🤿' : '💎'
+    });
+
+    await CMSManager.updateCMS(updatedContent, sha, `bot: registered new guardian ${targetName}`);
+    await telegram.sendMessage(chatId, `✅ *Approved ${targetName} as ${targetRole}*`);
+    await telegram.sendMessage(targetChatId, `🎉 *Access Granted!*\nYou are now registered as a **${targetRole}**.\nType /menu to access your dashboard.`);
+  }
+
   // 5. Stats Management
   else if (data.startsWith('stats:')) {
     const action = data.split(':')[1];
@@ -223,7 +251,24 @@ async function handleMessage(message) {
 
   // 3. Media Center / Pending File Uploads
   else if (message.photo || message.video || message.document) {
-    if (PENDING_INPUTS.has(chatId) && PENDING_INPUTS.get(chatId).type === 'stats:add_doc_file') {
+    const caption = (message.caption || '').toLowerCase();
+    const matchAdopt = caption.match(/#adopt(\d+)/);
+    const matchSweep = caption.match(/#sweep(\d+)/);
+    const matchEdu = caption.match(/#edu(\d+)/);
+
+    let targetFolder = null;
+    if (matchAdopt) {
+       targetFolder = `Adoption${matchAdopt[1]}`;
+    } else if (matchSweep) {
+       targetFolder = `SweepersEffort${matchSweep[1]}`;
+    } else if (matchEdu) {
+       targetFolder = `EduAwareRound${matchEdu[1]}`;
+    }
+
+    if (targetFolder) {
+      await telegram.sendMessage(chatId, `⏳ *Hashtag Detected.*\nRouting media directly to **${targetFolder}**...`);
+      await handleDirectHashtagUpload(message, targetFolder, guardian, chatId);
+    } else if (PENDING_INPUTS.has(chatId) && PENDING_INPUTS.get(chatId).type === 'stats:add_doc_file') {
       const fileId = message.document?.file_id || message.photo?.[0].file_id; // Support photos as docs too
       const ext = message.document?.file_name?.split('.').pop() || 'jpg';
       const fileName = `doc_${Date.now()}.${ext}`;
@@ -252,7 +297,16 @@ async function handleMessage(message) {
     const pending = PENDING_INPUTS.get(chatId);
     PENDING_INPUTS.delete(chatId);
 
-    if (pending.type === 'stats:survival') {
+    if (pending.type === 'register_name') {
+      const newName = message.text.trim();
+      await telegram.sendMessage(chatId, `⏳ *Registration sent for approval.* We will notify you once an admin verifies your identity.`);
+      for (const adminId of admins) {
+        await telegram.sendMessage(adminId, `⚠️ *New Registration Request*\nName: ${newName}\nRole: ${pending.role}\nChat ID: \`${chatId}\``, {
+          reply_markup: { inline_keyboard: [[{ text: '✅ Approve', callback_data: `approve_new:${chatId}:${newName}:${pending.role}` }, { text: '❌ Reject', callback_data: 'ignore' }]] }
+        });
+      }
+    }
+    else if (pending.type === 'stats:survival') {
       const val = parseInt(text);
       if (isNaN(val) || val < 0 || val > 100) return telegram.sendMessage(chatId, '❌ Invalid percentage. Please send a number between 0 and 100.');
       
@@ -300,25 +354,15 @@ async function handleMessage(message) {
 }
 
 async function handleUnregisteredUser(chatId, name, cmsContent, admins) {
-  const welcome = `🌊 *Greetings from the Lagoon.*\nI am the Hinnavaru Blue assistant. Your access level is currently **General Observer**.`;
+  const welcome = `🌊 *Greetings from the Lagoon.*\nI am the Hinnavaru Blue assistant. Your access level is currently **General Observer**.\n\nPlease select a role to register:`;
   await telegram.sendMessage(chatId, welcome, {
-    reply_markup: { inline_keyboard: [[{ text: '📘 Project Intelligence', callback_data: 'menu:info' }]] }
+    reply_markup: { 
+      inline_keyboard: [
+        [{ text: '🤿 Reef Guardian (Volunteer)', callback_data: `register:Reef Guardian` }],
+        [{ text: '💎 Guardian (Financial Contributor)', callback_data: `register:Guardian` }]
+      ] 
+    }
   });
-
-  // Notify Admins
-  const unassignedRegex = /name:\s*'([^']+)',[^}]+telegramId:\s*''/g;
-  let match;
-  const buttons = [];
-  while ((match = unassignedRegex.exec(cmsContent)) !== null) {
-    const guardianName = match[1];
-    buttons.push([{ text: `✅ Approve as ${guardianName}`, callback_data: `approve:${chatId}:${guardianName}` }]);
-  }
-
-  for (const adminId of admins) {
-    await telegram.sendMessage(adminId, `⚠️ *Access Request*\n${name} (ID: \`${chatId}\`) is requesting clearance.`, {
-      reply_markup: { inline_keyboard: buttons.length ? buttons : [[{ text: 'No spots left', callback_data: 'ignore' }]] }
-    });
-  }
 }
 
 async function showMediaOptions(chatId, message) {
@@ -400,6 +444,68 @@ async function handleMediaUpload(callback) {
     await telegram.answerCallbackQuery(callback.id);
   } catch (err) {
     await telegram.sendMessage(chatId, `❌ *Upload Error:* ${err.message}`);
+  }
+}
+
+async function handleDirectHashtagUpload(message, folderName, guardian, chatId) {
+  let fileId, fileType, ext;
+  if (message.photo) {
+    fileId = message.photo[message.photo.length - 1].file_id;
+    fileType = 'photo';
+    ext = 'jpg';
+  } else if (message.video) {
+    fileId = message.video.file_id;
+    fileType = 'video';
+    ext = 'mp4';
+  } else if (message.document) {
+    fileId = message.document.file_id;
+    fileType = 'document';
+    ext = message.document.file_name?.split('.').pop() || 'pdf';
+  } else {
+    return telegram.sendMessage(chatId, '❌ Unsupported file type.');
+  }
+
+  try {
+    const file = await telegram.getFile(fileId);
+    const buffer = await telegram.downloadFile(file.file_path);
+    const fileName = `${folderName}_${Date.now()}.${ext}`;
+
+    const drive = getDriveClient();
+
+    // 1. Check if folder exists
+    const res = await drive.files.list({
+      q: `name='${folderName}' and '${DRIVE_FOLDERS.ROOT}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`,
+      fields: 'files(id, name)',
+      spaces: 'drive'
+    });
+
+    let targetFolderId;
+    if (res.data.files.length > 0) {
+      targetFolderId = res.data.files[0].id;
+    } else {
+      // 2. Create if not exists
+      const folderRes = await drive.files.create({
+        requestBody: {
+          name: folderName,
+          mimeType: 'application/vnd.google-apps.folder',
+          parents: [DRIVE_FOLDERS.ROOT]
+        },
+        fields: 'id'
+      });
+      targetFolderId = folderRes.data.id;
+    }
+
+    // 3. Upload to target folder
+    await drive.files.create({
+      requestBody: { name: fileName, parents: [targetFolderId] },
+      media: { body: Readable.from(buffer) },
+    });
+
+    await telegram.sendMessage(chatId, `✅ *Success! Media Archived into ${folderName}.*\n🔄 *Initiating Website Integration...*`);
+    await Automation.triggerMediaSync();
+
+  } catch (err) {
+    await telegram.sendMessage(chatId, `❌ *Hashtag Upload Error:* ${err.message}`);
   }
 }
 

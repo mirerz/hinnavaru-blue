@@ -68,6 +68,21 @@ const CMSManager = {
     return cmsContent.replace(targetRegex, `$1${targetChatId}$3`);
   },
 
+  addNewGuardian(cmsContent, guardian) {
+    const target = 'export const APPROVED_GUARDIANS = [';
+    if (!cmsContent.includes(target)) return cmsContent;
+
+    const idMatches = [...cmsContent.matchAll(/id:\s*'GD-(\d+)'/g)];
+    let maxId = 0;
+    if (idMatches.length > 0) {
+      maxId = Math.max(...idMatches.map(m => parseInt(m[1])));
+    }
+    const newIdStr = `GD-${(maxId + 1).toString().padStart(2, '0')}`;
+
+    const newGuardianStr = `\n  { id: '${newIdStr}', name: '${guardian.name}', role: '${guardian.role}', avatar: '${guardian.avatar}', telegramId: '${guardian.telegramId}' },`;
+    return cmsContent.replace(target, target + newGuardianStr);
+  },
+
   updateTransparencyStats(cmsContent, stats) {
     let updatedContent = cmsContent;
     if (stats.active_frames !== undefined) {

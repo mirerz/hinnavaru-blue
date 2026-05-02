@@ -9,6 +9,7 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null)
   
   const [currentSlide, setCurrentSlide] = useState(0)
+  const [archiveTab, setArchiveTab] = useState('image') // 'image' or 'video'
 
   const handleTabChange = (catId) => {
     setSearchParams({ cat: catId })
@@ -16,8 +17,8 @@ export default function Projects() {
 
   const heroImages = useMemo(() => {
     return MANIFEST.slideshow.length > 0 
-      ? MANIFEST.slideshow.map(m => m.startsWith('/') ? m : `/media-hub/${m}`)
-      : ['/Project-Progs.png']
+      ? [...MANIFEST.slideshow].reverse().map(m => m.startsWith('/') ? m : `/deep-archives/Focus/${m}`)
+      : ['/deep-archives/Focus/GPDR2636.JPG', '/deep-archives/Focus/GPDR2637.JPG', '/deep-archives/Focus/GPDR2638.JPG']
   }, [])
 
   useEffect(() => {
@@ -29,24 +30,63 @@ export default function Projects() {
   }, [heroImages])
 
   const allMedia = useMemo(() => {
-    const archives = MANIFEST.archives.map(m => `/media-hub/${m}`)
-    return archives
+    return [...MANIFEST.archives].reverse().map(m => m.startsWith('/') ? m : `/deep-archives/Focus/${m}`)
   }, [])
+
+  const coralSliderFrames = useMemo(() => {
+    const defaultFrames = [
+      '/deep-archives/Focus/GPDR2636.JPG',
+      '/deep-archives/Focus/GPDR2637.JPG',
+      '/deep-archives/Focus/GPDR2638.JPG'
+    ];
+    const available = allMedia.filter(m => !heroImages.includes(m) && m.toLowerCase().includes('coral'))
+    
+    const selected = available.slice(0, 3);
+    while (selected.length < 3) {
+      selected.push(defaultFrames[selected.length]);
+    }
+    return selected;
+  }, [allMedia, heroImages])
 
   const [currentArchiveIdx, setCurrentArchiveIdx] = useState(0)
 
   const tabMedia = useMemo(() => {
     const keyword = activeTab === 'coral' ? 'coral' : activeTab === 'sweep' ? 'clean' : 'aware'
-    const filtered = allMedia.filter(m => m.toLowerCase().includes(keyword))
+    let filtered = allMedia.filter(m => m.toLowerCase().includes(keyword) && !heroImages.includes(m))
+    
+    if (activeTab === 'coral') {
+      filtered = filtered.filter(m => !coralSliderFrames.includes(m))
+    }
     return filtered.length > 0 ? filtered : heroImages
-  }, [activeTab, allMedia, heroImages])
+  }, [activeTab, allMedia, heroImages, coralSliderFrames])
 
   useEffect(() => {
     setCurrentArchiveIdx(0)
   }, [activeTab])
 
+  // Coral Restoration specific automated slide frame
+  const CoralRestorationSlider = () => {
+    const [frameIdx, setFrameIdx] = useState(0);
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setFrameIdx(p => (p + 1) % coralSliderFrames.length);
+      }, 4000);
+      return () => clearInterval(timer);
+    }, []);
+    return (
+      <div className="featured-media-frame" style={{ marginTop: '30px', position: 'relative' }}>
+        <div className="featured-media-inner">
+          <img src={coralSliderFrames[frameIdx]} alt="Coral Restoration Auto Slide" />
+          <div className="pulse-tag">
+            <span className="live-dot" /> <span>AUTO FRAME TRANSITION</span>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const activeCatObj = PROJECT_CATEGORIES.find(c => c.id === activeTab)
-  const filteredProjects = PROJECTS_LIST.filter(p => p.category === activeTab)
+  const filteredProjects = PROJECTS_LIST.filter(p => p.category === activeTab).slice(0, 3)
 
   return (
     <div className="projects-page">
@@ -101,7 +141,7 @@ export default function Projects() {
           <div className="featured-mission-container animate-reveal" key={activeTab}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px' }}>
               <div>
-                <div className="badge badge-teal" style={{ marginBottom: '10px' }}>MISSION: {activeCatObj?.title.toUpperCase()}</div>
+                <div className="badge badge-teal" style={{ marginBottom: '10px' }}>MISSION MODULE: {activeCatObj?.title.toUpperCase()}</div>
                 <h2 style={{ fontSize: '2.5rem', margin: 0 }}>{activeCatObj?.title}</h2>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -109,66 +149,51 @@ export default function Projects() {
               </div>
             </div>
             
-            <div className="featured-media-frame" style={{ marginTop: '30px', position: 'relative' }}>
-              <div className="featured-media-inner">
-                <img src={tabMedia[currentArchiveIdx] || heroImages[0]} alt="Featured Archive" />
-                <div className="pulse-tag">
-                  <span className="live-dot" /> <span>LATEST CAPTURE</span>
-                </div>
-                {tabMedia.length > 1 && (
-                  <div style={{ position: 'absolute', bottom: '20px', right: '20px', display: 'flex', gap: '10px', zIndex: 10 }}>
-                    <button onClick={() => setCurrentArchiveIdx(prev => (prev > 0 ? prev - 1 : tabMedia.length - 1))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'<'}</button>
-                    <button onClick={() => setCurrentArchiveIdx(prev => (prev < tabMedia.length - 1 ? prev + 1 : 0))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'>'}</button>
+            {activeTab === 'coral' ? (
+              <CoralRestorationSlider />
+            ) : (
+              <div className="featured-media-frame" style={{ marginTop: '30px', position: 'relative' }}>
+                <div className="featured-media-inner">
+                  <img src={tabMedia[currentArchiveIdx] || heroImages[0]} alt="Featured Archive" />
+                  <div className="pulse-tag">
+                    <span className="live-dot" /> <span>LATEST CAPTURE</span>
                   </div>
-                )}
+                  {tabMedia.length > 1 && (
+                    <div style={{ position: 'absolute', bottom: '20px', right: '20px', display: 'flex', gap: '10px', zIndex: 10 }}>
+                      <button onClick={() => setCurrentArchiveIdx(prev => (prev > 0 ? prev - 1 : tabMedia.length - 1))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'<'}</button>
+                      <button onClick={() => setCurrentArchiveIdx(prev => (prev < tabMedia.length - 1 ? prev + 1 : 0))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'>'}</button>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
             <div style={{ marginTop: '50px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '30px' }}>
-              {filteredProjects.slice(0, 3).map((p, i) => (
-                <div key={i} className="card animate-reveal" style={{ background: 'rgba(255,255,255,0.02)', padding: '30px', cursor: 'pointer' }} onClick={() => setSelectedProject(p)}>
-                  <div className="badge badge-teal" style={{ marginBottom: '15px' }}>{p.progress}% COMPLETE</div>
-                  <h4 style={{ fontSize: '1.3rem', marginBottom: '10px' }}>{p.title}</h4>
-                  <p style={{ opacity: 0.7, fontSize: '0.9rem' }}>{p.desc.substring(0, 100)}...</p>
-                  <div className="progress-bar" style={{ marginTop: '20px' }}>
-                    <div className="progress-fill" style={{ width: `${p.progress}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+              {filteredProjects.map((p, i) => {
+                const isVideo = i === 1;
+                const mediaSrc = isVideo 
+                  ? '/deep-archives/Puls/pulse-update.mp4' 
+                  : (i === 0 ? '/deep-archives/Focus/GPDR2638.JPG' : '/deep-archives/Focus/GPDR2637.JPG');
 
-      {/* 4. NURSERY DIRECTORY (Reef Guardians) */}
-      <section className="section" style={{ background: '#020b18', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
-            <div>
-              <div className="badge badge-teal" style={{ marginBottom: '12px' }}>🛡️ Nursery Directory</div>
-              <h2 className="section-title" style={{ textAlign: 'left', margin: 0 }}>Active <span className="gradient-text">Guardians</span></h2>
-            </div>
-            <Link to="/registry" className="btn btn-outline btn-sm">Full Registry →</Link>
-          </div>
-
-          <div className="guardian-slider-wrap">
-            <div className="guardian-slider-inner" id="guardian-slider">
-               {CORAL_REGISTRY.slice(0, 10).map((c, i) => (
-                 <div key={i} className="guardian-slide-card card" style={{ minWidth: '220px', padding: '24px', textAlign: 'center' }}>
-                    <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>🪸</div>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--teal)', marginBottom: '4px' }}>{c.id}</div>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '8px', minHeight: '2.4em' }}>{c.species}</div>
-                    <div style={{ fontSize: '0.75rem', opacity: 0.6 }}>Guardian: {c.adopter}</div>
-                    <div className="progress-bar" style={{ marginTop: '16px', height: '4px' }}>
-                      <div className="progress-fill" style={{ width: `${c.survival}%` }} />
+                return (
+                  <div key={i} className="card animate-reveal" style={{ background: 'rgba(255,255,255,0.02)', padding: '0', cursor: 'pointer', overflow: 'hidden' }} onClick={() => setSelectedProject(p)}>
+                    {isVideo ? (
+                      <video src={mediaSrc} style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} autoPlay loop muted playsInline />
+                    ) : (
+                      <img src={mediaSrc} style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} alt={p.title} />
+                    )}
+                    <div style={{ padding: '30px' }}>
+                      <div className="badge badge-teal" style={{ marginBottom: '15px' }}>{p.progress}% COMPLETE</div>
+                      <h4 style={{ fontSize: '1.3rem', marginBottom: '10px' }}>{p.title}</h4>
+                      <p style={{ opacity: 0.7, fontSize: '0.9rem' }}>{p.desc.substring(0, 100)}...</p>
+                      <div className="progress-bar" style={{ marginTop: '20px' }}>
+                        <div className="progress-fill" style={{ width: `${p.progress}%` }} />
+                      </div>
                     </div>
-                 </div>
-               ))}
+                  </div>
+                )
+              })}
             </div>
-          </div>
-          <div style={{ display: 'flex', gap: '16px', marginTop: '30px', justifyContent: 'center' }}>
-            <button onClick={() => document.getElementById('guardian-slider').scrollBy({ left: -250, behavior: 'smooth' })} className="btn btn-outline" style={{ borderRadius: '50%', width: '48px', height: '48px', padding: 0 }}>{'<'}</button>
-            <button onClick={() => document.getElementById('guardian-slider').scrollBy({ left: 250, behavior: 'smooth' })} className="btn btn-outline" style={{ borderRadius: '50%', width: '48px', height: '48px', padding: 0 }}>{'>'}</button>
           </div>
         </div>
       </section>
@@ -221,50 +246,68 @@ export default function Projects() {
       {/* 5. MISSION ARCHIVE (Gallery) */}
       <section className="section" id="archive" style={{ background: 'var(--ocean-deep)' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <div className="badge badge-teal" style={{ marginBottom: '16px' }}>📸 Mission Archive</div>
             <h2 className="section-title">Visual <span className="gradient-text">Bulletins</span></h2>
             <p className="section-sub" style={{ margin: '0 auto' }}>Synchronized high-resolution captures from the Hinnavaru lagoon and field operations.</p>
           </div>
 
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
-            gap: '20px' 
-          }}>
-            {MANIFEST.archives.slice(0, 3).map((img, i) => (
-              <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', height: '240px', position: 'relative', cursor: 'zoom-in' }}>
-                <img 
-                  src={`/media-hub/${img}`} 
-                  alt={`Mission update ${i}`} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'var(--transition)' }} 
-                  onMouseOver={e => e.currentTarget.style.transform = 'scale(1.1)'}
-                  onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
-                />
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '15px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', fontSize: '0.7rem', opacity: 0.8 }}>
-                  FILE: {img.split('.')[0]}
-                </div>
-              </div>
-            ))}
+          <div className="mockup-tab-nav" style={{ marginBottom: '40px' }}>
+            <button 
+              className={`mockup-tab-btn ${archiveTab === 'image' ? 'active' : ''}`}
+              onClick={() => setArchiveTab('image')}
+            >
+              📷 Images
+            </button>
+            <button 
+              className={`mockup-tab-btn ${archiveTab === 'video' ? 'active' : ''}`}
+              onClick={() => setArchiveTab('video')}
+            >
+              🎥 Videos
+            </button>
           </div>
 
-          {(MANIFEST.videos && MANIFEST.videos.length > 0) && (
+          {archiveTab === 'image' && (
             <>
-              <div style={{ textAlign: 'center', margin: '60px 0 40px' }}>
-                <div className="badge badge-coral" style={{ marginBottom: '16px' }}>🎥 Field Footage</div>
-                <h3 className="section-title" style={{ fontSize: '2rem' }}>Lagoon <span className="gradient-text">Clips</span></h3>
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
+                gap: '20px' 
+              }}>
+                {MANIFEST.archives.slice(0, 3).map((img, i) => (
+                  <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', height: '240px', position: 'relative', cursor: 'zoom-in' }}>
+                    <img 
+                      src={img.startsWith('/') ? img : `/deep-archives/Focus/${img}`} 
+                      alt={`Mission update ${i}`} 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'var(--transition)' }} 
+                      onMouseOver={e => e.currentTarget.style.transform = 'scale(1.1)'}
+                      onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
+                    />
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '15px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', fontSize: '0.7rem', opacity: 0.8 }}>
+                      FILE: {img.split('.')[0]}
+                    </div>
+                  </div>
+                ))}
               </div>
+              <div style={{ textAlign: 'center', marginTop: '60px' }}>
+                <a href={`https://drive.google.com/drive/folders/${CMS_CONFIG.media_automation.images_id}`} target="_blank" rel="noopener" className="btn btn-outline">More Options →</a>
+              </div>
+            </>
+          )}
+
+          {archiveTab === 'video' && (
+            <>
               <div style={{ 
                 display: 'grid', 
                 gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', 
                 gap: '20px' 
               }}>
-                {MANIFEST.videos.slice(0, 3).map((vid, i) => (
+                {(MANIFEST.videos || []).slice(0, 3).map((vid, i) => (
                   <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', background: '#000', border: '1px solid rgba(255,107,107,0.3)' }}>
                     <video 
                       controls 
                       style={{ width: '100%', aspectRatio: '16/9', display: 'block' }}
-                      poster="/Living-L.png"
+                      poster="/deep-archives/Focus/GPDR2636.JPG"
                     >
                       <source src={vid.path} type="video/mp4" />
                     </video>
@@ -274,12 +317,47 @@ export default function Projects() {
                     </div>
                   </div>
                 ))}
+                {(!MANIFEST.videos || MANIFEST.videos.length === 0) && (
+                  <p style={{ textAlign: 'center', width: '100%', opacity: 0.7 }}>No video captures available yet.</p>
+                )}
+              </div>
+              <div style={{ textAlign: 'center', marginTop: '60px' }}>
+                <a href={`https://drive.google.com/drive/folders/${CMS_CONFIG.media_automation.vids_id}`} target="_blank" rel="noopener" className="btn btn-outline">More Options →</a>
               </div>
             </>
           )}
-          
-          <div style={{ textAlign: 'center', marginTop: '60px' }}>
-            <a href={`https://drive.google.com/drive/folders/${CMS_CONFIG.media_automation.drive_id}`} target="_blank" rel="noopener" className="btn btn-outline">Explore Full Archive on Drive →</a>
+        </div>
+      </section>
+
+      {/* 4. NURSERY DIRECTORY (Reef Guardians) */}
+      <section className="section" style={{ background: '#020b18', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div className="container">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
+            <div>
+              <div className="badge badge-teal" style={{ marginBottom: '12px' }}>🛡️ Nursery Directory</div>
+              <h2 className="section-title" style={{ textAlign: 'left', margin: 0 }}>Active <span className="gradient-text">Guardians</span></h2>
+            </div>
+            <Link to="/registry" className="btn btn-outline btn-sm">Full Registry →</Link>
+          </div>
+
+          <div className="guardian-slider-wrap">
+            <div className="guardian-slider-inner" id="guardian-slider">
+               {CORAL_REGISTRY.slice(0, 10).map((c, i) => (
+                 <div key={i} className="guardian-slide-card card" style={{ minWidth: '220px', padding: '24px', textAlign: 'center' }}>
+                    <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>🪸</div>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--teal)', marginBottom: '4px' }}>{c.id}</div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '8px', minHeight: '2.4em' }}>{c.species}</div>
+                    <div style={{ fontSize: '0.75rem', opacity: 0.6 }}>Guardian: {c.adopter}</div>
+                    <div className="progress-bar" style={{ marginTop: '16px', height: '4px' }}>
+                      <div className="progress-fill" style={{ width: `${c.survival}%` }} />
+                    </div>
+                 </div>
+               ))}
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: '16px', marginTop: '30px', justifyContent: 'center' }}>
+            <button onClick={() => document.getElementById('guardian-slider').scrollBy({ left: -250, behavior: 'smooth' })} className="btn btn-outline" style={{ borderRadius: '50%', width: '48px', height: '48px', padding: 0 }}>{'<'}</button>
+            <button onClick={() => document.getElementById('guardian-slider').scrollBy({ left: 250, behavior: 'smooth' })} className="btn btn-outline" style={{ borderRadius: '50%', width: '48px', height: '48px', padding: 0 }}>{'>'}</button>
           </div>
         </div>
       </section>

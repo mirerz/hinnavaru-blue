@@ -188,41 +188,16 @@ export default function Registry() {
             </div>
           </div>
 
-          <div className="transparency-grid-simple">
-            {/* Deployment Success Rate Card */}
-            <div className="card glass-card transparency-card animate-reveal">
-              <div className="card-header-icon">
-                <i className="fas fa-chart-line teal"></i>
-                <h3>{REGISTRY_CONTENT.transparency.funds.title}</h3>
-              </div>
-              <p className="text-secondary-small mb-16">{REGISTRY_CONTENT.transparency.funds.total}</p>
-              <div className="fund-bars">
-                {FUND_ALLOCATION.map((f, i) => (
-                  <div className="fund-bar-item" key={i}>
-                    <div className="fund-bar-label">
-                      <span>{f.label}</span>
-                      <span className="teal-small">{f.pct}%</span>
-                    </div>
-                    <div className="fund-bar-track">
-                      <div className="fund-bar-fill" style={{ width: `${f.pct}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="card-footer-info mt-16">
-                <i className="fas fa-info-circle"></i> Last update: {CMS_CONFIG.last_updated}
-              </div>
-            </div>
-
+          <div className="transparency-hub-container">
             {/* Document Vault Card */}
-            <div className="card glass-card transparency-card docs-vault-card">
+            <div className="card glass-card transparency-card docs-vault-card w-full">
               <div className="vault-header">
                 <div className="card-header-icon">
                   <i className="fas fa-file-shield"></i>
                   <h3>{REGISTRY_CONTENT.transparency.docs.title}</h3>
                 </div>
                 <div className="doc-filters">
-                  {['all', 'Admin', 'Awareness', 'Scientific'].map(cat => (
+                  {['all', 'eBooks', 'Docs/Reports'].map(cat => (
                     <button 
                       key={cat} 
                       className={`doc-filter-btn ${docCategory === cat ? 'active' : ''}`}
@@ -235,7 +210,7 @@ export default function Registry() {
               </div>
               
               <div className="docs-list-grid">
-                {filteredDocs.map((d, i) => (
+                {filteredDocs.slice(0, 6).map((d, i) => (
                   <div key={i} className="doc-item animate-reveal">
                     <span className="doc-icon">{d.icon}</span>
                     <div className="doc-info">
@@ -245,8 +220,8 @@ export default function Registry() {
                       </div>
                     </div>
                     <div className="doc-actions">
-                      {d.path ? (
-                        <a href={d.path} target="_blank" rel="noopener" className="btn btn-primary btn-sm btn-icon-only">
+                      {d.url ? (
+                        <a href={d.url} target="_blank" rel="noopener" className="btn btn-primary btn-sm btn-icon-only">
                           <i className="fas fa-download"></i>
                         </a>
                       ) : (
@@ -303,8 +278,8 @@ export default function Registry() {
                    const archives = MANIFEST?.archives || [];
                    const match = archives.find(p => p.startsWith(selected.id));
                    const photoSrc = match 
-                     ? (match.startsWith('/') ? match : `/media-hub/${match}`)
-                     : '/media-hub/vibrant-coral-reef-stockcake.webp';
+                     ? (match.startsWith('/') ? match : `/deep-archives/media-hub/${match}`)
+                     : '/deep-archives/media-hub/vibrant-coral-reef-stockcake.webp';
                    return (
                      <>
                        <img src={photoSrc} alt="Field update" />

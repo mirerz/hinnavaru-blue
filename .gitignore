@@ -7,3 +7,8 @@ dist/
 .vscode/
 .tdad/
 adhu-*.json
+
+/net-commander
+# Agent Checkpoint Manager
+.vscode/.agent-checkpoints/
+.copilot-specs-cache/

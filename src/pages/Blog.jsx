@@ -9,7 +9,7 @@ const BLOG_POSTS = [
     author: 'Admin',
     date: 'April 12, 2026',
     category: 'Ecology',
-    image: '/Living-L.png'
+    image: '/deep-archives/media-hub/Living-L.png'
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const BLOG_POSTS = [
     author: 'Founder',
     date: 'April 10, 2026',
     category: 'Missions',
-    image: '/Project-Progs.png'
+    image: '/deep-archives/media-hub/Project-Progs.png'
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ const BLOG_POSTS = [
     author: 'Lead Diver',
     date: 'April 05, 2026',
     category: 'Community',
-    image: '/media-hub/HBI_20260408_01.webp'
+    image: '/deep-archives/media-hub/HBI_20260408_01.webp'
   }
 ]
 
@@ -37,7 +37,7 @@ export default function Blog() {
       <section className="section" style={{ position: 'relative', overflow: 'hidden', padding: '160px 0 100px', textAlign: 'center' }}>
         <div style={{
           position: 'absolute', inset: 0, zIndex: 0,
-          backgroundImage: `url('/Living-L.png')`,
+          backgroundImage: `url('/deep-archives/media-hub/Living-L.png')`,
           backgroundSize: 'cover', backgroundPosition: 'center',
           opacity: 0.2
         }} />
