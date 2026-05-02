@@ -380,7 +380,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/skipjacii.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:35:24.619Z",
-    "expiryDate": "2026-06-01T10:00:42.673Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-1",
@@ -388,7 +388,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/hinn_top_view.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:35:03.263Z",
-    "expiryDate": "2026-06-01T10:00:42.673Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-2",
@@ -396,7 +396,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/hinnavaru_areal_view.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:34:50.627Z",
-    "expiryDate": "2026-06-01T10:00:42.673Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-3",
@@ -404,7 +404,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/underwater.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:34:19.952Z",
-    "expiryDate": "2026-06-01T10:00:42.673Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-4",
@@ -412,7 +412,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAL2352.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:07.000Z",
-    "expiryDate": "2026-06-01T10:00:42.673Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-5",
@@ -420,7 +420,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAF2336.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:07.000Z",
-    "expiryDate": "2026-06-01T10:00:42.673Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-6",
@@ -428,7 +428,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAG2341.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:06.000Z",
-    "expiryDate": "2026-06-01T10:00:42.673Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-7",
@@ -436,7 +436,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAF2338.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
-    "expiryDate": "2026-06-01T10:00:42.674Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-8",
@@ -444,7 +444,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAI2343.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
-    "expiryDate": "2026-06-01T10:00:42.674Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-9",
@@ -452,7 +452,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAO2357.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
-    "expiryDate": "2026-06-01T10:00:42.674Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-10",
@@ -460,7 +460,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAQ2359.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:04.000Z",
-    "expiryDate": "2026-06-01T10:00:42.674Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   },
   {
     "id": "DRIVE-11",
@@ -468,7 +468,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAE2334.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:03.000Z",
-    "expiryDate": "2026-06-01T10:00:42.674Z"
+    "expiryDate": "2026-06-01T12:58:30.674Z"
   }
 ]
 
