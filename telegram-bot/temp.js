@@ -1,1 +1,18 @@
-const { google } = require('googleapis'); require('dotenv').config(); const auth = new google.auth.GoogleAuth({ credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON), scopes: ['https://www.googleapis.com/auth/drive.readonly'] }); const drive = google.drive({ version: 'v3', auth }); async function run() { const res = await drive.files.list({ q: \'12yWK3lhwcqiTNV6yUS6Insgqhg9r9jx7' in parents and mimeType = 'application/vnd.google-apps.folder'\ }); console.log(res.data.files); } run();
+const { google } = require('googleapis');
+require('dotenv').config();
+const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
+credentials.private_key = credentials.private_key.replace(/\\n/g, '\n');
+const auth = new google.auth.GoogleAuth({
+  credentials,
+  scopes: ['https://www.googleapis.com/auth/drive.readonly']
+});
+const drive = google.drive({ version: 'v3', auth });
+async function run() {
+  try {
+    const res = await drive.files.list({ q: "'1NSWIdP8eY0_Okk8xlKGpTg6TjAVGRWlN' in parents" });
+    console.log(res.data.files);
+  } catch(e) {
+    console.error(e.message);
+  }
+}
+run();

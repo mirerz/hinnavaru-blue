@@ -234,7 +234,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/Useful_references_for_coral_reef_rehabilitation.pdf"
+    "url": "/deep-archives/media-hub/Useful_references_for_coral_reef_rehabilitation.pdf"
   },
   {
     "icon": "📄",
@@ -242,7 +242,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/Methods_to_evaluate_restoration_success_from_local_to_ecosystem_scales.pdf"
+    "url": "/deep-archives/media-hub/Methods_to_evaluate_restoration_success_from_local_to_ecosystem_scales.pdf"
   },
   {
     "icon": "📄",
@@ -250,7 +250,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/Coral_Restoration_FoundationTM_boulder_coral.pdf"
+    "url": "/deep-archives/media-hub/Coral_Restoration_FoundationTM_boulder_coral.pdf"
   },
   {
     "icon": "📄",
@@ -258,7 +258,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/A_restoration_genetics_guide_for_coral_reef_conservation.pdf"
+    "url": "/deep-archives/media-hub/A_restoration_genetics_guide_for_coral_reef_conservation.pdf"
   },
   {
     "icon": "📄",
@@ -266,7 +266,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/A_user_s_guide_to_coral_reef_restoration_terminologies.pdf"
+    "url": "/deep-archives/media-hub/A_user_s_guide_to_coral_reef_restoration_terminologies.pdf"
   },
   {
     "icon": "📄",
@@ -274,7 +274,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/Handbook_on_Coral_Reef_Impacts.pdf"
+    "url": "/deep-archives/media-hub/Handbook_on_Coral_Reef_Impacts.pdf"
   },
   {
     "icon": "📄",
@@ -282,7 +282,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/Coral_Restoration_Guide_for_the_Tourism_Sector.pdf"
+    "url": "/deep-archives/media-hub/Coral_Restoration_Guide_for_the_Tourism_Sector.pdf"
   },
   {
     "icon": "📄",
@@ -290,7 +290,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/Coral_Reef_Restoration_in_the_Maldives.pdf"
+    "url": "/deep-archives/media-hub/Coral_Reef_Restoration_in_the_Maldives.pdf"
   },
   {
     "icon": "📄",
@@ -298,7 +298,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/Workbook_for_the_Managers_Guide_to_Restoration_Planning.pdf"
+    "url": "/deep-archives/media-hub/Workbook_for_the_Managers_Guide_to_Restoration_Planning.pdf"
   },
   {
     "icon": "📄",
@@ -306,7 +306,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/ACTIVE_CORAL_REST.pdf"
+    "url": "/deep-archives/media-hub/ACTIVE_CORAL_REST.pdf"
   },
   {
     "icon": "📄",
@@ -314,7 +314,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/Reef_Rehabilitation_Manual_web.pdf"
+    "url": "/deep-archives/media-hub/Reef_Rehabilitation_Manual_web.pdf"
   },
   {
     "icon": "📄",
@@ -322,7 +322,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/Hein_et_al._2020_UNEP_report_1.pdf"
+    "url": "/deep-archives/media-hub/Hein_et_al._2020_UNEP_report_1.pdf"
   },
   {
     "icon": "📄",
@@ -330,7 +330,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/media-hub/Toolkit_CoralReefRestoration_2018_.pdf"
+    "url": "/deep-archives/media-hub/Toolkit_CoralReefRestoration_2018_.pdf"
   },
   {
     "icon": "📸",
@@ -338,7 +338,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Scanned Doc",
     "date": "Mar 2026",
     "category": "Awareness",
-    "url": "/media-hub/NGO_HBI_Certificate.webp"
+    "url": "/deep-archives/media-hub/NGO_HBI_Certificate.webp"
   }
 ]
 
@@ -377,7 +377,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-0",
     "type": "photo",
-    "url": "/media-hub/skipjacii.webp",
+    "url": "/deep-archives/media-hub/skipjacii.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:35:24.619Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -385,7 +385,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-1",
     "type": "photo",
-    "url": "/media-hub/hinn_top_view.webp",
+    "url": "/deep-archives/media-hub/hinn_top_view.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:35:03.263Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -393,7 +393,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-2",
     "type": "photo",
-    "url": "/media-hub/hinnavaru_areal_view.webp",
+    "url": "/deep-archives/media-hub/hinnavaru_areal_view.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:34:50.627Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -401,7 +401,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-3",
     "type": "photo",
-    "url": "/media-hub/underwater.webp",
+    "url": "/deep-archives/media-hub/underwater.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:34:19.952Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -409,7 +409,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-4",
     "type": "photo",
-    "url": "/media-hub/GPAL2352.webp",
+    "url": "/deep-archives/media-hub/GPAL2352.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:07.000Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -417,7 +417,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-5",
     "type": "photo",
-    "url": "/media-hub/GPAF2336.webp",
+    "url": "/deep-archives/media-hub/GPAF2336.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:07.000Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -425,7 +425,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-6",
     "type": "photo",
-    "url": "/media-hub/GPAG2341.webp",
+    "url": "/deep-archives/media-hub/GPAG2341.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:06.000Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -433,7 +433,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-7",
     "type": "photo",
-    "url": "/media-hub/GPAF2338.webp",
+    "url": "/deep-archives/media-hub/GPAF2338.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -441,7 +441,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-8",
     "type": "photo",
-    "url": "/media-hub/GPAI2343.webp",
+    "url": "/deep-archives/media-hub/GPAI2343.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -449,7 +449,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-9",
     "type": "photo",
-    "url": "/media-hub/GPAO2357.webp",
+    "url": "/deep-archives/media-hub/GPAO2357.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -457,7 +457,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-10",
     "type": "photo",
-    "url": "/media-hub/GPAQ2359.webp",
+    "url": "/deep-archives/media-hub/GPAQ2359.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:04.000Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -465,7 +465,7 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-11",
     "type": "photo",
-    "url": "/media-hub/GPAE2334.webp",
+    "url": "/deep-archives/media-hub/GPAE2334.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:03.000Z",
     "expiryDate": "2026-06-02T18:52:33.329Z"
@@ -620,7 +620,7 @@ export const PROJECTS_LIST = [
 
 // 9. MEDIA ASSETS CONFIG (Placeholders & Posters)
 export const LAGOON_ASSETS = {
-  pulse_poster: '/Living-L.png', // Fallback poster for the pulse video
+  pulse_poster: '/deep-archives/media-hub/Living-L.png', // Fallback poster for the pulse video
 }
 
 // 10. SPONSORSHIP TIERS
@@ -683,7 +683,7 @@ export const ABOUT_CONTENT = {
   hero: {
     badge: "📖 Our Roots",
     title: "The Hinnavaru Blue Model: A Paradigm for Island-Led Environmental Resilience",
-    bg_image: "/media-hub/Hinnavaru-Harbor-Extension-Project-Mobilized-1.webp"
+    bg_image: "/deep-archives/media-hub/Hinnavaru-Harbor-Extension-Project-Mobilized-1.webp"
   },
   narrative: {
     intro: `In the face of escalating global climate threats, the island community of Hinnavaru (G1) in the Maldives’ Faadhippolhu (Lhaviyani (Lh.) Atoll) has pioneered a powerful, locally-driven conservation strategy: The Hinnavaru Blue Model. This purely homegrown initiative was born out of a critical realization following the 2004 Tsunami and observations by veteran fishermen of alarming sea level changes, which confirmed that the island’s survival is intrinsically linked to the health of its surrounding reef. Rejecting the reliance on external aid, the community initiated the RiseUP movement, leveraging a unique blend of traditional Maldivian environmental wisdom and repurposed innovation. Central to this ethos is "The Shipyard," a site featuring the Skipjack I and Skipjack II wrecks, which stand as "living monuments" to the island's industrial past and now serve as flourishing artificial reefs—providing a natural foundation for coral restoration efforts. By utilizing indigenous knowledge of "micro-currents" and transforming seafaring iron frames into the "cradles of a restored ecosystem," the Hinnavaru Blue Initiative demonstrates an inspiring paradigm for island-led environmental resilience.`,
@@ -744,7 +744,7 @@ export const HOME_CONTENT = {
     badge: "🪸 Make an Impact",
     title: "Adopt a Coral Frame",
     text: "Join the mission. Sponsor a coral frame and watch it grow on our Live Lagoon map. Your commitment, forever etched in the reef.",
-    bg_image: "/media-hub/cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp"
+    bg_image: "/deep-archives/media-hub/cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp"
   }
 }
 
@@ -787,7 +787,7 @@ export const SPONSOR_CONTENT = {
     badge: "🪸 Adopt a Frame",
     title: "Leave Your Legacy in the Reef",
     desc: "Every coral frame you adopt is named after you, tracked in the registry, and visible on the Live Lagoon map. Your commitment grows with the coral.",
-    bg_image: "/media-hub/cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp"
+    bg_image: "/deep-archives/media-hub/cec0c6_c3f60b1bea6d40c796852da247ade8f5~mv2.webp"
   },
   guarantee: {
     badge: "💯 Our Guarantee",
@@ -807,7 +807,7 @@ export const REGISTRY_CONTENT = {
     badge: "🪸 Coral Registry",
     title: "The Reef Guardians Registry",
     desc: "Every coral frame tracked, every dive logged, every adopter acknowledged. Full transparency starts here.",
-    bg_image: "/media-hub/468935784_563334113148327_3285024386015099630_n.webp"
+    bg_image: "/deep-archives/media-hub/468935784_563334113148327_3285024386015099630_n.webp"
   },
   transparency: {
     badge: "🏛️ Amaanaiy",
@@ -830,6 +830,6 @@ export const LIVE_LAGOON_CONTENT = {
     badge: "🗺️ Live Monitoring",
     title: "Live Lagoon Map",
     desc: "Real-time visualization of all active coral nursery frames in Hinnavaru lagoon. Click any marker to view frame details, survival data, and adopter info.",
-    bg_image: "/media-hub/329567670_599749564986500_5209262465781353000_n-1714976176673.webp"
+    bg_image: "/deep-archives/media-hub/329567670_599749564986500_5209262465781353000_n-1714976176673.webp"
   }
 }

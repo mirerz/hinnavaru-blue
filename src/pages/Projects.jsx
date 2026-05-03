@@ -64,22 +64,22 @@ export default function Projects() {
     setCurrentArchiveIdx(0)
   }, [activeTab])
 
-  // Coral Restoration specific automated slide frame
+  // Coral Restoration specific interactive slide frame
   const CoralRestorationSlider = () => {
     const [frameIdx, setFrameIdx] = useState(0);
-    useEffect(() => {
-      const timer = setInterval(() => {
-        setFrameIdx(p => (p + 1) % coralSliderFrames.length);
-      }, 4000);
-      return () => clearInterval(timer);
-    }, []);
     return (
       <div className="featured-media-frame" style={{ marginTop: '30px', position: 'relative' }}>
         <div className="featured-media-inner">
-          <img src={coralSliderFrames[frameIdx]} alt="Coral Restoration Auto Slide" />
+          <img src={coralSliderFrames[frameIdx]} alt="Coral Restoration Slide" />
           <div className="pulse-tag">
-            <span className="live-dot" /> <span>AUTO FRAME TRANSITION</span>
+            <span className="live-dot" /> <span>INTERACTIVE FRAME</span>
           </div>
+          {coralSliderFrames.length > 1 && (
+            <div style={{ position: 'absolute', bottom: '20px', right: '20px', display: 'flex', gap: '10px', zIndex: 10 }}>
+              <button onClick={() => setFrameIdx(prev => (prev > 0 ? prev - 1 : coralSliderFrames.length - 1))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'<'}</button>
+              <button onClick={() => setFrameIdx(prev => (prev < coralSliderFrames.length - 1 ? prev + 1 : 0))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'>'}</button>
+            </div>
+          )}
         </div>
       </div>
     );

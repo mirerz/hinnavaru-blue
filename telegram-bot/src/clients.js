@@ -19,9 +19,9 @@ module.exports = {
   REPO_NAME: 'hinnavaru-blue',
   CMS_PATH: 'src/data/cms.js',
   DRIVE_FOLDERS: {
-    ROOT: '12yWK3lhwcqiTNV6yUS6Insgqhg9r9jx7',
-    DOCS: '1NGwKXGaQs0S7hMLTJd5nhz_DboPas0Bw',
-    IMAGES: '1vbeY96DGn3aXshplZjmzsERlNG72KRbs',
-    VIDS: '1JDy0lTHiP2c-7KI4SlWGHR9Wbzly9FjG'
+    ROOT: '1NSWIdP8eY0_Okk8xlKGpTg6TjAVGRWlN',
+    DOCS: '1C2QtUsCsh25-erxxwtpXTNq8z8b_47h4',
+    IMAGES: '1TBjSCthn9HHo8-DRYKo-pRtO9XvfIsjB',
+    VIDS: '1GrRY4Z-KFyfgfQ6NCEkqtf71G2K1av2A'
   }
 };

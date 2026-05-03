@@ -39,6 +39,12 @@ files.forEach(file => {
     changed = true;
   }
 
+  // Collapse redundant deep-archives paths
+  if (content.includes('/deep-archives/deep-archives/')) {
+    content = content.replace(/\/deep-archives\/deep-archives\//g, '/deep-archives/');
+    changed = true;
+  }
+
   // Replace root images
   rootImages.forEach(img => {
     const regex1 = new RegExp(`'/${img}'`, 'g');
