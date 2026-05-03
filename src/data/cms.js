@@ -234,7 +234,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/Useful_references_for_coral_reef_rehabilitation.pdf"
+    "url": "/media-hub/Useful_references_for_coral_reef_rehabilitation.pdf"
   },
   {
     "icon": "📄",
@@ -242,7 +242,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/Methods_to_evaluate_restoration_success_from_local_to_ecosystem_scales.pdf"
+    "url": "/media-hub/Methods_to_evaluate_restoration_success_from_local_to_ecosystem_scales.pdf"
   },
   {
     "icon": "📄",
@@ -250,7 +250,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/Coral_Restoration_FoundationTM_boulder_coral.pdf"
+    "url": "/media-hub/Coral_Restoration_FoundationTM_boulder_coral.pdf"
   },
   {
     "icon": "📄",
@@ -258,7 +258,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/A_restoration_genetics_guide_for_coral_reef_conservation.pdf"
+    "url": "/media-hub/A_restoration_genetics_guide_for_coral_reef_conservation.pdf"
   },
   {
     "icon": "📄",
@@ -266,7 +266,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/A_user_s_guide_to_coral_reef_restoration_terminologies.pdf"
+    "url": "/media-hub/A_user_s_guide_to_coral_reef_restoration_terminologies.pdf"
   },
   {
     "icon": "📄",
@@ -274,7 +274,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/Handbook_on_Coral_Reef_Impacts.pdf"
+    "url": "/media-hub/Handbook_on_Coral_Reef_Impacts.pdf"
   },
   {
     "icon": "📄",
@@ -282,7 +282,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/Coral_Restoration_Guide_for_the_Tourism_Sector.pdf"
+    "url": "/media-hub/Coral_Restoration_Guide_for_the_Tourism_Sector.pdf"
   },
   {
     "icon": "📄",
@@ -290,7 +290,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/Coral_Reef_Restoration_in_the_Maldives.pdf"
+    "url": "/media-hub/Coral_Reef_Restoration_in_the_Maldives.pdf"
   },
   {
     "icon": "📄",
@@ -298,7 +298,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/Workbook_for_the_Managers_Guide_to_Restoration_Planning.pdf"
+    "url": "/media-hub/Workbook_for_the_Managers_Guide_to_Restoration_Planning.pdf"
   },
   {
     "icon": "📄",
@@ -306,7 +306,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/ACTIVE_CORAL_REST.pdf"
+    "url": "/media-hub/ACTIVE_CORAL_REST.pdf"
   },
   {
     "icon": "📄",
@@ -314,7 +314,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/Reef_Rehabilitation_Manual_web.pdf"
+    "url": "/media-hub/Reef_Rehabilitation_Manual_web.pdf"
   },
   {
     "icon": "📄",
@@ -322,7 +322,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/Hein_et_al._2020_UNEP_report_1.pdf"
+    "url": "/media-hub/Hein_et_al._2020_UNEP_report_1.pdf"
   },
   {
     "icon": "📄",
@@ -330,7 +330,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Archive Doc",
     "date": "Apr 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/Toolkit_CoralReefRestoration_2018_.pdf"
+    "url": "/media-hub/Toolkit_CoralReefRestoration_2018_.pdf"
   },
   {
     "icon": "📸",
@@ -338,7 +338,7 @@ export const DOCUMENT_VAULTS = [
     "type": "Scanned Doc",
     "date": "Mar 2026",
     "category": "Awareness",
-    "url": "/deep-archives/media-hub/NGO_HBI_Certificate.webp"
+    "url": "/media-hub/NGO_HBI_Certificate.webp"
   }
 ]
 
@@ -377,98 +377,98 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-0",
     "type": "photo",
-    "url": "/deep-archives/media-hub/skipjacii.webp",
+    "url": "/media-hub/skipjacii.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:35:24.619Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.241Z"
   },
   {
     "id": "DRIVE-1",
     "type": "photo",
-    "url": "/deep-archives/media-hub/hinn_top_view.webp",
+    "url": "/media-hub/hinn_top_view.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:35:03.263Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   },
   {
     "id": "DRIVE-2",
     "type": "photo",
-    "url": "/deep-archives/media-hub/hinnavaru_areal_view.webp",
+    "url": "/media-hub/hinnavaru_areal_view.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:34:50.627Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   },
   {
     "id": "DRIVE-3",
     "type": "photo",
-    "url": "/deep-archives/media-hub/underwater.webp",
+    "url": "/media-hub/underwater.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:34:19.952Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   },
   {
     "id": "DRIVE-4",
     "type": "photo",
-    "url": "/deep-archives/media-hub/GPAL2352.webp",
+    "url": "/media-hub/GPAL2352.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:07.000Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   },
   {
     "id": "DRIVE-5",
     "type": "photo",
-    "url": "/deep-archives/media-hub/GPAF2336.webp",
+    "url": "/media-hub/GPAF2336.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:07.000Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   },
   {
     "id": "DRIVE-6",
     "type": "photo",
-    "url": "/deep-archives/media-hub/GPAG2341.webp",
+    "url": "/media-hub/GPAG2341.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:06.000Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   },
   {
     "id": "DRIVE-7",
     "type": "photo",
-    "url": "/deep-archives/media-hub/GPAF2338.webp",
+    "url": "/media-hub/GPAF2338.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   },
   {
     "id": "DRIVE-8",
     "type": "photo",
-    "url": "/deep-archives/media-hub/GPAI2343.webp",
+    "url": "/media-hub/GPAI2343.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   },
   {
     "id": "DRIVE-9",
     "type": "photo",
-    "url": "/deep-archives/media-hub/GPAO2357.webp",
+    "url": "/media-hub/GPAO2357.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   },
   {
     "id": "DRIVE-10",
     "type": "photo",
-    "url": "/deep-archives/media-hub/GPAQ2359.webp",
+    "url": "/media-hub/GPAQ2359.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:04.000Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   },
   {
     "id": "DRIVE-11",
     "type": "photo",
-    "url": "/deep-archives/media-hub/GPAE2334.webp",
+    "url": "/media-hub/GPAE2334.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:03.000Z",
-    "expiryDate": "2026-06-02T18:52:33.329Z"
+    "expiryDate": "2026-06-02T23:32:05.242Z"
   }
 ]
 

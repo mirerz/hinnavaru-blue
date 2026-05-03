@@ -1,0 +1,404 @@
+{
+  "last_sync": "2026-05-03T23:32:05.257Z",
+  "assets": [
+    {
+      "id": "1GBK5Kw5XnJHCNO-kABTFHUcPWgKDuBQI",
+      "name": "skipjacii.png",
+      "type": "image",
+      "url": "/media-hub/skipjacii.webp",
+      "category": "images"
+    },
+    {
+      "id": "1Jv7NaX0cfEbzmf_eNLXfzGl89omopl6J",
+      "name": "hinn top view.webp",
+      "type": "image",
+      "url": "/media-hub/hinn_top_view.webp",
+      "category": "images"
+    },
+    {
+      "id": "1Kx_22EiF5AxbnCpoTRKU3FmT-gU2s06e",
+      "name": "hinnavaru areal view.jpg",
+      "type": "image",
+      "url": "/media-hub/hinnavaru_areal_view.webp",
+      "category": "images"
+    },
+    {
+      "id": "1FAAxPdIBA9IwOcsw9c2pyH8-H_HvuAQE",
+      "name": "underwater.avif",
+      "type": "image",
+      "url": "/media-hub/underwater.webp",
+      "category": "images"
+    },
+    {
+      "id": "1tdfw36ywwgvKrVPD_mP_D7xuh3ppXMQj",
+      "name": "GPAL2352.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAL2352.webp",
+      "category": "images"
+    },
+    {
+      "id": "1VxvRuXIyW_HRC_ey4xdj1N6m2YOuhGZ4",
+      "name": "GPAF2336.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAF2336.webp",
+      "category": "images"
+    },
+    {
+      "id": "1F4zrXaqplMpKcEvJDfSor2bozrmcTqIG",
+      "name": "GPAG2341.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAG2341.webp",
+      "category": "images"
+    },
+    {
+      "id": "1goTeICQWpUJtTjsyD5PHhtlztzB2xGhY",
+      "name": "GPAF2338.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAF2338.webp",
+      "category": "images"
+    },
+    {
+      "id": "187hfD_QJnXXcufZPWLkY3uUwpX5K4Il2",
+      "name": "GPAI2343.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAI2343.webp",
+      "category": "images"
+    },
+    {
+      "id": "1-5YQ_bhX_wNg6dnFNJYuIPpWYPH4nLak",
+      "name": "GPAO2357.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAO2357.webp",
+      "category": "images"
+    },
+    {
+      "id": "1FuWSmI9_abrLv4xZK2cKcjOy1YboJs1k",
+      "name": "GPAQ2359.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAQ2359.webp",
+      "category": "images"
+    },
+    {
+      "id": "1wlgRWXDqkNAOyJ-04c7gPRTKca02-eG7",
+      "name": "GPAE2334.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAE2334.webp",
+      "category": "images"
+    },
+    {
+      "id": "1nrMG-O513CBrEtTAZaiYkHqGCae0YnLF",
+      "name": "GPBA2374.JPG",
+      "type": "image",
+      "url": "/media-hub/GPBA2374.webp",
+      "category": "images"
+    },
+    {
+      "id": "1tkA_o3EMXD8W1h_nz_CSJb0P1mG2zgOb",
+      "name": "GPAU2365.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAU2365.webp",
+      "category": "images"
+    },
+    {
+      "id": "1NY3ZKXOsrabmnJJbGFasvpNr6OVZuAk3",
+      "name": "GPAT2363.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAT2363.webp",
+      "category": "images"
+    },
+    {
+      "id": "1_f62Z2V01U4HzsoBbPzjva1ewEYjGGJM",
+      "name": "GPBA2373.JPG",
+      "type": "image",
+      "url": "/media-hub/GPBA2373.webp",
+      "category": "images"
+    },
+    {
+      "id": "1xszeDRDtfX-Nw4Pao2uEQl3P9jo5Ny7J",
+      "name": "GPBG2380.JPG",
+      "type": "image",
+      "url": "/media-hub/GPBG2380.webp",
+      "category": "images"
+    },
+    {
+      "id": "1BGthOR9IdMY3QlZxc7PtnSPFufrRKyvw",
+      "name": "GPAZ2372.JPG",
+      "type": "image",
+      "url": "/media-hub/GPAZ2372.webp",
+      "category": "images"
+    },
+    {
+      "id": "1-MN5XZy5DvsRzpttbrBPQv5Bd_g_-0cw",
+      "name": "GPBW2413.JPG",
+      "type": "image",
+      "url": "/media-hub/GPBW2413.webp",
+      "category": "images"
+    },
+    {
+      "id": "1hvQ2RvEUKbxU2t6eNhUT9agMRiSf39MM",
+      "name": "GPBI2384.JPG",
+      "type": "image",
+      "url": "/media-hub/GPBI2384.webp",
+      "category": "images"
+    },
+    {
+      "id": "13sO9POTgyDtFs32H9JPBnh8VNc17QFcc",
+      "name": "GPBV2412.JPG",
+      "type": "image",
+      "url": "/media-hub/GPBV2412.webp",
+      "category": "images"
+    },
+    {
+      "id": "1och_wckvqsANZYFQQX_IqQ28f40qm-5-",
+      "name": "GPCG2434.JPG",
+      "type": "image",
+      "url": "/media-hub/GPCG2434.webp",
+      "category": "images"
+    },
+    {
+      "id": "1-UZR4uTI8vhMiPkrcFTwt_0l7vWCKqxR",
+      "name": "GPCI2436.JPG",
+      "type": "image",
+      "url": "/media-hub/GPCI2436.webp",
+      "category": "images"
+    },
+    {
+      "id": "10th0lxsjJu0sDl2hemanZMaNohZyzN7j",
+      "name": "GPCH2435.JPG",
+      "type": "image",
+      "url": "/media-hub/GPCH2435.webp",
+      "category": "images"
+    },
+    {
+      "id": "1hrL1iXLtO4x_lo_Ajf9iP3b9tchEiWOh",
+      "name": "GPDR2606.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2606.webp",
+      "category": "images"
+    },
+    {
+      "id": "14il89Slc5Ik32JpLezfL_tkPoXH6cPZQ",
+      "name": "GPDR2638.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2638.webp",
+      "category": "images"
+    },
+    {
+      "id": "19_NQjPNedHmq3TET-uuy0GCB5WGqluiV",
+      "name": "GPDR2648.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2648.webp",
+      "category": "images"
+    },
+    {
+      "id": "1Me2uxQrIqhMiEfeB9nAHFOb0ZrYOcS7q",
+      "name": "GPDR2649.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2649.webp",
+      "category": "images"
+    },
+    {
+      "id": "1dJp3jxehJnn_sWLM9ECKQsSbSHsi3Pye",
+      "name": "GPDR2615.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2615.webp",
+      "category": "images"
+    },
+    {
+      "id": "1WdkP2NSWXQ-OzWQO_2ElvlqPhArLw0NG",
+      "name": "GPDR2675.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2675.webp",
+      "category": "images"
+    },
+    {
+      "id": "1xTfZ-HcObXi48f1Bip7hYtvyJ-FOjkhr",
+      "name": "GPDR2672.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2672.webp",
+      "category": "images"
+    },
+    {
+      "id": "1a2lBcKWMbEzAOHoxpP1JrXB8exwO9dyT",
+      "name": "GPDR2684.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2684.webp",
+      "category": "images"
+    },
+    {
+      "id": "1VWBcY4lS4DLfNCj-iN9zYlxwPKiWknQP",
+      "name": "GPDR2646.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2646.webp",
+      "category": "images"
+    },
+    {
+      "id": "1jTopuU5uNnbBkpehJs1jPW5B7a1YDbvY",
+      "name": "GPDR2673.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2673.webp",
+      "category": "images"
+    },
+    {
+      "id": "1LQc6xX5pak1xnu2KhVo_dSjGR1Ew4hPB",
+      "name": "GPDR2755.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2755.webp",
+      "category": "images"
+    },
+    {
+      "id": "1MZ1EDZNdA6Ab8PPvzle0TwLZG19PKFJH",
+      "name": "GPDR2718.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2718.webp",
+      "category": "images"
+    },
+    {
+      "id": "1o43vIq5hX_mvlPTOznsjw9eC3ltRR390",
+      "name": "GPDR2747.JPG",
+      "type": "image",
+      "url": "/media-hub/GPDR2747.webp",
+      "category": "images"
+    },
+    {
+      "id": "1AgyZ-xXJBSxH18tZ6ySRgwKzLxLRhbej",
+      "name": "hinnavar artificial beach.webp",
+      "type": "image",
+      "url": "/media-hub/hinnavar_artificial_beach.webp",
+      "category": "images"
+    },
+    {
+      "id": "1rUVw55YGEl_XL5pXMK4_69ku0X9lZW08",
+      "name": "logo-CgmoTIVw.png",
+      "type": "image",
+      "url": "/media-hub/logo_CgmoTIVw.webp",
+      "category": "images"
+    },
+    {
+      "id": "1FSrLFuHQoOUO97NdR0NfGA9BIaYPtN6t",
+      "name": "hinnavar map.png",
+      "type": "image",
+      "url": "/media-hub/hinnavar_map.webp",
+      "category": "images"
+    },
+    {
+      "id": "1LL-lq4_KyRUZOmcS0lnz_9sgA6yfb-b7",
+      "name": "CoverBK.png",
+      "type": "image",
+      "url": "/media-hub/CoverBK.webp",
+      "category": "images"
+    },
+    {
+      "id": "1zFINwV_7ETplTqQbkSI_-LX66CE_g7d5",
+      "name": "vibrant-coral-reef-stockcake.jpg",
+      "type": "image",
+      "url": "/media-hub/vibrant_coral_reef_stockcake.webp",
+      "category": "images"
+    },
+    {
+      "id": "1rESL1KF-8wg9LStM9dYBY4ChREUNYV71",
+      "name": "Hinnavaru-Harbor-Extension-Project-Mobilized-1.jpg",
+      "type": "image",
+      "url": "/media-hub/Hinnavaru_Harbor_Extension_Project_Mobilized_1.webp",
+      "category": "images"
+    },
+    {
+      "id": "1liFBi2A-OTVEGPnjvkzI8LrK5_pRnaZ2",
+      "name": "Lh.-Hinnavaru-harbor-4.jpg",
+      "type": "image",
+      "url": "/media-hub/Lh._Hinnavaru_harbor_4.webp",
+      "category": "images"
+    },
+    {
+      "id": "1-cjV0knDzM2JZzpNGpu0xfLaZkta80IF",
+      "name": "Useful references for coral reef rehabilitation.pdf",
+      "type": "pdf",
+      "url": "/media-hub/Useful_references_for_coral_reef_rehabilitation.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "1BpWPpnTCCe7Oh3AsOzIMXmJKKIhMXEHn",
+      "name": "Coral Restoration FoundationTM boulder coral.pdf",
+      "type": "pdf",
+      "url": "/media-hub/Coral_Restoration_FoundationTM_boulder_coral.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "1KQ_q5OowW_qDBkjYHruY0ib94F85V2mT",
+      "name": "A restoration genetics guide for coral reef conservation.pdf",
+      "type": "pdf",
+      "url": "/media-hub/A_restoration_genetics_guide_for_coral_reef_conservation.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "15rhk_3z5OOz7aMZQ14wdZVIY0qPATN4w",
+      "name": "A user’s guide to coral reef restoration terminologies.pdf",
+      "type": "pdf",
+      "url": "/media-hub/A_user_s_guide_to_coral_reef_restoration_terminologies.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "1kUYRJwL-rIZixqi39mHXomR4MXeU7sJc",
+      "name": "Handbook on Coral Reef Impacts.pdf",
+      "type": "pdf",
+      "url": "/media-hub/Handbook_on_Coral_Reef_Impacts.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "1J9JDYGZPYw4SRbSX6YO3vGNazGxnyAAx",
+      "name": "Coral_Restoration_Guide_for_the_Tourism_Sector.pdf",
+      "type": "pdf",
+      "url": "/media-hub/Coral_Restoration_Guide_for_the_Tourism_Sector.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "15tBrpuShC_3O_pACRARGdz66vrMV515o",
+      "name": "Coral Reef Restoration in the Maldives.pdf",
+      "type": "pdf",
+      "url": "/media-hub/Coral_Reef_Restoration_in_the_Maldives.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "1C77ShrjkDm_NTcLfnWTBV4HG1oMGSSr-",
+      "name": "Workbook-for-the-Managers-Guide-to-Restoration-Planning.pdf",
+      "type": "pdf",
+      "url": "/media-hub/Workbook_for_the_Managers_Guide_to_Restoration_Planning.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "1XlweK-dVC69kz9kWuyRLxG3-0a_pINto",
+      "name": "ACTIVE CORAL REST.pdf",
+      "type": "pdf",
+      "url": "/media-hub/ACTIVE_CORAL_REST.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "1iRhknq5Qf2PX73lS8FEpvcurq93ciAu6",
+      "name": "Reef Rehabilitation Manual_web.pdf",
+      "type": "pdf",
+      "url": "/media-hub/Reef_Rehabilitation_Manual_web.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "1jpMcFyJyL8g39y9fs3O7jBzMneFF0kxk",
+      "name": "Hein-et-al.-2020_UNEP-report-1.pdf",
+      "type": "pdf",
+      "url": "/media-hub/Hein_et_al._2020_UNEP_report_1.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "1GYdZ4ZJ0OlhpblarQQVSqnLxbeRdK93u",
+      "name": "Toolkit-CoralReefRestoration(2018).pdf",
+      "type": "pdf",
+      "url": "/media-hub/Toolkit_CoralReefRestoration_2018_.pdf",
+      "category": "docs"
+    },
+    {
+      "id": "1O6tUVI-jmdn_Yq_nm4FCDdg-q0Pg6hM5",
+      "name": "NGO HBI Certificate.png",
+      "type": "image",
+      "url": "/media-hub/NGO_HBI_Certificate.webp",
+      "category": "docs"
+    }
+  ]
+}
