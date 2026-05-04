@@ -1,6 +1,6 @@
 # 🌊 Hinnavaru Blue — Technical Maintenance Guide
 
-This guide is designed for the non-developer or a new developer to manage and update the Hinnavaru Blue platform.
+This guide is designed for the non-developer or a new developer to manage and update the Hinnavaru Blue platform. The primary administrative and storage account is **hinnavarublue@gmail.com**.
 
 ## 🚀 How to Update Content (CMS)
 

@@ -18,7 +18,7 @@ export default function Projects() {
   const heroImages = useMemo(() => {
     return MANIFEST.slideshow.length > 0 
       ? [...MANIFEST.slideshow].reverse().map(m => m.startsWith('/') ? m : `/deep-archives/Focus/${m}`)
-      : ['/deep-archives/Focus/GPDR2636.JPG', '/deep-archives/Focus/GPDR2637.JPG', '/deep-archives/Focus/GPDR2638.JPG']
+      : ['/deep-archives/Focus/Adopt/AX1/GPDR2636.JPG', '/deep-archives/Focus/Adopt/AX1/GPDR2637.JPG', '/deep-archives/Focus/Adopt/AX1/GPDR2638.JPG']
   }, [])
 
   useEffect(() => {
@@ -35,9 +35,9 @@ export default function Projects() {
 
   const coralSliderFrames = useMemo(() => {
     const defaultFrames = [
-      '/deep-archives/Focus/GPDR2636.JPG',
-      '/deep-archives/Focus/GPDR2637.JPG',
-      '/deep-archives/Focus/GPDR2638.JPG'
+      '/deep-archives/Focus/Adopt/AX1/GPDR2636.JPG',
+      '/deep-archives/Focus/Adopt/AX1/GPDR2637.JPG',
+      '/deep-archives/Focus/Adopt/AX1/GPDR2638.JPG'
     ];
     const available = allMedia.filter(m => !heroImages.includes(m) && m.toLowerCase().includes('coral'))
     
@@ -172,8 +172,8 @@ export default function Projects() {
               {filteredProjects.map((p, i) => {
                 const isVideo = i === 1;
                 const mediaSrc = isVideo 
-                  ? '/deep-archives/Puls/pulse-update.mp4' 
-                  : (i === 0 ? '/deep-archives/Focus/GPDR2638.JPG' : '/deep-archives/Focus/GPDR2637.JPG');
+                  ? '/deep-archives/Puls/Adopt/AX1/pulse-update.mp4' 
+                  : (i === 0 ? '/deep-archives/Focus/Adopt/AX1/GPDR2638.JPG' : '/deep-archives/Focus/Adopt/AX1/GPDR2637.JPG');
 
                 return (
                   <div key={i} className="card animate-reveal" style={{ background: 'rgba(255,255,255,0.02)', padding: '0', cursor: 'pointer', overflow: 'hidden' }} onClick={() => setSelectedProject(p)}>
@@ -307,7 +307,7 @@ export default function Projects() {
                     <video 
                       controls 
                       style={{ width: '100%', aspectRatio: '16/9', display: 'block' }}
-                      poster="/deep-archives/Focus/GPDR2636.JPG"
+                      poster="/deep-archives/Focus/Adopt/AX1/GPDR2636.JPG"
                     >
                       <source src={vid.path} type="video/mp4" />
                     </video>

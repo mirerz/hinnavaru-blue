@@ -9,22 +9,21 @@ export const CMS_CONFIG = {
   atoll: "Lhaviyani (Lh.)",
   location_code: "LH..G1",
   country_code: "MV",
-  admin_email: "admin@hinnavarublueinitiative.org",
-  founder_email: "founder@hinnavarublueinitiative.org",
-  hello_email: "hello@hinnavarublueinitiative.org",
-  contact_email: "hello@hinnavarublueinitiative.org",
-  support_email: "admin@hinnavarublueinitiative.org",
+  admin_email: "hinnavarublue@gmail.com",
+  founder_email: "hinnavarublue@gmail.com",
+  hello_email: "hinnavarublue@gmail.com",
+  contact_email: "hinnavarublue@gmail.com",
+  support_email: "hinnavarublue@gmail.com",
   hotline: "+9607714340",
   mailer_url: "https://mailer-service-1085797488900.asia-southeast1.run.app/send",
   whatsapp_link: "https://wa.me/9607714340?text=START",
   telegram_link: "https://t.me/HinnavaruBlue_bot",
-  media_automation: {
-    drive_id: "12yWK3lhwcqiTNV6yUS6Insgqhg9r9jx7",
-    docs_id: "1NGwKXGaQs0S7hMLTJd5nhz_DboPas0Bw",
-    images_id: "1vbeY96DGn3aXshplZjmzsERlNG72KRbs",
-    vids_id: "1JDy0lTHiP2c-7KI4SlWGHR9Wbzly9FjG",
-    sync_folder: "public/media-hub",
-    optimize_to: "webp"
+  "media_automation": {
+    "drive_id": "12yWK3lhwcqiTNV6yUS6Insgqhg9r9jx7",
+    "docs_id": "1NGwKXGaQs0S7hMLTJd5nhz_DboPas0Bw",
+    "images_id": "1vbeY96DGn3aXshplZjmzsERlNG72KRbs",
+    "vids_id": "1JDy0lTHiP2c-7KI4SlWGHR9Wbzly9FjG",
+    "last_sync": "2026-05-04T07:30:00Z"
   }
 }
 
@@ -380,7 +379,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/skipjacii.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:35:24.619Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.156Z"
   },
   {
     "id": "DRIVE-1",
@@ -388,7 +387,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/hinn_top_view.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:35:03.263Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   },
   {
     "id": "DRIVE-2",
@@ -396,7 +395,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/hinnavaru_areal_view.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:34:50.627Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   },
   {
     "id": "DRIVE-3",
@@ -404,7 +403,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/underwater.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:34:19.952Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   },
   {
     "id": "DRIVE-4",
@@ -412,7 +411,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAL2352.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:07.000Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   },
   {
     "id": "DRIVE-5",
@@ -420,7 +419,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAF2336.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:07.000Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   },
   {
     "id": "DRIVE-6",
@@ -428,7 +427,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAG2341.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:06.000Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   },
   {
     "id": "DRIVE-7",
@@ -436,7 +435,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAF2338.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   },
   {
     "id": "DRIVE-8",
@@ -444,7 +443,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAI2343.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   },
   {
     "id": "DRIVE-9",
@@ -452,7 +451,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAO2357.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:05.000Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   },
   {
     "id": "DRIVE-10",
@@ -460,7 +459,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAQ2359.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:04.000Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   },
   {
     "id": "DRIVE-11",
@@ -468,7 +467,7 @@ export const LAGOON_STORIES = [
     "url": "/media-hub/GPAE2334.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:32:03.000Z",
-    "expiryDate": "2026-06-03T19:21:52.504Z"
+    "expiryDate": "2026-06-03T22:29:47.165Z"
   }
 ]
 
@@ -672,7 +671,7 @@ export const SPONSOR_TIERS = [
 
 // 11. NURSERY SUMMARY (Used in multiple pages)
 export const NURSERY_SUMMARY = {
-  active_frames: 19,
+  active_frames: 180,
   survival_rate: 82,
   total_funds: '100% Impact',
   field_allocation: 100
@@ -680,6 +679,24 @@ export const NURSERY_SUMMARY = {
 
 // 12. ABOUT PAGE NARRATIVE
 export const ABOUT_CONTENT = {
+  explore: {
+    title: "Explore the Blue Frontier",
+    desc: "Dive into the real-time data and visual archives of the Hinnavaru lagoon restoration.",
+    items: [
+      {
+        title: "Aerial Perspectives",
+        text: "High-resolution drone mapping of the restoration site and island coastlines.",
+        url: "/deep-archives/media-hub/hinn top view.webp",
+        tag: "Mapping"
+      },
+      {
+        title: "Lagoon Seeding",
+        text: "The latest field observations from our underwater nurseries.",
+        url: "/deep-archives/media-hub/hinnavaru areal view.webp",
+        tag: "Real-time"
+      }
+    ]
+  },
   hero: {
     badge: "📖 Our Roots",
     title: "The Hinnavaru Blue Model: A Paradigm for Island-Led Environmental Resilience",
@@ -705,6 +722,24 @@ export const ABOUT_CONTENT = {
     },
     model: {
       title: "The Model is characterized by two key elements:",
+      impact: {
+        "title": "Documented Success",
+        "desc": "Every contribution is mapped and monitored. View our verifiable impact records.",
+        "cards": [
+          {
+            "title": "Beach Restoration",
+            "icon": "🏖️",
+            "text": "Monitoring the impact of harbor extension on local current patterns.",
+            "url": "/deep-archives/media-hub/hinnavar artificial beach.webp"
+          },
+          {
+            "title": "Geospatial Mapping",
+            "icon": "🗺️",
+            "text": "Precise GPS tracking of every deployed restoration frame.",
+            "url": "/deep-archives/media-hub/hinnavar map.webp"
+          }
+        ]
+      },
       bullets: [
         { label: "Indigenous Knowledge", text: "The community leverages its traditional understanding to grasp the specific \"micro-currents\" of Felivaru Kandu, optimizing their conservation efforts." },
         { label: "Repurposed Innovation", text: "The island established its first coral nursery by utilizing repurposed iron frames. This method effectively transformed tools of their seafaring trade into the \"cradles of a restored ecosystem,\" and by using local materials, it has achieved exceptionally high coral survival rates." }

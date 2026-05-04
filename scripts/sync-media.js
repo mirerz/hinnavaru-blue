@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 
 // Paths
 const CMS_FILE_PATH = path.join(__dirname, '../src/data/cms.js');
-const MEDIA_HUB_DIR = path.join(__dirname, '../public/media-hub');
+const MEDIA_HUB_DIR = path.join(__dirname, '../public/deep-archives/media-hub');
 const MANIFEST_PATH = path.join(MEDIA_HUB_DIR, 'manifest.json');
 
 // Ensure directories exist
@@ -28,10 +28,10 @@ if (!fs.existsSync(MEDIA_HUB_DIR)) {
 function getCMSConfig() {
   try {
     const content = fs.readFileSync(CMS_FILE_PATH, 'utf8');
-    const driveIdMatch = content.match(/drive_id:\s*["'](.+?)["']/);
-    const imagesIdMatch = content.match(/images_id:\s*["'](.+?)["']/);
-    const vidsIdMatch = content.match(/vids_id:\s*["'](.+?)["']/);
-    const docsIdMatch = content.match(/docs_id:\s*["'](.+?)["']/);
+    const driveIdMatch = content.match(/["']?drive_id["']?:\s*["'](.+?)["']/);
+    const imagesIdMatch = content.match(/["']?images_id["']?:\s*["'](.+?)["']/);
+    const vidsIdMatch = content.match(/["']?vids_id["']?:\s*["'](.+?)["']/);
+    const docsIdMatch = content.match(/["']?docs_id["']?:\s*["'](.+?)["']/);
 
     return {
       drive_id: driveIdMatch ? driveIdMatch[1] : null,
@@ -80,33 +80,43 @@ async function sync() {
     
     async function getAllFiles(folderId, pathMap = {}) {
       let results = [];
-      const res = await drive.files.list({
-        q: `'${folderId}' in parents and trashed = false`,
-        fields: 'files(id, name, mimeType, modifiedTime, parents, size)',
-      });
+      let pageToken = null;
       
-      for (const file of res.data.files || []) {
-        if (file.mimeType === 'application/vnd.google-apps.folder') {
-          console.log(`📂 Entering subfolder: ${file.name}`);
-          // Pass down the target category if we are entering one of the special folders
-          let currentCategory = pathMap[folderId] || null;
-          if (file.id === config.images_id) currentCategory = 'images';
-          if (file.id === config.vids_id) currentCategory = 'vids';
-          if (file.id === config.docs_id) currentCategory = 'docs';
-          
-          const subPathMap = { ...pathMap, [file.id]: currentCategory };
-          const subFiles = await getAllFiles(file.id, subPathMap);
-          results = results.concat(subFiles.map(f => ({ ...f, category: f.category || currentCategory })));
-        } else {
-          // Identify if this file belongs to a special folder
-          let category = pathMap[folderId] || null;
-          if (file.parents?.includes(config.images_id)) category = 'images';
-          else if (file.parents?.includes(config.vids_id)) category = 'vids';
-          else if (file.parents?.includes(config.docs_id)) category = 'docs';
-          
-          results.push({ ...file, category });
+      do {
+        const res = await drive.files.list({
+          q: `'${folderId}' in parents and trashed = false`,
+          fields: 'nextPageToken, files(id, name, mimeType, modifiedTime, parents, size)',
+          pageToken: pageToken,
+          pageSize: 100,
+        });
+        
+        for (const file of res.data.files || []) {
+          if (file.mimeType === 'application/vnd.google-apps.folder') {
+            console.log(`📂 Entering subfolder: ${file.name} (${file.id})`);
+            
+            // Determine category for this folder and its children
+            let currentCategory = pathMap[folderId] || null;
+            if (file.id === config.images_id) currentCategory = 'images';
+            else if (file.id === config.vids_id) currentCategory = 'vids';
+            else if (file.id === config.docs_id) currentCategory = 'docs';
+            
+            const subPathMap = { ...pathMap, [file.id]: currentCategory };
+            const subFiles = await getAllFiles(file.id, subPathMap);
+            results = results.concat(subFiles);
+          } else {
+            // Determine category for this file
+            let category = pathMap[folderId] || null;
+            if (file.parents?.includes(config.images_id)) category = 'images';
+            else if (file.parents?.includes(config.vids_id)) category = 'vids';
+            else if (file.parents?.includes(config.docs_id)) category = 'docs';
+            
+            console.log(`📄 Found file: ${file.name} | Category: ${category} | MIME: ${file.mimeType}`);
+            results.push({ ...file, category });
+          }
         }
-      }
+        pageToken = res.data.nextPageToken;
+      } while (pageToken);
+      
       return results;
     }
 
@@ -152,9 +162,9 @@ async function sync() {
           }
 
           if (isStory) {
-            stories.push({ type: 'photo', url: `/media-hub/${optimizedName}`, timestamp: file.modifiedTime });
+            stories.push({ type: 'photo', url: `/deep-archives/media-hub/${optimizedName}`, timestamp: file.modifiedTime });
           }
-          manifest.push({ id: file.id, name: file.name, type: 'image', url: `/media-hub/${optimizedName}`, category: file.category });
+          manifest.push({ id: file.id, name: file.name, type: 'image', url: `/deep-archives/media-hub/${optimizedName}`, category: file.category });
 
         } else if (file.mimeType.startsWith('video/')) {
           if (!fs.existsSync(outputPath)) {
@@ -165,9 +175,9 @@ async function sync() {
           }
 
           if (isStory) {
-            stories.push({ type: 'video', url: `/media-hub/${safeName}`, timestamp: file.modifiedTime });
+            stories.push({ type: 'video', url: `/deep-archives/media-hub/${safeName}`, timestamp: file.modifiedTime });
           }
-          manifest.push({ id: file.id, name: file.name, type: 'video', url: `/media-hub/${safeName}`, category: file.category });
+          manifest.push({ id: file.id, name: file.name, type: 'video', url: `/deep-archives/media-hub/${safeName}`, category: file.category });
 
         } else if (file.mimeType === 'application/pdf') {
           if (!fs.existsSync(outputPath)) {
@@ -175,7 +185,7 @@ async function sync() {
             const response = await drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'arraybuffer' });
             fs.writeFileSync(outputPath, Buffer.from(response.data));
           }
-          manifest.push({ id: file.id, name: file.name, type: 'pdf', url: `/media-hub/${safeName}`, category: file.category });
+          manifest.push({ id: file.id, name: file.name, type: 'pdf', url: `/deep-archives/media-hub/${safeName}`, category: file.category });
         }
       } catch (err) {
         console.error(`❌ Error processing ${file.name}:`, err.message);
@@ -220,7 +230,7 @@ async function sync() {
           type: isImage ? 'Scanned Doc' : 'Archive Doc',
           date: new Date(f.modifiedTime).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
           category: 'Awareness',
-          url: `/media-hub/${optimizedName}`
+          url: `/deep-archives/media-hub/${optimizedName}`
         };
       });
 
