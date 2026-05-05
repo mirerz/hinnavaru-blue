@@ -304,13 +304,22 @@ export default function Projects() {
               }}>
                 {(MANIFEST.videos || []).slice(0, 3).map((vid, i) => (
                   <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', background: '#000', border: '1px solid rgba(255,107,107,0.3)' }}>
-                    <video 
-                      controls 
-                      style={{ width: '100%', aspectRatio: '16/9', display: 'block' }}
-                      poster="/deep-archives/Focus/Adopt/AX1/GPDR2636.JPG"
-                    >
-                      <source src={vid.path} type="video/mp4" />
-                    </video>
+                    {vid.path && vid.path.includes('drive.google.com') ? (
+                      <iframe 
+                        src={vid.path} 
+                        style={{ width: '100%', aspectRatio: '16/9', display: 'block', border: 'none' }}
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
+                      ></iframe>
+                    ) : (
+                      <video 
+                        controls 
+                        style={{ width: '100%', aspectRatio: '16/9', display: 'block' }}
+                        poster="/deep-archives/Focus/Adopt/AX1/GPDR2636.JPG"
+                      >
+                        <source src={vid.path} type="video/mp4" />
+                      </video>
+                    )}
                     <div style={{ padding: '15px' }}>
                       <div style={{ fontSize: '0.85rem', fontWeight: 700 }}>{vid.name}</div>
                       <div style={{ fontSize: '0.65rem', opacity: 0.6, marginTop: '4px' }}>MISSION SIG: {vid.id?.substring(0,8)}</div>

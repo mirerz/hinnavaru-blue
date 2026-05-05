@@ -167,25 +167,17 @@ async function sync() {
           manifest.push({ id: file.id, name: file.name, type: 'image', url: `/deep-archives/media-hub/${optimizedName}`, category: file.category });
 
         } else if (file.mimeType.startsWith('video/')) {
-          if (!fs.existsSync(outputPath)) {
-            console.log(`🎥 Syncing Video: ${file.name}...`);
-            const dest = fs.createWriteStream(outputPath);
-            const response = await drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'arraybuffer' });
-            fs.writeFileSync(outputPath, Buffer.from(response.data));
-          }
-
+          const gdriveUrl = `https://drive.google.com/file/d/${file.id}/preview`;
+          console.log(`🎥 Mapping Video to GDrive: ${file.name}...`);
           if (isStory) {
-            stories.push({ type: 'video', url: `/deep-archives/media-hub/${safeName}`, timestamp: file.modifiedTime });
+            stories.push({ type: 'video', url: gdriveUrl, timestamp: file.modifiedTime });
           }
-          manifest.push({ id: file.id, name: file.name, type: 'video', url: `/deep-archives/media-hub/${safeName}`, category: file.category });
+          manifest.push({ id: file.id, name: file.name, type: 'video', url: gdriveUrl, category: file.category });
 
         } else if (file.mimeType === 'application/pdf') {
-          if (!fs.existsSync(outputPath)) {
-            console.log(`📄 Syncing PDF: ${file.name}...`);
-            const response = await drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'arraybuffer' });
-            fs.writeFileSync(outputPath, Buffer.from(response.data));
-          }
-          manifest.push({ id: file.id, name: file.name, type: 'pdf', url: `/deep-archives/media-hub/${safeName}`, category: file.category });
+          const gdriveUrl = `https://drive.google.com/file/d/${file.id}/view?usp=sharing`;
+          console.log(`📄 Mapping PDF to GDrive: ${file.name}...`);
+          manifest.push({ id: file.id, name: file.name, type: 'pdf', url: gdriveUrl, category: file.category });
         }
       } catch (err) {
         console.error(`❌ Error processing ${file.name}:`, err.message);
@@ -222,6 +214,7 @@ async function sync() {
       console.log(`📝 Syncing ${docs.length} documents to Vault...`);
       const vaultItems = docs.map(f => {
         const isImage = f.mimeType.startsWith('image/');
+        const gdriveUrl = `https://drive.google.com/file/d/${f.id}/view?usp=sharing`;
         const optimizedName = isImage ? f.name.replace(/[^a-z0-9.]/gi, '_').replace(/\.[^.]+$/, '.webp') : f.name.replace(/[^a-z0-9.]/gi, '_');
         
         return {
@@ -230,7 +223,7 @@ async function sync() {
           type: isImage ? 'Scanned Doc' : 'Archive Doc',
           date: new Date(f.modifiedTime).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
           category: 'Awareness',
-          url: `/deep-archives/media-hub/${optimizedName}`
+          url: isImage ? `/deep-archives/media-hub/${optimizedName}` : gdriveUrl
         };
       });
 
