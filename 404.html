@@ -1,28 +1,60 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Hinnavaru Blue</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/logo-circle-DTMtHe4G.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Hinnavaru Blue Initiative — protecting Lhaviyani Atoll's coral reefs through community-led restoration, transparency, and ocean stewardship." />
+    <meta name="keywords" content="coral reef, Maldives, Hinnavaru, ocean conservation, marine biology, coral restoration" />
+    
+    <!-- Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hinnavarublueinitiative.org/" />
+    <meta property="og:title" content="Hinnavaru Blue Initiative" />
+    <meta property="og:description" content="Restoring the blue heart of Hinnavaru lagoon, one coral frame at a time." />
+    <meta property="og:image" content="https://hinnavarublueinitiative.org/we-are.png" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:domain" content="hinnavarublueinitiative.org" />
+    <meta name="twitter:url" content="https://hinnavarublueinitiative.org/" />
+    <meta name="twitter:title" content="Hinnavaru Blue Initiative" />
+    <meta name="twitter:description" content="Restoring the blue heart of Hinnavaru lagoon, one coral frame at a time." />
+    <meta name="twitter:image" content="https://hinnavarublueinitiative.org/we-are.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <title>Hinnavaru Blue Initiative</title>
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
-      // This script takes the current url and converts the path and query
-      // string into just a query string, and then redirects the browser
-      // to the new url with only a query string and hash fragment,
-      // e.g. https://www.foo.tld/one/two?a=b#c -> https://www.foo.tld/?/one/two&a=b#c
-      var pathSegmentsToKeep = 0;
-
-      var l = window.location;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
-        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-        l.hash
-      );
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back into the correct url and adds it to the
+      // browser's history using window.history.replaceState(...),
+      // which wouldn't cause the browser to refresh the page or register a
+      // new history entry.
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
     </script>
+    <script type="module" crossorigin src="/assets/index-BnhFQcPn.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-DF2fYuay.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-Bs-rbnoK.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-CmbejH0k.css">
   </head>
   <body>
+    <div id="root"></div>
   </body>
 </html>
