@@ -51,14 +51,21 @@ export default function Projects() {
   const [currentArchiveIdx, setCurrentArchiveIdx] = useState(0)
 
   const tabMedia = useMemo(() => {
-    const keyword = activeTab === 'coral' ? 'coral' : activeTab === 'sweep' ? 'clean' : 'aware'
-    let filtered = allMedia.filter(m => m.toLowerCase().includes(keyword) && !heroImages.includes(m))
+    const keywords = activeTab === 'coral' ? ['focus', 'adopt', 'coral'] 
+                  : activeTab === 'sweep' ? ['puls', 'clean', 'sweep', 'debris', 'harbor'] 
+                  : ['aware', 'edu', 'workshop', 'flyer', 'docs'];
+    
+    let filtered = allMedia.filter(m => {
+      const path = m.toLowerCase();
+      const match = keywords.some(k => path.includes(k));
+      return match; // Removed !heroImages.includes(m) to ensure all project images show up
+    });
     
     if (activeTab === 'coral') {
       filtered = filtered.filter(m => !coralSliderFrames.includes(m))
     }
-    return filtered.length > 0 ? filtered : heroImages
-  }, [activeTab, allMedia, heroImages, coralSliderFrames])
+    return filtered.length > 0 ? filtered : allMedia.slice(0, 20)
+  }, [activeTab, allMedia, coralSliderFrames])
 
   useEffect(() => {
     setCurrentArchiveIdx(0)
@@ -87,6 +94,78 @@ export default function Projects() {
 
   const activeCatObj = PROJECT_CATEGORIES.find(c => c.id === activeTab)
   const filteredProjects = PROJECTS_LIST.filter(p => p.category === activeTab).slice(0, 3)
+
+  // Helper to count files in a folder path
+  const getResourceCount = (folderPath) => {
+    if (!folderPath) return 0;
+    // Match files that start with the folderPath
+    const count = MANIFEST.archives.filter(path => path.includes(folderPath)).length;
+    return count;
+  };
+
+  // Featured Media Slider that prioritizes videos from the latest 3 projects
+  const FeaturedMediaSlider = () => {
+    const [mediaIdx, setMediaIdx] = useState(0);
+    
+    // Get videos for the projects currently shown in the category
+    const projectVideos = useMemo(() => {
+      const vids = [];
+      filteredProjects.forEach(p => {
+        const folderVids = MANIFEST.archives.filter(m => 
+          m.toLowerCase().endsWith('.mp4') && m.includes(p.folderPath)
+        ).map(m => ({ type: 'local', path: m, project: p.title }));
+        vids.push(...folderVids);
+      });
+      
+      // Fallback to drive videos if no local project videos found
+      if (vids.length === 0) {
+        const driveVids = (MANIFEST.videos || []).map(v => ({ type: 'drive', path: v.path, project: 'Mission Archive' }));
+        vids.push(...driveVids);
+      }
+      
+      // Add images as fallback
+      const categoryImages = tabMedia.map(m => ({ type: 'image', path: m }));
+      return [...vids, ...categoryImages];
+    }, [filteredProjects]);
+
+    const nextMedia = () => setMediaIdx(prev => (prev + 1) % projectVideos.length);
+    const prevMedia = () => setMediaIdx(prev => (prev > 0 ? prev - 1 : projectVideos.length - 1));
+
+    const currentMedia = projectVideos[mediaIdx];
+
+    return (
+      <div className="featured-media-frame" style={{ marginTop: '0', position: 'relative' }}>
+        <div className="featured-media-inner">
+          {currentMedia?.type === 'local' ? (
+            <video src={currentMedia.path} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : currentMedia?.type === 'drive' ? (
+            <iframe src={currentMedia.path} style={{ width: '100%', height: '100%', border: 'none' }} allow="autoplay" />
+          ) : (
+            <img src={currentMedia?.path || heroImages[0]} alt="Featured Mission" />
+          )}
+          
+          <div className="pulse-tag">
+            <span className="live-dot" /> <span>{currentMedia?.type === 'image' ? 'LATEST CAPTURE' : `CLIP: ${currentMedia?.project || 'UPDATE'}`}</span>
+          </div>
+
+          {projectVideos.length > 1 && (
+            <div style={{ position: 'absolute', bottom: '40px', right: '40px', display: 'flex', gap: '20px', zIndex: 10 }}>
+              <button onClick={prevMedia} className="btn btn-outline" style={{ 
+                width: '80px', height: '80px', borderRadius: '50%', padding: '0', 
+                background: 'rgba(2,11,24,0.95)', fontSize: '2rem', fontWeight: 'bold',
+                border: '2px solid var(--teal)', boxShadow: '0 0 20px rgba(13,211,197,0.3)'
+              }}>{'<'}</button>
+              <button onClick={nextMedia} className="btn btn-outline" style={{ 
+                width: '80px', height: '80px', borderRadius: '50%', padding: '0', 
+                background: 'rgba(2,11,24,0.95)', fontSize: '2rem', fontWeight: 'bold',
+                border: '2px solid var(--teal)', boxShadow: '0 0 20px rgba(13,211,197,0.3)'
+              }}>{'>'}</button>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="projects-page">
@@ -121,6 +200,9 @@ export default function Projects() {
       {/* 2. EXPLORATION INTERFACE */}
       <section className="section-sm" style={{ background: 'var(--ocean-deep)', paddingTop: '40px', paddingBottom: '0' }}>
         <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+            <div className="badge badge-teal animate-reveal" style={{ display: 'inline-block', padding: '10px 25px', fontSize: '0.9rem' }}>PROJECTS UPDATE</div>
+          </div>
           <div className="mockup-tab-nav">
             {PROJECT_CATEGORIES.map(cat => (
               <button 
@@ -136,44 +218,26 @@ export default function Projects() {
       </section>
 
       {/* 3. CORE DISPLAY FRAME */}
-      <section className="section-sm" style={{ background: 'var(--ocean-deep)', paddingTop: '30px', paddingBottom: '80px' }}>
+      <section className="section-sm" style={{ background: 'var(--ocean-deep)', paddingTop: '20px', paddingBottom: '80px' }}>
         <div className="container">
           <div className="featured-mission-container animate-reveal" key={activeTab}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px' }}>
-              <div>
-                <div className="badge badge-teal" style={{ marginBottom: '10px' }}>MISSION MODULE: {activeCatObj?.title.toUpperCase()}</div>
-                <h2 style={{ fontSize: '2.5rem', margin: 0 }}>{activeCatObj?.title}</h2>
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
               <div style={{ textAlign: 'right' }}>
-                <span className="live-dot" /> <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--teal)' }}>DATA SYNC: STABLE</span>
+                <span className="live-dot" /> <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--teal)' }}>DATA SYNC: {MANIFEST.last_sync ? new Date(MANIFEST.last_sync).toLocaleDateString() : 'STABLE'}</span>
               </div>
             </div>
             
-            {activeTab === 'coral' ? (
-              <CoralRestorationSlider />
-            ) : (
-              <div className="featured-media-frame" style={{ marginTop: '30px', position: 'relative' }}>
-                <div className="featured-media-inner">
-                  <img src={tabMedia[currentArchiveIdx] || heroImages[0]} alt="Featured Archive" />
-                  <div className="pulse-tag">
-                    <span className="live-dot" /> <span>LATEST CAPTURE</span>
-                  </div>
-                  {tabMedia.length > 1 && (
-                    <div style={{ position: 'absolute', bottom: '20px', right: '20px', display: 'flex', gap: '10px', zIndex: 10 }}>
-                      <button onClick={() => setCurrentArchiveIdx(prev => (prev > 0 ? prev - 1 : tabMedia.length - 1))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'<'}</button>
-                      <button onClick={() => setCurrentArchiveIdx(prev => (prev < tabMedia.length - 1 ? prev + 1 : 0))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'>'}</button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
+            <FeaturedMediaSlider />
 
             <div style={{ marginTop: '50px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '30px' }}>
               {filteredProjects.map((p, i) => {
-                const isVideo = i === 1;
-                const mediaSrc = isVideo 
-                  ? '/deep-archives/Puls/Adopt/AX1/pulse-update.mp4' 
-                  : (i === 0 ? '/deep-archives/Focus/Adopt/AX1/GPDR2638.JPG' : '/deep-archives/Focus/Adopt/AX1/GPDR2637.JPG');
+                const projectFiles = MANIFEST.archives.filter(path => path.includes(p.folderPath));
+                const mediaSrc = projectFiles.length > 0 
+                  ? projectFiles[Math.floor(Math.random() * projectFiles.length)] 
+                  : (tabMedia[i % tabMedia.length] || heroImages[0]);
+                
+                const isVideo = mediaSrc.toLowerCase().endsWith('.mp4');
+                const fileCount = projectFiles.length;
 
                 return (
                   <div key={i} className="card animate-reveal" style={{ background: 'rgba(255,255,255,0.02)', padding: '0', cursor: 'pointer', overflow: 'hidden' }} onClick={() => setSelectedProject(p)}>
@@ -183,11 +247,17 @@ export default function Projects() {
                       <img src={mediaSrc} style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} alt={p.title} />
                     )}
                     <div style={{ padding: '30px' }}>
-                      <div className="badge badge-teal" style={{ marginBottom: '15px' }}>{p.progress}% COMPLETE</div>
-                      <h4 style={{ fontSize: '1.3rem', marginBottom: '10px' }}>{p.title}</h4>
-                      <p style={{ opacity: 0.7, fontSize: '0.9rem' }}>{p.desc.substring(0, 100)}...</p>
-                      <div className="progress-bar" style={{ marginTop: '20px' }}>
-                        <div className="progress-fill" style={{ width: `${p.progress}%` }} />
+                      <div className="badge badge-teal" style={{ marginBottom: '15px', fontWeight: 800 }}>
+                        {fileCount > 0 ? `${fileCount} TOTAL RESOURCES` : 'COMING SOON'}
+                      </div>
+                      <h4 style={{ fontSize: '1.4rem', marginBottom: '10px', color: 'white' }}>{p.title}</h4>
+                      <p style={{ opacity: 0.7, fontSize: '0.9rem', lineHeight: '1.6' }}>{p.desc.substring(0, 100)}...</p>
+                      
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
+                         <span style={{ fontSize: '0.7rem', color: 'var(--teal)', fontWeight: 800 }}>MISSION SYNCED</span>
+                         <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', flex: 1, marginLeft: '15px', borderRadius: '2px' }}>
+                            <div style={{ width: fileCount > 0 ? '100%' : '0%', height: '100%', background: 'var(--teal)', borderRadius: '2px' }} />
+                         </div>
                       </div>
                     </div>
                   </div>
@@ -219,19 +289,15 @@ export default function Projects() {
                   </p>
                   <div style={{ background: 'rgba(255,255,255,0.03)', padding: '24px', borderRadius: '12px', border: '1px solid var(--card-border)' }}>
                     <div className="funding-stats-dash">
-                      <span className="gradient-text" style={{ fontSize: '2.5rem' }}>{selectedProject.progress}%</span>
-                      <span style={{ marginLeft: '12px', fontSize: '0.9rem' }}>Project results delivered.</span>
+                      <span className="gradient-text" style={{ fontSize: '2.5rem' }}>{getResourceCount(selectedProject.folderPath)}</span>
+                      <span style={{ marginLeft: '12px', fontSize: '0.9rem' }}>Total mission resources archived.</span>
                     </div>
                     <div className="progress-bar" style={{ height: '12px' }}>
-                      <div className="progress-fill" style={{ width: `${selectedProject.progress}%` }} />
+                      <div className="progress-fill" style={{ width: getResourceCount(selectedProject.folderPath) > 0 ? '100%' : '0%' }} />
                     </div>
                   </div>
                 </div>
                 <div className="deep-dive-side">
-                   <div className="mini-card" style={{ marginBottom: '12px' }}>
-                     <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>STATUS</div>
-                     <div style={{ fontWeight: 800, color: 'var(--teal)' }}>{selectedProject.status.toUpperCase()}</div>
-                   </div>
                    <div className="mini-card" style={{ marginBottom: '12px' }}>
                      <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>LOCALE</div>
                      <div style={{ fontWeight: 800 }}>{CMS_CONFIG.atoll} Lagoon</div>
@@ -274,7 +340,7 @@ export default function Projects() {
                 gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
                 gap: '20px' 
               }}>
-                {MANIFEST.archives.slice(0, 3).map((img, i) => (
+                {MANIFEST.archives.slice(0, 12).map((img, i) => (
                   <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', height: '240px', position: 'relative', cursor: 'zoom-in' }}>
                     <img 
                       src={img.startsWith('/') ? img : `/deep-archives/Focus/${img}`} 
@@ -284,7 +350,7 @@ export default function Projects() {
                       onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
                     />
                     <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '15px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', fontSize: '0.7rem', opacity: 0.8 }}>
-                      FILE: {img.split('.')[0]}
+                      FILE: {img.split('/').pop().split('.')[0]}
                     </div>
                   </div>
                 ))}
@@ -302,7 +368,7 @@ export default function Projects() {
                 gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', 
                 gap: '20px' 
               }}>
-                {(MANIFEST.videos || []).slice(0, 3).map((vid, i) => (
+                {(MANIFEST.videos || []).slice(0, 6).map((vid, i) => (
                   <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', background: '#000', border: '1px solid rgba(255,107,107,0.3)' }}>
                     {vid.path && vid.path.includes('drive.google.com') ? (
                       <iframe 

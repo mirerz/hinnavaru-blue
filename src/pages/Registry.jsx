@@ -276,10 +276,11 @@ export default function Registry() {
               <div className="modal-photo-wrap">
                  {(() => {
                    const archives = MANIFEST?.archives || [];
-                   const match = archives.find(p => p.startsWith(selected.id));
+                   // Match by folder name or file name containing the ID part
+                   const match = archives.find(p => p.includes(selected.id.split('-')[0]) || p.includes(selected.id));
                    const photoSrc = match 
                      ? (match.startsWith('/') ? match : `/deep-archives/media-hub/${match}`)
-                     : '/deep-archives/media-hub/vibrant-coral-reef-stockcake.webp';
+                     : '/deep-archives/media-hub/vibrant_coral_reef_stockcake.webp';
                    return (
                      <>
                        <img src={photoSrc} alt="Field update" />

@@ -138,13 +138,20 @@ export default function Home() {
                 {videoStories.length > 0 ? (
                   <>
                     <a href={videoStories[pulseIdx].url} target="_blank" rel="noopener" style={{ display: 'block', height: '100%', cursor: 'pointer' }}>
-                      {videoStories[pulseIdx].url.toLowerCase().endsWith('.mp4') ? (
-                        <video key={pulseIdx} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }}>
-                          <source src={videoStories[pulseIdx].url} type="video/mp4" />
-                        </video>
-                      ) : (
-                        <img key={pulseIdx} src={videoStories[pulseIdx].url} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.5s' }} alt="Pulse capture" />
-                      )}
+                    {videoStories[pulseIdx].url.includes('drive.google.com') ? (
+                      <iframe
+                        src={videoStories[pulseIdx].url}
+                        style={{ width: '100%', height: '100%', border: 'none' }}
+                        allow="autoplay"
+                        title="Pulse Video"
+                      />
+                    ) : videoStories[pulseIdx].url.toLowerCase().endsWith('.mp4') ? (
+                      <video key={pulseIdx} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }}>
+                        <source src={videoStories[pulseIdx].url} type="video/mp4" />
+                      </video>
+                    ) : (
+                      <img key={pulseIdx} src={videoStories[pulseIdx].url} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.5s' }} alt="Pulse capture" />
+                    )}
                     </a>
                     <div className="story-overlay">
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -159,7 +166,7 @@ export default function Home() {
                 ) : (
                   <div style={{ height: '100%', position: 'relative' }}>
                     <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}>
-                      <source src="/pulse-update.mp4" type="video/mp4" />
+                      <source src="/deep-archives/Puls/Adopt/AX1/pulse-update.mp4" type="video/mp4" />
                     </video>
                     <div className="story-overlay">
                       <div style={{ fontSize: '0.7rem', fontWeight: 800, color: 'var(--teal)' }}>LATEST MISSION FEED</div>

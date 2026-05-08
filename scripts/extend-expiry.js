@@ -21,8 +21,8 @@ function extendExpiry() {
   const storiesBlock = lagoonStoriesMatch[1];
   let updatedStoriesBlock = storiesBlock;
 
-  // Find all expiryDates within this block
-  const expiryRegex = /expiryDate:\s*'([^']+)'/g;
+  // Find all expiryDates within this block (supports both single and double quotes)
+  const expiryRegex = /expiryDate:\s*['"]([^'"]+)['"]/g;
   let match;
   let updatedCount = 0;
 
@@ -40,8 +40,9 @@ function extendExpiry() {
     const diffDays = diffTime / (1000 * 3600 * 24);
 
     if (diffDays < 30) {
+      const quote = fullMatch.includes('"') ? '"' : "'";
       const newExpiryStr = threeMonthsFromNow.toISOString().split('.')[0] + 'Z';
-      updatedStoriesBlock = updatedStoriesBlock.replace(fullMatch, `expiryDate: '${newExpiryStr}'`);
+      updatedStoriesBlock = updatedStoriesBlock.replace(fullMatch, `expiryDate: ${quote}${newExpiryStr}${quote}`);
       updatedCount++;
       console.log(`Extended expiry date from ${dateStr} to ${newExpiryStr}`);
     }

@@ -1,0 +1,28 @@
+{
+  "gitProjectManager.openInNewWindow": true,
+  "gitProjectManager.displayProjectPath": true,
+  "tdad.agent.cli.enabled": true,
+  "tdad.agent.cli.command": "gemini \"{prompt}\"",
+  "tdad.agent.cli.preset": "gemini",
+  "tdad.agent.cli.permissionFlags": {
+    "claude": {
+      "dangerouslySkipPermissions": false
+    },
+    "aider": {
+      "yesAlways": false,
+      "autoCommit": false
+    },
+    "codex": {
+      "dangerouslyBypassApprovalsAndSandbox": false
+    },
+    "cursor": {
+      "autoApprove": false
+    },
+    "gemini": {
+      "yolo": false
+    },
+    "opencode": {
+      "autoApprove": false
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "name": "hinnavaru/blue-cms",
+    "description": "Concrete CMS v9.5.0 deployment for Hinnavaru Blue Initiative",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.4",
+        "concretecms/core": "9.5.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        },
+        "vendor-dir": "vendor"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Concrete\\Core\\Console\\Command\\InstallCommand::install"
+        ]
+    }
+}
