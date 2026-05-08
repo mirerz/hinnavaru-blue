@@ -343,15 +343,16 @@ export const DOCUMENT_VAULTS = [
 
 // 4. THE NOTICE BOARD (Live Feed Updates)
 export const LATEST_BULLETINS = [
-  { icon: '🌍', type: 'Global News', text: 'Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’ (news.un.org)' },
-  { icon: '🌍', type: 'Global News', text: 'World News in Brief: Europe warming twice as fast, acute hunger in Lebanon, peacekeepers deployed in Congo (news.un.org)' },
-  { icon: '📜', type: 'New Document', text: 'Official User Guide to Coral Restoration Terminologies published. Read now in the Vault.' },
-  { icon: '🧬', type: 'Science', text: 'Restoration Genetics Guide updated with heat-tolerant species metrics.' },
-  { icon: '🌍', type: 'Global', text: 'UN Ocean Decade target aligned: Hinnavaru blueprint scaling to 14 atolls.' },
-  { icon: '📡', type: 'Live Feed', text: 'Global network detects 0.2°C temp anomaly. High-frequency monitoring activated.' },
-  { icon: '🌊', type: 'Mission', text: 'Vision 2030: Restoring critical nursery corridors for 5,000+ localized reef species.' },
-  { icon: '🌍', type: 'Global', text: 'Hinnavaru Blue’s locally-led restoration model receives international recognition for its impact on climate adaptation.' },
-  { icon: '📊', type: 'Data', text: 'March survival rates show 82% healthy coverage across 180 tracked frames.' }
+  { icon: '🌍', type: 'Global News', text: 'Oil, plastics and climate: Why higher prices could speed a materials transition (news.un.org)'},
+  { icon: '🌍', type: 'Global News', text: '‘Every Bird Counts:’ How city residents can help protect migratory birds (news.un.org)'},
+  { icon: '🌍', type: 'Global News', text: 'Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’ (news.un.org)'},
+  { icon: '🌍', type: 'Global News', text: 'World News in Brief: Europe warming twice as fast, acute hunger in Lebanon, peacekeepers deployed in Congo (news.un.org)'},
+  { icon: '📜', type: 'New Document', text: 'Official User Guide to Coral Restoration Terminologies published. Read now in the Vault.'},
+  { icon: '🧬', type: 'Science', text: 'Restoration Genetics Guide updated with heat-tolerant species metrics.'},
+  { icon: '🌍', type: 'Global', text: 'UN Ocean Decade target aligned: Hinnavaru blueprint scaling to 14 atolls.'},
+  { icon: '📡', type: 'Live Feed', text: 'Global network detects 0.2°C temp anomaly. High-frequency monitoring activated.'},
+  { icon: '🌊', type: 'Mission', text: 'Vision 2030: Restoring critical nursery corridors for 5,000+ localized reef species.'},
+  { icon: '🌍', type: 'Global', text: 'Hinnavaru Blue’s locally-led restoration model receives international recognition for its impact on climate adaptation.'},
 ]
 
 // 5. FINANCIAL ALLOCATION (Transparency Hub)
