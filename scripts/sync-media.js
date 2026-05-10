@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 // Paths
 const CMS_FILE_PATH = path.join(__dirname, '../src/data/cms.js');
 const MEDIA_HUB_DIR = path.join(__dirname, '../public/deep-archives/media-hub');
-const MANIFEST_PATH = path.join(MEDIA_HUB_DIR, 'manifest.json');
+const MANIFEST_PATH = path.join(__dirname, '../src/data/media-manifest.json');
 
 // Ensure directories exist
 if (!fs.existsSync(MEDIA_HUB_DIR)) {
@@ -29,16 +29,19 @@ function getCMSConfig() {
   try {
     const content = fs.readFileSync(CMS_FILE_PATH, 'utf8');
     const driveIdMatch = content.match(/["']?drive_id["']?:\s*["'](.+?)["']/);
+    const botIdMatch = content.match(/["']?bot_uploads_id["']?:\s*["'](.+?)["']/);
+    const docsIdMatch = content.match(/["']?docs_id["']?:\s*["'](.+?)["']/);
     const imagesIdMatch = content.match(/["']?images_id["']?:\s*["'](.+?)["']/);
     const vidsIdMatch = content.match(/["']?vids_id["']?:\s*["'](.+?)["']/);
-    const docsIdMatch = content.match(/["']?docs_id["']?:\s*["'](.+?)["']/);
-
+    
     return {
       drive_id: driveIdMatch ? driveIdMatch[1] : null,
+      bot_uploads_id: botIdMatch ? botIdMatch[1] : null,
+      docs_id: docsIdMatch ? docsIdMatch[1] : null,
       images_id: imagesIdMatch ? imagesIdMatch[1] : null,
-      vids_id: vidsIdMatch ? vidsIdMatch[1] : null,
-      docs_id: docsIdMatch ? docsIdMatch[1] : null
+      vids_id: vidsIdMatch ? vidsIdMatch[1] : null
     };
+
   } catch (err) {
     console.error('❌ Error reading CMS config:', err.message);
     return {};
@@ -57,8 +60,13 @@ async function sync() {
     
     auth = new google.auth.GoogleAuth({
       credentials: JSON.parse(credentialsJson),
-      scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+      scopes: [
+        'https://www.googleapis.com/auth/drive.readonly',
+        'https://www.googleapis.com/auth/drive.file',
+        'https://www.googleapis.com/auth/drive.metadata'
+      ],
     });
+
     console.log('✅ Authenticated with Service Account.');
   } catch (err) {
     console.error('❌ Authentication failed:', err.message);
@@ -120,8 +128,43 @@ async function sync() {
       return results;
     }
 
-    const allFiles = await getAllFiles(DRIVE_FOLDER_ID);
-    console.log(`📦 Found ${allFiles.length} total files.`);
+    const allFilesMain = await getAllFiles(DRIVE_FOLDER_ID);
+    let allFilesBot = [];
+    if (config.bot_uploads_id) {
+      console.log(`🔍 Scanning Bot Uploads: ${config.bot_uploads_id}...`);
+      allFilesBot = await getAllFiles(config.bot_uploads_id);
+      
+      // MOVE LOGIC: Sort bot uploads into respective folders
+      for (const file of allFilesBot) {
+        let destFolderId = null;
+        if (file.mimeType.startsWith('image/')) destFolderId = config.images_id;
+        else if (file.mimeType.startsWith('video/')) destFolderId = config.vids_id;
+        else if (file.mimeType === 'application/pdf') destFolderId = config.docs_id;
+
+        if (destFolderId) {
+          console.log(`🚚 Moving ${file.name} to designated HBI folder...`);
+          try {
+            const previousParents = file.parents.join(',');
+            await drive.files.update({
+              fileId: file.id,
+              addParents: destFolderId,
+              removeParents: previousParents,
+              fields: 'id, parents',
+            });
+            // Update the category for local processing
+            if (destFolderId === config.images_id) file.category = 'images';
+            else if (destFolderId === config.vids_id) file.category = 'vids';
+            else if (destFolderId === config.docs_id) file.category = 'docs';
+          } catch (moveErr) {
+            console.error(`❌ Failed to move ${file.name}:`, moveErr.message);
+          }
+        }
+      }
+    }
+
+    const allFiles = [...allFilesMain, ...allFilesBot];
+
+    console.log(`📦 Found ${allFiles.length} total files across all tracked folders.`);
 
     const stories = [];
     const manifest = [];
@@ -141,7 +184,8 @@ async function sync() {
         continue;
       }
 
-      const safeName = file.name.replace(/[^a-z0-9.]/gi, '_');
+      const categoryPrefix = file.category ? `${file.category}_` : '';
+      const safeName = (categoryPrefix + file.name).replace(/[^a-z0-9.]/gi, '_');
       const outputPath = path.join(MEDIA_HUB_DIR, safeName);
       
       // Determine if it should be in Pulse/Stories
@@ -237,11 +281,25 @@ async function sync() {
     }
 
     // E. Update Manifest
-    fs.writeFileSync(MANIFEST_PATH, JSON.stringify({
+    const finalManifest = {
       last_sync: new Date().toISOString(),
-      assets: manifest
-    }, null, 2));
-    console.log('✅ Manifest updated.');
+      archives: manifest.map(m => m.url),
+      slideshow: manifest.filter(m => m.type === 'image').slice(0, 10).map(m => m.url),
+      hero_pulse: null,
+      videos: manifest.filter(m => m.type === 'video').map(m => ({
+        name: m.name,
+        path: m.url,
+        id: m.id
+      })),
+      pdfs: manifest.filter(m => m.type === 'pdf').map(m => ({
+        name: m.name,
+        path: m.url,
+        id: m.id
+      }))
+    };
+
+    fs.writeFileSync(MANIFEST_PATH, JSON.stringify(finalManifest, null, 2));
+    console.log('✅ UI Manifest updated.');
 
     console.log('--- Sync Complete ---');
   } catch (err) {

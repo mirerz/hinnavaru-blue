@@ -19,11 +19,12 @@ export const CMS_CONFIG = {
   whatsapp_link: "https://wa.me/9607714340?text=START",
   telegram_link: "https://t.me/HinnavaruBlue_bot",
   "media_automation": {
-    "drive_id": "1NSWIdP8eY0_Okk8xlKGpTg6TjAVGRWlN",
-    "docs_id": "1C2QtUsCsh25-erxxwtpXTNq8z8b_47h4",
-    "images_id": "1TBjSCthn9HHo8-DRYKo-pRtO9XvfIsjB",
-    "vids_id": "1GrRY4Z-KFyfgfQ6NCEkqtf71G2K1av2A",
-    "last_sync": "2026-05-06T18:00:00Z"
+    "drive_id": "12yWK3lhwcqiTNV6yUS6Insgqhg9r9jx7",
+    "bot_uploads_id": "1RYxB4RRfE_BU3vipXqOD5il02ogU1uPq",
+    "docs_id": "1NGwKXGaQs0S7hMLTJd5nhz_DboPas0Bw",
+    "images_id": "1vbeY96DGn3aXshplZjmzsERlNG72KRbs",
+    "vids_id": "1JDy0lTHiP2c-7KI4SlWGHR9Wbzly9FjG",
+    "last_sync": "2026-05-10T05:00:00Z"
   }
 }
 
@@ -343,6 +344,8 @@ export const DOCUMENT_VAULTS = [
 
 // 4. THE NOTICE BOARD (Live Feed Updates)
 export const LATEST_BULLETINS = [
+  { icon: '🚀', type: 'System', text: 'CMS Integrated Admin Hub activated. Nabeel Hussain authorized as Lead Editor.' },
+  { icon: '📧', type: 'Mission', text: 'Mission inquiry protocol live. Verified secure SMTP handshake for @hinnavarublue initiative.' },
   { icon: '🌍', type: 'Global News', text: 'Iran crisis shows fossil fuels-based energy system ‘is inherently volatile and unstable’ (news.un.org)' },
   { icon: '🌍', type: 'Global News', text: 'World News in Brief: Europe warming twice as fast, acute hunger in Lebanon, peacekeepers deployed in Congo (news.un.org)' },
   { icon: '📜', type: 'New Document', text: 'Official User Guide to Coral Restoration Terminologies published. Read now in the Vault.' },
@@ -376,50 +379,98 @@ export const LAGOON_STORIES = [
   {
     "id": "DRIVE-0",
     "type": "photo",
-    "url": "/deep-archives/media-hub/skipjacii.webp",
+    "url": "/deep-archives/media-hub/images_skipjacii.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:35:24.619Z",
-    "expiryDate": "2027-12-31T23:59:59Z"
+    "expiryDate": "2026-06-09T13:30:06.646Z"
   },
   {
     "id": "DRIVE-1",
     "type": "photo",
-    "url": "/deep-archives/media-hub/hinn_top_view.webp",
+    "url": "/deep-archives/media-hub/images_hinn_top_view.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:35:03.263Z",
-    "expiryDate": "2027-12-31T23:59:59Z"
+    "expiryDate": "2026-06-09T13:30:06.655Z"
   },
   {
     "id": "DRIVE-2",
     "type": "photo",
-    "url": "/deep-archives/media-hub/hinnavaru_areal_view.webp",
+    "url": "/deep-archives/media-hub/images_hinnavaru_areal_view.webp",
     "guardianId": "GD-00",
     "timestamp": "2026-04-15T16:34:50.627Z",
-    "expiryDate": "2027-12-31T23:59:59Z"
+    "expiryDate": "2026-06-09T13:30:06.655Z"
   },
   {
-    "id": "DRIVE-12",
+    "id": "DRIVE-3",
     "type": "photo",
-    "url": "/deep-archives/Focus/Adopt/AX1/GPDR2638.webp",
-    "guardianId": "GD-01",
-    "timestamp": "2026-05-01T10:00:00Z",
-    "expiryDate": "2027-12-31T23:59:59Z"
-  },
-  {
-    "id": "DRIVE-13",
-    "type": "photo",
-    "url": "/deep-archives/Focus/Adopt/AX2/GPDR2750.JPG",
-    "guardianId": "GD-01",
-    "timestamp": "2026-05-02T11:00:00Z",
-    "expiryDate": "2027-12-31T23:59:59Z"
-  },
-  {
-    "id": "DRIVE-14",
-    "type": "photo",
-    "url": "/deep-archives/Focus/Adopt/AX2/GPDR2752.JPG",
+    "url": "/deep-archives/media-hub/images_underwater.webp",
     "guardianId": "GD-00",
-    "timestamp": "2026-05-03T12:00:00Z",
-    "expiryDate": "2027-12-31T23:59:59Z"
+    "timestamp": "2026-04-15T16:34:19.952Z",
+    "expiryDate": "2026-06-09T13:30:06.655Z"
+  },
+  {
+    "id": "DRIVE-4",
+    "type": "photo",
+    "url": "/deep-archives/media-hub/images_GPAL2352.webp",
+    "guardianId": "GD-00",
+    "timestamp": "2026-04-15T16:32:07.000Z",
+    "expiryDate": "2026-06-09T13:30:06.655Z"
+  },
+  {
+    "id": "DRIVE-5",
+    "type": "photo",
+    "url": "/deep-archives/media-hub/images_GPAF2336.webp",
+    "guardianId": "GD-00",
+    "timestamp": "2026-04-15T16:32:07.000Z",
+    "expiryDate": "2026-06-09T13:30:06.655Z"
+  },
+  {
+    "id": "DRIVE-6",
+    "type": "photo",
+    "url": "/deep-archives/media-hub/images_GPAG2341.webp",
+    "guardianId": "GD-00",
+    "timestamp": "2026-04-15T16:32:06.000Z",
+    "expiryDate": "2026-06-09T13:30:06.655Z"
+  },
+  {
+    "id": "DRIVE-7",
+    "type": "photo",
+    "url": "/deep-archives/media-hub/images_GPAF2338.webp",
+    "guardianId": "GD-00",
+    "timestamp": "2026-04-15T16:32:05.000Z",
+    "expiryDate": "2026-06-09T13:30:06.655Z"
+  },
+  {
+    "id": "DRIVE-8",
+    "type": "photo",
+    "url": "/deep-archives/media-hub/images_GPAI2343.webp",
+    "guardianId": "GD-00",
+    "timestamp": "2026-04-15T16:32:05.000Z",
+    "expiryDate": "2026-06-09T13:30:06.655Z"
+  },
+  {
+    "id": "DRIVE-9",
+    "type": "photo",
+    "url": "/deep-archives/media-hub/images_GPAO2357.webp",
+    "guardianId": "GD-00",
+    "timestamp": "2026-04-15T16:32:05.000Z",
+    "expiryDate": "2026-06-09T13:30:06.655Z"
+  },
+  {
+    "id": "DRIVE-10",
+    "type": "photo",
+    "url": "/deep-archives/media-hub/images_GPAQ2359.webp",
+    "guardianId": "GD-00",
+    "timestamp": "2026-04-15T16:32:04.000Z",
+    "expiryDate": "2026-06-09T13:30:06.655Z"
+  },
+  {
+    "id": "DRIVE-11",
+    "type": "photo",
+    "url": "/deep-archives/media-hub/images_GPAE2334.webp",
+    "guardianId": "GD-00",
+    "timestamp": "2026-04-15T16:32:03.000Z",
+    "expiryDate": "2026-06-09T13:30:06.655Z"
   }
 ]
 

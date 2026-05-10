@@ -9,23 +9,27 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null)
   
   const [currentSlide, setCurrentSlide] = useState(0)
-  const [archiveTab, setArchiveTab] = useState('image') // 'image' or 'video'
+  const [archiveTab, setArchiveTab] = useState('image')
+  const [galleryPage, setGalleryPage] = useState(0)
+  const [lightboxData, setLightboxData] = useState(null) // { images: [], index: 0, title: '' }
 
   const handleTabChange = (catId) => {
     setSearchParams({ cat: catId })
+    setGalleryPage(0)
   }
 
+  // 1. Optimized Hero Images (Performance)
   const heroImages = useMemo(() => {
     return MANIFEST.slideshow.length > 0 
       ? [...MANIFEST.slideshow].reverse().map(m => m.startsWith('/') ? m : `/deep-archives/Focus/${m}`)
-      : ['/deep-archives/Focus/Adopt/AX1/GPDR2636.JPG', '/deep-archives/Focus/Adopt/AX1/GPDR2637.JPG', '/deep-archives/Focus/Adopt/AX1/GPDR2638.JPG']
+      : ['/deep-archives/Focus/Adopt/AX1/GPDR2636.JPG']
   }, [])
 
   useEffect(() => {
     if (heroImages.length <= 1) return
     const timer = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % heroImages.length)
-    }, 5000)
+    }, 10000) // Much slower for stability
     return () => clearInterval(timer)
   }, [heroImages])
 
@@ -33,81 +37,75 @@ export default function Projects() {
     return [...MANIFEST.archives].reverse().map(m => m.startsWith('/') ? m : `/deep-archives/Focus/${m}`)
   }, [])
 
-  const coralSliderFrames = useMemo(() => {
-    const defaultFrames = [
-      '/deep-archives/Focus/Adopt/AX1/GPDR2636.JPG',
-      '/deep-archives/Focus/Adopt/AX1/GPDR2637.JPG',
-      '/deep-archives/Focus/Adopt/AX1/GPDR2638.JPG'
-    ];
-    const available = allMedia.filter(m => !heroImages.includes(m) && m.toLowerCase().includes('coral'))
+  // 2. Advanced Project-Based Sorting
+  const projectAlbums = useMemo(() => {
+    const albums = {};
     
-    const selected = available.slice(0, 3);
-    while (selected.length < 3) {
-      selected.push(defaultFrames[selected.length]);
-    }
-    return selected;
-  }, [allMedia, heroImages])
+    // Core Project Albums
+    PROJECTS_LIST.forEach(p => {
+      albums[p.title] = {
+        title: p.title,
+        category: p.category,
+        images: allMedia.filter(m => m.includes(p.folderPath) || m.toLowerCase().includes(p.title.toLowerCase().replace(' ', '_'))),
+        cover: null
+      };
+    });
 
-  const [currentArchiveIdx, setCurrentArchiveIdx] = useState(0)
+    // Special Catch-All Albums for user-mentioned folders
+    const sweeperImgs = allMedia.filter(m => m.toLowerCase().includes('sweeper') || m.toLowerCase().includes('sweep'));
+    if (sweeperImgs.length > 0) {
+      albums['Sweeper Effects'] = { title: 'Sweeper Effects', category: 'sweep', images: sweeperImgs, cover: sweeperImgs[0] };
+    }
+
+    const eduImgs = allMedia.filter(m => m.toLowerCase().includes('edu') || m.toLowerCase().includes('aware') || m.toLowerCase().includes('page'));
+    if (eduImgs.length > 0) {
+      albums['Edu Pages'] = { title: 'Edu Pages', category: 'edu', images: eduImgs, cover: eduImgs[0] };
+    }
+
+    // "Mission Archive" as a final catch-all
+    albums['Mission Archive'] = { title: 'Mission Archive', category: 'general', images: allMedia, cover: allMedia[0] };
+
+    // Set covers for projects that didn't get one
+    Object.keys(albums).forEach(key => {
+      if (!albums[key].cover && albums[key].images.length > 0) {
+        albums[key].cover = albums[key].images[0];
+      }
+    });
+
+    return albums;
+  }, [allMedia]);
 
   const tabMedia = useMemo(() => {
+    // Determine which images to show in the main gallery based on tab
     const keywords = activeTab === 'coral' ? ['focus', 'adopt', 'coral'] 
                   : activeTab === 'sweep' ? ['puls', 'clean', 'sweep', 'debris', 'harbor'] 
-                  : ['aware', 'edu', 'workshop', 'flyer', 'docs'];
+                  : ['aware', 'edu', 'workshop', 'flyer', 'docs', 'page'];
     
-    let filtered = allMedia.filter(m => {
+    return allMedia.filter(m => {
       const path = m.toLowerCase();
-      const match = keywords.some(k => path.includes(k));
-      return match; // Removed !heroImages.includes(m) to ensure all project images show up
+      return keywords.some(k => path.includes(k));
     });
-    
-    if (activeTab === 'coral') {
-      filtered = filtered.filter(m => !coralSliderFrames.includes(m))
-    }
-    return filtered.length > 0 ? filtered : allMedia.slice(0, 20)
-  }, [activeTab, allMedia, coralSliderFrames])
+  }, [activeTab, allMedia]);
 
-  useEffect(() => {
-    setCurrentArchiveIdx(0)
-  }, [activeTab])
+  const ITEMS_PER_PAGE = 6;
+  const totalPages = Math.ceil(tabMedia.length / ITEMS_PER_PAGE);
+  const currentGalleryItems = tabMedia.slice(galleryPage * ITEMS_PER_PAGE, (galleryPage + 1) * ITEMS_PER_PAGE);
 
-  // Coral Restoration specific interactive slide frame
-  const CoralRestorationSlider = () => {
-    const [frameIdx, setFrameIdx] = useState(0);
-    return (
-      <div className="featured-media-frame" style={{ marginTop: '30px', position: 'relative' }}>
-        <div className="featured-media-inner">
-          <img src={coralSliderFrames[frameIdx]} alt="Coral Restoration Slide" />
-          <div className="pulse-tag">
-            <span className="live-dot" /> <span>INTERACTIVE FRAME</span>
-          </div>
-          {coralSliderFrames.length > 1 && (
-            <div style={{ position: 'absolute', bottom: '20px', right: '20px', display: 'flex', gap: '10px', zIndex: 10 }}>
-              <button onClick={() => setFrameIdx(prev => (prev > 0 ? prev - 1 : coralSliderFrames.length - 1))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'<'}</button>
-              <button onClick={() => setFrameIdx(prev => (prev < coralSliderFrames.length - 1 ? prev + 1 : 0))} className="btn btn-outline btn-sm" style={{ padding: '8px 16px', background: 'rgba(2,11,24,0.8)' }}>{'>'}</button>
-            </div>
-          )}
-        </div>
-      </div>
-    );
+  const openLightbox = (img) => {
+    // Find best album match
+    const album = Object.values(projectAlbums).find(a => a.images.includes(img) && a.title !== 'Mission Archive') || projectAlbums['Mission Archive'];
+    const imgIndex = album.images.indexOf(img);
+    setLightboxData({ 
+      images: album.images, 
+      index: imgIndex >= 0 ? imgIndex : 0, 
+      title: album.title 
+    });
   };
 
-  const activeCatObj = PROJECT_CATEGORIES.find(c => c.id === activeTab)
-  const filteredProjects = PROJECTS_LIST.filter(p => p.category === activeTab).slice(0, 3)
-
-  // Helper to count files in a folder path
-  const getResourceCount = (folderPath) => {
-    if (!folderPath) return 0;
-    // Match files that start with the folderPath
-    const count = MANIFEST.archives.filter(path => path.includes(folderPath)).length;
-    return count;
-  };
-
-  // Featured Media Slider that prioritizes videos from the latest 3 projects
   const FeaturedMediaSlider = () => {
     const [mediaIdx, setMediaIdx] = useState(0);
+    const filteredProjects = PROJECTS_LIST.filter(p => p.category === activeTab).slice(0, 3);
     
-    // Get videos for the projects currently shown in the category
     const projectVideos = useMemo(() => {
       const vids = [];
       filteredProjects.forEach(p => {
@@ -117,14 +115,12 @@ export default function Projects() {
         vids.push(...folderVids);
       });
       
-      // Fallback to drive videos if no local project videos found
       if (vids.length === 0) {
         const driveVids = (MANIFEST.videos || []).map(v => ({ type: 'drive', path: v.path, project: 'Mission Archive' }));
         vids.push(...driveVids);
       }
       
-      // Add images as fallback
-      const categoryImages = tabMedia.map(m => ({ type: 'image', path: m }));
+      const categoryImages = tabMedia.slice(0, 5).map(m => ({ type: 'image', path: m }));
       return [...vids, ...categoryImages];
     }, [filteredProjects]);
 
@@ -150,16 +146,8 @@ export default function Projects() {
 
           {projectVideos.length > 1 && (
             <div style={{ position: 'absolute', bottom: '40px', right: '40px', display: 'flex', gap: '20px', zIndex: 10 }}>
-              <button onClick={prevMedia} className="btn btn-outline" style={{ 
-                width: '80px', height: '80px', borderRadius: '50%', padding: '0', 
-                background: 'rgba(2,11,24,0.95)', fontSize: '2rem', fontWeight: 'bold',
-                border: '2px solid var(--teal)', boxShadow: '0 0 20px rgba(13,211,197,0.3)'
-              }}>{'<'}</button>
-              <button onClick={nextMedia} className="btn btn-outline" style={{ 
-                width: '80px', height: '80px', borderRadius: '50%', padding: '0', 
-                background: 'rgba(2,11,24,0.95)', fontSize: '2rem', fontWeight: 'bold',
-                border: '2px solid var(--teal)', boxShadow: '0 0 20px rgba(13,211,197,0.3)'
-              }}>{'>'}</button>
+              <button onClick={prevMedia} className="btn btn-outline" style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(2,11,24,0.95)', fontSize: '1.5rem', border: '2px solid var(--teal)' }}>{'<'}</button>
+              <button onClick={nextMedia} className="btn btn-outline" style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(2,11,24,0.95)', fontSize: '1.5rem', border: '2px solid var(--teal)' }}>{'>'}</button>
             </div>
           )}
         </div>
@@ -169,7 +157,7 @@ export default function Projects() {
 
   return (
     <div className="projects-page">
-      {/* 1. CINEMATIC HERO SLIDESHOW */}
+      {/* 1. CINEMATIC HERO */}
       <section className="projects-hero section" style={{ position: 'relative', overflow: 'hidden', padding: '180px 0 120px', textAlign: 'center', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {heroImages.map((img, idx) => (
           <div key={idx} style={{
@@ -177,8 +165,7 @@ export default function Projects() {
             backgroundImage: `url('${img}')`,
             backgroundSize: 'cover', backgroundPosition: 'center',
             opacity: idx === currentSlide ? 0.6 : 0,
-            transition: 'opacity 1.5s ease-in-out',
-            transform: idx === currentSlide ? 'scale(1.05)' : 'scale(1)',
+            transition: 'opacity 2s ease-in-out',
             filter: 'brightness(0.7) contrast(1.1)'
           }} />
         ))}
@@ -192,7 +179,7 @@ export default function Projects() {
             Deep Sea <span className="gradient-text">Frontlines</span>
           </h1>
           <p className="section-sub animate-reveal" style={{ margin: '0 auto', maxWidth: '800px', textAlign: 'center' }}>
-            Live archives from our Hinnavaru conservation sites. From coral nurseries to waste management — the data of resilience.
+            Live archives from our Hinnavaru conservation sites. Sorted by mission and project focus.
           </p>
         </div>
       </section>
@@ -200,9 +187,6 @@ export default function Projects() {
       {/* 2. EXPLORATION INTERFACE */}
       <section className="section-sm" style={{ background: 'var(--ocean-deep)', paddingTop: '40px', paddingBottom: '0' }}>
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-            <div className="badge badge-teal animate-reveal" style={{ display: 'inline-block', padding: '10px 25px', fontSize: '0.9rem' }}>PROJECTS UPDATE</div>
-          </div>
           <div className="mockup-tab-nav">
             {PROJECT_CATEGORIES.map(cat => (
               <button 
@@ -230,14 +214,10 @@ export default function Projects() {
             <FeaturedMediaSlider />
 
             <div style={{ marginTop: '50px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '30px' }}>
-              {filteredProjects.map((p, i) => {
+              {PROJECTS_LIST.filter(p => p.category === activeTab).slice(0, 3).map((p, i) => {
                 const projectFiles = MANIFEST.archives.filter(path => path.includes(p.folderPath));
-                const mediaSrc = projectFiles.length > 0 
-                  ? projectFiles[Math.floor(Math.random() * projectFiles.length)] 
-                  : (tabMedia[i % tabMedia.length] || heroImages[0]);
-                
+                const mediaSrc = projectFiles.length > 0 ? projectFiles[0] : (tabMedia[i % tabMedia.length] || heroImages[0]);
                 const isVideo = mediaSrc.toLowerCase().endsWith('.mp4');
-                const fileCount = projectFiles.length;
 
                 return (
                   <div key={i} className="card animate-reveal" style={{ background: 'rgba(255,255,255,0.02)', padding: '0', cursor: 'pointer', overflow: 'hidden' }} onClick={() => setSelectedProject(p)}>
@@ -247,18 +227,9 @@ export default function Projects() {
                       <img src={mediaSrc} style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} alt={p.title} />
                     )}
                     <div style={{ padding: '30px' }}>
-                      <div className="badge badge-teal" style={{ marginBottom: '15px', fontWeight: 800 }}>
-                        {fileCount > 0 ? `${fileCount} TOTAL RESOURCES` : 'COMING SOON'}
-                      </div>
+                      <div className="badge badge-teal" style={{ marginBottom: '15px', fontWeight: 800 }}>{projectFiles.length} TOTAL RESOURCES</div>
                       <h4 style={{ fontSize: '1.4rem', marginBottom: '10px', color: 'white' }}>{p.title}</h4>
                       <p style={{ opacity: 0.7, fontSize: '0.9rem', lineHeight: '1.6' }}>{p.desc.substring(0, 100)}...</p>
-                      
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
-                         <span style={{ fontSize: '0.7rem', color: 'var(--teal)', fontWeight: 800 }}>MISSION SYNCED</span>
-                         <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', flex: 1, marginLeft: '15px', borderRadius: '2px' }}>
-                            <div style={{ width: fileCount > 0 ? '100%' : '0%', height: '100%', background: 'var(--teal)', borderRadius: '2px' }} />
-                         </div>
-                      </div>
                     </div>
                   </div>
                 )
@@ -268,269 +239,159 @@ export default function Projects() {
         </div>
       </section>
 
-      {/* MODAL */}
-      {selectedProject && (
-        <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
-          <div className="modal glass-card deep-dive-modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-header">
-              <div>
-                <div className={`badge ${selectedProject.badgeClass}`} style={{ marginBottom: '8px' }}>
-                  {selectedProject.emoji} {selectedProject.badge}
-                </div>
-                <h3 className="gradient-text">{selectedProject.title}</h3>
-              </div>
-              <button className="modal-close" onClick={() => setSelectedProject(null)}>×</button>
-            </div>
-            <div className="modal-content">
-              <div className="deep-dive-grid">
-                <div className="deep-dive-main">
-                  <p style={{ fontSize: '1.05rem', lineHeight: '1.7', color: 'var(--text-secondary)', marginBottom: '24px' }}>
-                    {selectedProject.desc}
-                  </p>
-                  <div style={{ background: 'rgba(255,255,255,0.03)', padding: '24px', borderRadius: '12px', border: '1px solid var(--card-border)' }}>
-                    <div className="funding-stats-dash">
-                      <span className="gradient-text" style={{ fontSize: '2.5rem' }}>{getResourceCount(selectedProject.folderPath)}</span>
-                      <span style={{ marginLeft: '12px', fontSize: '0.9rem' }}>Total mission resources archived.</span>
-                    </div>
-                    <div className="progress-bar" style={{ height: '12px' }}>
-                      <div className="progress-fill" style={{ width: getResourceCount(selectedProject.folderPath) > 0 ? '100%' : '0%' }} />
-                    </div>
-                  </div>
-                </div>
-                <div className="deep-dive-side">
-                   <div className="mini-card" style={{ marginBottom: '12px' }}>
-                     <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>LOCALE</div>
-                     <div style={{ fontWeight: 800 }}>{CMS_CONFIG.atoll} Lagoon</div>
-                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* 5. MISSION ARCHIVE (Gallery) */}
       <section className="section" id="archive" style={{ background: 'var(--ocean-deep)' }}>
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <div className="badge badge-teal" style={{ marginBottom: '16px' }}>📸 Mission Archive</div>
             <h2 className="section-title">Visual <span className="gradient-text">Bulletins</span></h2>
-            <p className="section-sub" style={{ margin: '0 auto' }}>Synchronized high-resolution captures from the Hinnavaru lagoon and field operations.</p>
+            <p className="section-sub" style={{ margin: '0 auto' }}>Sorted by projects and community submissions.</p>
           </div>
 
           <div className="mockup-tab-nav" style={{ marginBottom: '40px' }}>
-            <button 
-              className={`mockup-tab-btn ${archiveTab === 'image' ? 'active' : ''}`}
-              onClick={() => setArchiveTab('image')}
-            >
-              📷 Images
-            </button>
-            <button 
-              className={`mockup-tab-btn ${archiveTab === 'video' ? 'active' : ''}`}
-              onClick={() => setArchiveTab('video')}
-            >
-              🎥 Videos
-            </button>
+            <button className={`mockup-tab-btn ${archiveTab === 'image' ? 'active' : ''}`} onClick={() => setArchiveTab('image')}>📷 Images</button>
+            <button className={`mockup-tab-btn ${archiveTab === 'video' ? 'active' : ''}`} onClick={() => setArchiveTab('video')}>🎥 Videos</button>
           </div>
 
           {archiveTab === 'image' && (
             <>
               <div style={{ 
                 display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
-                gap: '20px' 
+                gridTemplateColumns: 'repeat(3, 1fr)', 
+                gridTemplateRows: 'repeat(2, 240px)',
+                gap: '20px',
+                minHeight: '500px'
               }}>
-                {MANIFEST.archives.slice(0, 12).map((img, i) => (
-                  <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', height: '240px', position: 'relative', cursor: 'zoom-in' }}>
-                    <img 
-                      src={img.startsWith('/') ? img : `/deep-archives/Focus/${img}`} 
-                      alt={`Mission update ${i}`} 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'var(--transition)' }} 
-                      onMouseOver={e => e.currentTarget.style.transform = 'scale(1.1)'}
-                      onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
-                    />
+                {currentGalleryItems.map((img, i) => (
+                  <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', position: 'relative', cursor: 'zoom-in' }} onClick={() => openLightbox(img)}>
+                    <img src={img} alt={`Update ${i}`} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'var(--transition)' }} />
                     <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '15px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)', fontSize: '0.7rem', opacity: 0.8 }}>
                       FILE: {img.split('/').pop().split('.')[0]}
                     </div>
                   </div>
                 ))}
               </div>
-              <div style={{ textAlign: 'center', marginTop: '60px' }}>
-                <a href={`https://drive.google.com/drive/folders/${CMS_CONFIG.media_automation.images_id}`} target="_blank" rel="noopener" className="btn btn-outline">More Options →</a>
+
+              {/* PAGINATION */}
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '40px' }}>
+                <button className="btn btn-outline" disabled={galleryPage === 0} onClick={() => setGalleryPage(prev => prev - 1)}>← PREVIOUS</button>
+                <div style={{ alignSelf: 'center', fontWeight: 800, color: 'var(--teal)' }}>PAGE {galleryPage + 1} / {totalPages}</div>
+                <button className="btn btn-outline" disabled={galleryPage >= totalPages - 1} onClick={() => setGalleryPage(prev => prev + 1)}>NEXT →</button>
               </div>
             </>
           )}
 
           {archiveTab === 'video' && (
-            <>
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', 
-                gap: '20px' 
-              }}>
-                {(MANIFEST.videos || []).slice(0, 6).map((vid, i) => (
-                  <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', background: '#000', border: '1px solid rgba(255,107,107,0.3)' }}>
-                    {vid.path && vid.path.includes('drive.google.com') ? (
-                      <iframe 
-                        src={vid.path} 
-                        style={{ width: '100%', aspectRatio: '16/9', display: 'block', border: 'none' }}
-                        allow="autoplay; encrypted-media"
-                        allowFullScreen
-                      ></iframe>
-                    ) : (
-                      <video 
-                        controls 
-                        style={{ width: '100%', aspectRatio: '16/9', display: 'block' }}
-                        poster="/deep-archives/Focus/Adopt/AX1/GPDR2636.JPG"
-                      >
-                        <source src={vid.path} type="video/mp4" />
-                      </video>
-                    )}
-                    <div style={{ padding: '15px' }}>
-                      <div style={{ fontSize: '0.85rem', fontWeight: 700 }}>{vid.name}</div>
-                      <div style={{ fontSize: '0.65rem', opacity: 0.6, marginTop: '4px' }}>MISSION SIG: {vid.id?.substring(0,8)}</div>
-                    </div>
-                  </div>
-                ))}
-                {(!MANIFEST.videos || MANIFEST.videos.length === 0) && (
-                  <p style={{ textAlign: 'center', width: '100%', opacity: 0.7 }}>No video captures available yet.</p>
-                )}
-              </div>
-              <div style={{ textAlign: 'center', marginTop: '60px' }}>
-                <a href={`https://drive.google.com/drive/folders/${CMS_CONFIG.media_automation.vids_id}`} target="_blank" rel="noopener" className="btn btn-outline">More Options →</a>
-              </div>
-            </>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '20px' }}>
+              {(MANIFEST.videos || []).slice(0, 6).map((vid, i) => (
+                <div key={i} className="card" style={{ padding: '0', overflow: 'hidden', background: '#000' }}>
+                  <iframe src={vid.path} style={{ width: '100%', aspectRatio: '16/9', border: 'none' }} allow="autoplay; encrypted-media" allowFullScreen />
+                </div>
+              ))}
+            </div>
           )}
         </div>
       </section>
 
-      {/* 4. NURSERY DIRECTORY (Reef Guardians) */}
-      <section className="section" style={{ background: '#020b18', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-        <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px' }}>
-            <div>
-              <div className="badge badge-teal" style={{ marginBottom: '12px' }}>🛡️ Nursery Directory</div>
-              <h2 className="section-title" style={{ textAlign: 'left', margin: 0 }}>Active <span className="gradient-text">Guardians</span></h2>
+      {/* LIGHTBOX MODAL */}
+      {lightboxData && (
+        <div className="modal-overlay" onClick={() => setLightboxData(null)}>
+          <div className="modal glass-card" style={{ maxWidth: '1100px', width: '95%', padding: '0', height: '90vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+            <div className="modal-header" style={{ padding: '20px 30px', flex: '0 0 auto' }}>
+              <div>
+                <div className="badge badge-teal" style={{ fontSize: '0.6rem', marginBottom: '4px' }}>ALBUM VIEW</div>
+                <h3 className="gradient-text" style={{ margin: 0 }}>{lightboxData.title}</h3>
+              </div>
+              <button className="modal-close" onClick={() => setLightboxData(null)}>×</button>
             </div>
-            <Link to="/registry" className="btn btn-outline btn-sm">Full Registry →</Link>
-          </div>
+            
+            <div className="lightbox-viewport" style={{ position: 'relative', flex: '1 1 auto', background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+               <img 
+                 key={lightboxData.index}
+                 src={lightboxData.images[lightboxData.index]} 
+                 style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain', animation: 'fadeIn 0.5s ease' }} 
+                 alt="Enlarged view"
+               />
+               
+               {lightboxData.images.length > 1 && (
+                 <>
+                   <button 
+                     onClick={() => setLightboxData(prev => ({ ...prev, index: (prev.index > 0 ? prev.index - 1 : prev.images.length - 1) }))}
+                     style={{ position: 'absolute', left: '20px', background: 'rgba(0,0,0,0.5)', border: '2px solid var(--teal)', color: 'white', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }}
+                   >←</button>
+                   <button 
+                     onClick={() => setLightboxData(prev => ({ ...prev, index: (prev.index + 1) % prev.images.length }))}
+                     style={{ position: 'absolute', right: '20px', background: 'rgba(0,0,0,0.5)', border: '2px solid var(--teal)', color: 'white', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }}
+                   >→</button>
+                 </>
+               )}
+            </div>
 
-          <div className="guardian-slider-wrap">
-            <div className="guardian-slider-inner" id="guardian-slider">
-               {CORAL_REGISTRY.slice(0, 10).map((c, i) => (
-                 <div key={i} className="guardian-slide-card card" style={{ minWidth: '220px', padding: '24px', textAlign: 'center' }}>
-                    <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>🪸</div>
-                    <div style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--teal)', marginBottom: '4px' }}>{c.id}</div>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 600, marginBottom: '8px', minHeight: '2.4em' }}>{c.species}</div>
-                    <div style={{ fontSize: '0.75rem', opacity: 0.6 }}>Guardian: {c.adopter}</div>
-                    <div className="progress-bar" style={{ marginTop: '16px', height: '4px' }}>
-                      <div className="progress-fill" style={{ width: `${c.survival}%` }} />
+            <div className="lightbox-footer" style={{ padding: '25px', background: 'rgba(2,11,24,0.98)', borderTop: '1px solid rgba(255,255,255,0.05)', flex: '0 0 auto' }}>
+               <div style={{ fontSize: '0.7rem', color: 'var(--teal)', fontWeight: 900, marginBottom: '15px', textTransform: 'uppercase', letterSpacing: '1px' }}>Available Project Albums:</div>
+               <div className="album-picker" style={{ display: 'flex', gap: '15px', overflowX: 'auto', paddingBottom: '10px' }}>
+                  {Object.values(projectAlbums).filter(a => a.images.length > 0).map((album, idx) => (
+                    <div 
+                      key={idx} 
+                      className={`mini-album-thumb ${lightboxData.title === album.title ? 'active' : ''}`}
+                      onClick={() => setLightboxData({ images: album.images, index: 0, title: album.title })}
+                      style={{ 
+                        flex: '0 0 140px', height: '85px', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', position: 'relative',
+                        border: lightboxData.title === album.title ? '2px solid var(--teal)' : '1px solid rgba(255,255,255,0.1)',
+                        transition: 'all 0.3s ease'
+                      }}
+                    >
+                      <img src={album.cover} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: lightboxData.title === album.title ? 1 : 0.5 }} alt={album.title} />
+                      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
+                        <div style={{ fontSize: '0.6rem', fontWeight: 800, textAlign: 'center', color: 'white' }}>{album.title.toUpperCase()}</div>
+                      </div>
                     </div>
-                 </div>
-               ))}
+                  ))}
+               </div>
             </div>
-          </div>
-          <div style={{ display: 'flex', gap: '16px', marginTop: '30px', justifyContent: 'center' }}>
-            <button onClick={() => document.getElementById('guardian-slider').scrollBy({ left: -250, behavior: 'smooth' })} className="btn btn-outline" style={{ borderRadius: '50%', width: '48px', height: '48px', padding: 0 }}>{'<'}</button>
-            <button onClick={() => document.getElementById('guardian-slider').scrollBy({ left: 250, behavior: 'smooth' })} className="btn btn-outline" style={{ borderRadius: '50%', width: '48px', height: '48px', padding: 0 }}>{'>'}</button>
           </div>
         </div>
-      </section>
+      )}
+
+      {/* PROJECT DETAILS MODAL */}
+      {selectedProject && (
+        <div className="modal-overlay" onClick={() => setSelectedProject(null)}>
+          <div className="modal glass-card deep-dive-modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <div>
+                <div className={`badge ${selectedProject.badgeClass}`} style={{ marginBottom: '8px' }}>{selectedProject.emoji} {selectedProject.badge}</div>
+                <h3 className="gradient-text">{selectedProject.title}</h3>
+              </div>
+              <button className="modal-close" onClick={() => setSelectedProject(null)}>×</button>
+            </div>
+            <div className="modal-content">
+              <p style={{ fontSize: '1.05rem', lineHeight: '1.7', color: 'var(--text-secondary)', marginBottom: '24px' }}>{selectedProject.desc}</p>
+              <button className="btn btn-teal w-100" style={{ padding: '18px' }} onClick={() => {
+                const album = projectAlbums[selectedProject.title];
+                if (album) {
+                  setLightboxData({ images: album.images, index: 0, title: album.title });
+                  setSelectedProject(null);
+                }
+              }}>🖼️ OPEN PROJECT ALBUM</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style>{`
-        .mockup-tab-nav {
-          display: flex;
-          gap: 12px;
-          border-bottom: 2px solid rgba(255,255,255,0.05);
-          justify-content: center;
-        }
-        .mockup-tab-btn {
-          background: transparent;
-          border: none;
-          color: var(--text-muted);
-          padding: 20px 30px;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          font-size: 0.8rem;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          position: relative;
-        }
-        .mockup-tab-btn.active {
-          color: var(--teal);
-        }
-        .mockup-tab-btn.active::after {
-          content: '';
-          position: absolute;
-          bottom: -2px;
-          left: 0;
-          right: 0;
-          height: 2px;
-          background: var(--teal);
-          box-shadow: 0 0 15px var(--teal);
-        }
-        .guardian-slider-wrap {
-          overflow-x: auto;
-          padding: 20px 0 40px;
-          margin: 0 -20px;
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .guardian-slider-wrap::-webkit-scrollbar { display: none; }
-        .guardian-slider-inner {
-          display: flex;
-          gap: 20px;
-          padding: 0 20px;
-        }
-        .guardian-slide-card {
-          flex: 0 0 auto;
-          background: rgba(255,255,255,0.02);
-          border: 1px solid rgba(255,255,255,0.05);
-          transition: transform 0.3s;
-        }
-        .guardian-slide-card:hover { transform: translateY(-5px); border-color: var(--teal); }
-        .featured-mission-container {
-          background: rgba(255,255,255,0.02);
-          border: 1px solid rgba(255,255,255,0.05);
-          border-radius: 30px;
-          padding: 60px;
-          backdrop-filter: blur(20px);
-        }
-        .featured-media-frame {
-          position: relative;
-          padding: 15px;
-          background: rgba(0,0,0,0.3);
-          border: 1px solid rgba(13,211,197,0.3);
-          border-radius: 30px;
-        }
-        .featured-media-inner {
-          position: relative;
-          aspect-ratio: 21/9;
-          border-radius: 20px;
-          overflow: hidden;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .mockup-tab-nav { display: flex; gap: 12px; border-bottom: 2px solid rgba(255,255,255,0.05); justify-content: center; }
+        .mockup-tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 20px 30px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; position: relative; }
+        .mockup-tab-btn.active { color: var(--teal); }
+        .mockup-tab-btn.active::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--teal); box-shadow: 0 0 15px var(--teal); }
+        .featured-mission-container { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 30px; padding: 60px; backdrop-filter: blur(20px); }
+        .featured-media-frame { position: relative; padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid rgba(13,211,197,0.3); border-radius: 30px; }
+        .featured-media-inner { position: relative; aspect-ratio: 21/9; border-radius: 20px; overflow: hidden; }
         .featured-media-inner img { width: 100%; height: 100%; object-fit: cover; }
-        .pulse-tag {
-          position: absolute;
-          top: 25px;
-          right: 25px;
-          background: rgba(0,0,0,0.6);
-          padding: 10px 20px;
-          border-radius: 100px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          border: 1px solid var(--teal);
-          font-size: 0.75rem;
-          font-weight: 900;
-        }
-        .mini-card {
-           background: rgba(255,255,255,0.03);
-           padding: 16px;
-           border-radius: 12px;
-           border: 1px solid rgba(255,255,255,0.05);
-        }
+        .pulse-tag { position: absolute; top: 25px; right: 25px; background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 100px; display: flex; align-items: center; gap: 12px; border: 1px solid var(--teal); font-size: 0.75rem; font-weight: 900; }
+        .mini-album-thumb:hover { transform: scale(1.05); border-color: var(--teal); }
+        .album-picker::-webkit-scrollbar { height: 4px; }
+        .album-picker::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 2px; }
       `}</style>
     </div>
   )

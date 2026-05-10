@@ -8,7 +8,7 @@ return [
             'port' => '587',
             'encryption' => 'tls',
             'username' => 'hinnavarublue@gmail.com',
-            'password' => 'YOUR_GOOGLE_APP_PASSWORD', // Replace with Google App Password
+            'password' => 'G1@Lh.Blues',
         ],
         'default' => [
             'address' => 'hinnavarublue@gmail.com',
@@ -16,3 +16,4 @@ return [
         ],
     ],
 ];
+

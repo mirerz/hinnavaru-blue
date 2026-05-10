@@ -24,6 +24,6 @@ This document defines the dual-notification protocol for the Hinnavaru Blue Init
 ---
 
 ## 🛠️ Technical Configuration
-1. **SMTP Auth**: Use Gmail App Password in `application/config/mail.php`.
+1. **SMTP Auth**: Use `GMAIL_APP_PASSWORD` environment variable (configured in `application/config/mail.php`).
 2. **Recipient**: In the CMS Form Block, set "Notify Email" to `hinnavarublue@gmail.com`.
 3. **Template Mapping**: The `admin_notification.php` template in the mail folder will be used for internal alerts.
