@@ -3,7 +3,7 @@ const knowledgeBase = require('../knowledge_base');
 
 const Menus = {
   async showMainMenu(chatId, isAdmin) {
-    const text = `🌊 *Welcome to the Hinnavaru Blue Initiative Hub*\nGreetings🙏 Guardian👑 How shall we protect the blue today?\n\n🛠️ *Initiators and Guardians experience sharing hub*\n\n\`/ticker <message>\` - Write text broadcast to the live ticker.\n\n📸 🎥 *Upload Visuals:* Simply send a Photo, Video, or Docs to me directly (under 10MB). It will automatically be committed to the Deep Archives and broadcasted to the 'In Action' live UI section!`;
+    const text = `🌊 *Hinnavaru Blue Guardian Command Center*\nGreetings, Guardian. How shall we protect the blue today?\n\n🛠️ *Initiators & Adopters Dashboard*\n\n📸 *Visual Uploads:* Send Photos/Videos to archive them.\n📢 *Broadcast:* Admin command for news.\n📊 *Intelligence:* Stats & NGO Growth.`;
     
     const keyboard = [
       [{ text: '📢 Broadcast Ticker' }],
@@ -46,11 +46,12 @@ const Menus = {
   },
 
   async showStatsMenu(chatId, isEdit = false, messageId = null) {
-    const text = `📊 *Transparency Hub Management (Amaanaiy)*\nUpdate real-time survival metrics and fund allocations for the public dashboard.`;
+    const text = `📊 *Statistics Engine (Automated Calculation)*\nSelect a project batch to update metrics.`;
     const buttons = [
-      [{ text: '🪸 Update Survival Rate', callback_data: 'stats:survival' }],
-      [{ text: '🏗️ Update Active Frames', callback_data: 'stats:frames' }],
-      [{ text: '💰 Update Fund Allocations', callback_data: 'stats:funds' }],
+      [{ text: '🪸 Adopt: Coral Restoration', callback_data: 'stats:adopt' }],
+      [{ text: '🧹 Sweeper: Reef Cleaning', callback_data: 'stats:sweeper' }],
+      [{ text: '📚 Edu: Training & Awareness', callback_data: 'stats:edu' }],
+      [{ text: '💰 Fund Allocations', callback_data: 'stats:funds' }],
       [{ text: '📁 Add Official Document', callback_data: 'stats:add_doc' }],
       [{ text: '🏠 Main Menu', callback_data: 'menu:main' }]
     ];
@@ -64,6 +65,18 @@ const Menus = {
         reply_markup: { inline_keyboard: buttons }
       });
     }
+  },
+
+  async showRegistrationMenu(chatId) {
+    const text = `🌊 *Greetings from the Lagoon.*\nI am the Hinnavaru Blue assistant. Your access level is currently **General Observer**.\n\nPlease select your Guardian tier to begin onboarding:`;
+    const buttons = [
+      [{ text: '💎 Adopter (Financial Contributor)', callback_data: 'register:Adopter' }],
+      [{ text: '🛠️ Initiator (Professional Service)', callback_data: 'register:Initiator' }]
+    ];
+
+    await telegram.sendMessage(chatId, text, {
+      reply_markup: { inline_keyboard: buttons }
+    });
   }
 };
 

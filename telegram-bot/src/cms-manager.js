@@ -83,21 +83,30 @@ const CMSManager = {
     return cmsContent.replace(target, target + newGuardianStr);
   },
 
-  updateTransparencyStats(cmsContent, stats) {
+  updateBatchStats(cmsContent, category, metric, value) {
     let updatedContent = cmsContent;
-    if (stats.active_frames !== undefined) {
-      updatedContent = updatedContent.replace(/active_frames:\s*\d+/, `active_frames: ${stats.active_frames}`);
-    }
-    if (stats.survival_rate !== undefined) {
-      updatedContent = updatedContent.replace(/survival_rate:\s*\d+/, `survival_rate: ${stats.survival_rate}`);
-      // Also update the human-readable string in REGISTRY_CONTENT (handles variable years or labels)
-      updatedContent = updatedContent.replace(/total:\s*"Avg\. Frame Survival:\s*\d+%/ , `total: "Avg. Frame Survival: ${stats.survival_rate}%`);
-    }
-    if (stats.total_funds !== undefined) {
-      updatedContent = updatedContent.replace(/total_funds:\s*'[^']+'/, `total_funds: '${stats.total_funds}'`);
-    }
-    if (stats.field_allocation !== undefined) {
-      updatedContent = updatedContent.replace(/field_allocation:\s*\d+/, `field_allocation: ${stats.field_allocation}`);
+    const regex = new RegExp(`(${category}: {[\\s\\S]*?${metric}: )\\d+`);
+    if (regex.test(updatedContent)) {
+      updatedContent = updatedContent.replace(regex, `$1${value}`);
+      
+      // Auto-calculation for Adopt
+      if (category === 'adopt') {
+        const framesMatch = updatedContent.match(/active_frames:\s*(\d+)/);
+        const infectedMatch = updatedContent.match(/infected_polyps:\s*(\d+)/);
+        
+        if (framesMatch && infectedMatch) {
+          const frames = parseInt(framesMatch[1]);
+          const infected = parseInt(infectedMatch[1]);
+          const totalArtifacts = frames * 30;
+          const survival = Math.round(100 - (infected / totalArtifacts * 100));
+          
+          updatedContent = updatedContent.replace(/total_artifacts:\s*\d+/, `total_artifacts: ${totalArtifacts}`);
+          updatedContent = updatedContent.replace(/survival_rate:\s*\d+/, `survival_rate: ${survival}`);
+          
+          // Update the global transparency text too
+          updatedContent = updatedContent.replace(/total:\s*"Avg\. Frame Survival:\s*\d+%/ , `total: "Avg. Frame Survival: ${survival}%`);
+        }
+      }
     }
     return updatedContent;
   },

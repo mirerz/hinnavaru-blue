@@ -29,6 +29,24 @@ export const CMS_CONFIG = {
 }
 
 
+export const BATCH_STATISTICS = {
+  adopt: {
+    active_frames: 180,
+    infected_polyps: 32,
+    total_artifacts: 5400, // Calculated: frames * 30
+    survival_rate: 94
+  },
+  sweeper: {
+    plastics_kg: 450,
+    ghost_nets: 12,
+    cots_removal: 85
+  },
+  edu: {
+    workshop_attendance: 124,
+    certified_count: 18
+  }
+}
+
 // 1. PROJECT TIMELINE / ARCHIVE (History Page)
 export const PROJECT_ARCHIVE = [
   { year: 'Sep 2026', title: 'Smart-Reef 1.0 Launch', desc: 'Planned deployment of 12 IoT monitoring buoys across the deep lagoon zones.' },

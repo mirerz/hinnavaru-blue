@@ -8,6 +8,7 @@ const CMSManager = require('./src/cms-manager');
 const Automation = require('./src/automation');
 const RSSSync = require('./src/rss-sync');
 const Menus = require('./src/menus');
+const Gmail = require('./src/gmail');
 const { getDriveClient, DRIVE_FOLDERS, REPO_OWNER, REPO_NAME, octokit } = require('./src/clients');
 const knowledgeBase = require('./knowledge_base');
 const PENDING_INPUTS = new Map();
@@ -20,10 +21,10 @@ async function initBot() {
   console.log('🤖 Registering Guardian Command Center menu...');
   const commands = [
     { command: 'menu', description: '🌊 Guardian Dashboard' },
-    { command: 'ticker', description: '📢 Broadcast Ticker' },
+    { command: 'broadcast', description: '📢 Push News & Announcements' },
     { command: 'media', description: '📽️ Media Center (Archive/Live)' },
     { command: 'intelligence', description: '📘 HBI Project Intelligence' },
-    { command: 'stats', description: '📊 Statistics Update' },
+    { command: 'stats', description: '📊 Statistics Engine' },
     { command: 'inbox', description: '📩 View Inbox' },
     { command: 'sync', description: '🌀 Trigger Manual Sync' },
     { command: 'start', description: '🔄 Restart Bot' }
@@ -117,40 +118,92 @@ async function handleCallback(callback) {
     const admins = CMSManager.getAdmins(content);
     if (!admins.includes(chatId)) return;
 
+    const avatar = targetRole === 'Adopter' ? '💎' : '🛠️';
+
     const updatedContent = CMSManager.addNewGuardian(content, {
       name: targetName,
       role: targetRole,
       telegramId: targetChatId,
-      avatar: targetRole === 'Reef Guardian' ? '🤿' : '💎'
+      avatar: avatar
     });
 
     await CMSManager.updateCMS(updatedContent, sha, `bot: registered new guardian ${targetName}`);
     await telegram.sendMessage(chatId, `✅ *Approved ${targetName} as ${targetRole}*`);
     await telegram.sendMessage(targetChatId, `🎉 *Access Granted!*\nYou are now registered as a **${targetRole}**.\nType /menu to access your dashboard.`);
+    
+    // Send lead notification to Gmail
+    await Gmail.sendLeadNotification(targetName, targetRole, targetChatId);
   }
 
   // 5. Stats Management
   else if (data.startsWith('stats:')) {
     const action = data.split(':')[1];
-    if (action === 'survival') {
-      PENDING_INPUTS.set(chatId, { type: 'stats:survival' });
-      await telegram.sendMessage(chatId, '🪸 *Update Survival Rate*\nPlease enter the new average survival percentage (e.g., `85`):');
-    } else if (action === 'frames') {
-      PENDING_INPUTS.set(chatId, { type: 'stats:frames' });
-      await telegram.sendMessage(chatId, '🏗️ *Update Active Frames*\nPlease enter the total number of active frames (e.g., `200`):');
-    } else if (action === 'funds') {
-      // Show allocation sub-menu
-      const { content } = await CMSManager.getCMS();
-      const allocations = content.match(/FUND_ALLOCATION = \[([\s\S]*?)\]/)[1]
-        .match(/label: '([^']+)'/g)
-        .map(m => m.match(/'([^']+)'/)[1]);
-
-      const buttons = allocations.map(label => [{ text: label, callback_data: `stats:fund_sel:${label}` }]);
-      buttons.push([{ text: '⬅️ Back', callback_data: 'stats:main' }]);
-
-      await telegram.editMessageText(chatId, messageId, '💰 *Select Fund Category to Update:*', {
+    if (action === 'adopt') {
+      const buttons = [
+        [{ text: '🏗️ Update Active Frames', callback_data: 'stats:adopt_frames' }],
+        [{ text: '🦠 Report Infected Polyps', callback_data: 'stats:adopt_infected' }],
+        [{ text: '⬅️ Back', callback_data: 'stats:main' }]
+      ];
+      await telegram.editMessageText(chatId, messageId, '🪸 *Adopt: Coral Restoration Engine*\nUpdate coral propagation data to recalculate global survival.', {
         reply_markup: { inline_keyboard: buttons }
       });
+    } else if (action === 'adopt_frames') {
+      PENDING_INPUTS.set(chatId, { type: 'stats:adopt_frames' });
+      await telegram.sendMessage(chatId, '🏗️ *Active Frames*\nEnter the total number of frames in the lagoon (e.g., `200`):');
+    } else if (action === 'adopt_infected') {
+      PENDING_INPUTS.set(chatId, { type: 'stats:adopt_infected' });
+      await telegram.sendMessage(chatId, '🦠 *Infected Polyps*\nEnter the total number of infected/failed artifacts (e.g., `45`):');
+    } else if (action === 'sweeper') {
+      const buttons = [
+        [{ text: '♻️ Plastics (kg)', callback_data: 'stats:sweep_plastic' }],
+        [{ text: '🕸️ Ghost Nets', callback_data: 'stats:sweep_nets' }],
+        [{ text: '🐚 COTS removal', callback_data: 'stats:sweep_cots' }],
+        [{ text: '⬅️ Back', callback_data: 'stats:main' }]
+      ];
+      await telegram.editMessageText(chatId, messageId, '🧹 *Sweeper: Reef Cleaning Logic*\nLog debris and predator removal data.', {
+        reply_markup: { inline_keyboard: buttons }
+      });
+    } else if (action === 'sweep_plastic') {
+      PENDING_INPUTS.set(chatId, { type: 'stats:sweep_plastic' });
+      await telegram.sendMessage(chatId, '♻️ *Plastics Removed*\nEnter weight in kilograms:');
+    } else if (action === 'sweep_nets') {
+      PENDING_INPUTS.set(chatId, { type: 'stats:sweep_nets' });
+      await telegram.sendMessage(chatId, '🕸️ *Ghost Nets Recovered*\nEnter the total count:');
+    } else if (action === 'sweep_cots') {
+      PENDING_INPUTS.set(chatId, { type: 'stats:sweep_cots' });
+      await telegram.sendMessage(chatId, '🐚 *COTS Removal*\nEnter the total number of Crown-of-Thorns Starfish removed:');
+    } else if (action === 'edu') {
+      const buttons = [
+        [{ text: '🤝 Workshop Attendance', callback_data: 'stats:edu_attend' }],
+        [{ text: '🎓 Certified Guardians', callback_data: 'stats:edu_cert' }],
+        [{ text: '⬅️ Back', callback_data: 'stats:main' }]
+      ];
+      await telegram.editMessageText(chatId, messageId, '📚 *Edu: Training & Awareness*\nLog educational impact metrics.', {
+        reply_markup: { inline_keyboard: buttons }
+      });
+    } else if (action === 'edu_cert') {
+      PENDING_INPUTS.set(chatId, { type: 'stats:edu_cert' });
+      await telegram.sendMessage(chatId, '🎓 *Certified Guardians*\nEnter the current total count:');
+    } else if (action === 'edu_attend') {
+      PENDING_INPUTS.set(chatId, { type: 'stats:edu_attend' });
+      await telegram.sendMessage(chatId, '🤝 *Workshop Attendance*\nEnter the total number of participants:');
+    } else if (action === 'main') {
+      await Menus.showStatsMenu(chatId, true, messageId);
+    } else if (action === 'funds') {
+      const { content } = await CMSManager.getCMS();
+      const allocationsMatch = content.match(/FUND_ALLOCATION = \[([\s\S]*?)\]/);
+      if (allocationsMatch) {
+        const allocations = allocationsMatch[1]
+          .match(/label: '([^']+)'/g)
+          .map(m => m.match(/'([^']+)'/)[1]);
+
+        const buttons = allocations.map(label => [{ text: label, callback_data: `stats:fund_sel:${label}` }]);
+        buttons.push([{ text: '⬅️ Back', callback_data: 'stats:main' }]);
+
+        await telegram.editMessageText(chatId, messageId, '💰 *Select Fund Category to Update:*', {
+          reply_markup: { inline_keyboard: buttons }
+        });
+      }
     } else if (action === 'fund_sel') {
       const label = data.split(':')[2];
       PENDING_INPUTS.set(chatId, { type: 'stats:fund_val', label });
@@ -233,20 +286,24 @@ async function handleMessage(message) {
     }
   }
 
-  // 2. Ticker Update
-  else if (message.text && message.text.startsWith('/ticker ')) {
-    const updateText = message.text.replace('/ticker ', '').trim();
+  // 2. Broadcast / Ticker Update
+  else if (message.text && (message.text.startsWith('/ticker ') || message.text.startsWith('/broadcast '))) {
+    const isBroadcast = message.text.startsWith('/broadcast ');
+    const updateText = message.text.replace(isBroadcast ? '/broadcast ' : '/ticker ', '').trim();
     if (updateText.length < 5) return telegram.sendMessage(chatId, '❌ Update text too short.');
 
-    await telegram.sendMessage(chatId, `⏳ *Updating Website...*\nAuthenticating as ${guardian.name}...`);
+    const type = isBroadcast ? '🚨 Announcement' : '🌊 Guardian Log';
+    const icon = isBroadcast ? '📢' : guardian.avatar;
+
+    await telegram.sendMessage(chatId, `⏳ *Pushing to Network...*\nAuthenticating as ${guardian.name}...`);
     const updatedContent = CMSManager.addTickerEntry(content, {
-      icon: guardian.avatar,
-      type: 'Guardian Log',
+      icon: icon,
+      type: type,
       text: updateText
     });
 
-    await CMSManager.updateCMS(updatedContent, sha, `bot: guardian ${guardian.name} live update`);
-    await telegram.sendMessage(chatId, `✅ *Success! Update Committed.*\n\n*${guardian.name} (${guardian.role})*\n"${updateText}"\n\nLive on site in 60s.`);
+    await CMSManager.updateCMS(updatedContent, sha, `bot: ${isBroadcast ? 'admin broadcast' : 'guardian log'}`);
+    await telegram.sendMessage(chatId, `✅ *Success! Broadcast Committed.*\n\n*${type}*\n"${updateText}"\n\nLive on dashboard in 60s.`);
   }
 
   // 3. Media Center / Pending File Uploads
@@ -306,23 +363,28 @@ async function handleMessage(message) {
         });
       }
     }
-    else if (pending.type === 'stats:survival') {
+    else if (pending.type.startsWith('stats:')) {
       const val = parseInt(text);
-      if (isNaN(val) || val < 0 || val > 100) return telegram.sendMessage(chatId, '❌ Invalid percentage. Please send a number between 0 and 100.');
+      if (isNaN(val) || val < 0) return telegram.sendMessage(chatId, '❌ Invalid numerical value.');
       
-      await telegram.sendMessage(chatId, `⏳ *Committing Survival Data...*`);
-      const updatedContent = CMSManager.updateTransparencyStats(content, { survival_rate: val });
-      await CMSManager.updateCMS(updatedContent, sha, `bot: guardian ${guardian.name} updated survival rate to ${val}%`);
-      await telegram.sendMessage(chatId, `✅ *Survival Rate Updated to ${val}%*`);
-    } 
-    else if (pending.type === 'stats:frames') {
-      const val = parseInt(text);
-      if (isNaN(val) || val < 0) return telegram.sendMessage(chatId, '❌ Invalid frame count.');
+      let category = '', metric = '', label = '';
       
-      await telegram.sendMessage(chatId, `⏳ *Committing Frame Data...*`);
-      const updatedContent = CMSManager.updateTransparencyStats(content, { active_frames: val });
-      await CMSManager.updateCMS(updatedContent, sha, `bot: guardian ${guardian.name} updated active frames to ${val}`);
-      await telegram.sendMessage(chatId, `✅ *Active Frames Updated to ${val}*`);
+      switch(pending.type) {
+        case 'stats:adopt_frames': category = 'adopt'; metric = 'active_frames'; label = 'Active Frames'; break;
+        case 'stats:adopt_infected': category = 'adopt'; metric = 'infected_polyps'; label = 'Infected Polyps'; break;
+        case 'stats:sweep_plastic': category = 'sweeper'; metric = 'plastics_kg'; label = 'Plastics (kg)'; break;
+        case 'stats:sweep_nets': category = 'sweeper'; metric = 'ghost_nets'; label = 'Ghost Nets'; break;
+        case 'stats:sweep_cots': category = 'sweeper'; metric = 'cots_removal'; label = 'COTS Removed'; break;
+        case 'stats:edu_attend': category = 'edu'; metric = 'workshop_attendance'; label = 'Workshop Attendance'; break;
+        case 'stats:edu_cert': category = 'edu'; metric = 'certified_count'; label = 'Certified Guardians'; break;
+      }
+
+      if (category && metric) {
+        await telegram.sendMessage(chatId, `⏳ *Syncing Stats Engine...*`);
+        const updatedContent = CMSManager.updateBatchStats(content, category, metric, val);
+        await CMSManager.updateCMS(updatedContent, sha, `bot: update ${label} to ${val}`);
+        await telegram.sendMessage(chatId, `✅ *Statistics Synchronized.*\n\n${label}: ${val}\nDashboard updated.`);
+      }
     }
     else if (pending.type === 'stats:add_doc_title') {
       const title = message.text;
@@ -353,16 +415,8 @@ async function handleMessage(message) {
   }
 }
 
-async function handleUnregisteredUser(chatId, name, cmsContent, admins) {
-  const welcome = `🌊 *Greetings from the Lagoon.*\nI am the Hinnavaru Blue assistant. Your access level is currently **General Observer**.\n\nPlease select a role to register:`;
-  await telegram.sendMessage(chatId, welcome, {
-    reply_markup: { 
-      inline_keyboard: [
-        [{ text: '🤿 Reef Guardian (Volunteer)', callback_data: `register:Reef Guardian` }],
-        [{ text: '💎 Guardian (Financial Contributor)', callback_data: `register:Guardian` }]
-      ] 
-    }
-  });
+async function handleUnregisteredUser(chatId) {
+  await Menus.showRegistrationMenu(chatId);
 }
 
 async function showMediaOptions(chatId, message) {
